@@ -2,11 +2,12 @@ module.exports = (sequelize, Sequelize) => {
   const Address = sequelize.define("address", {
     id: {
       type: Sequelize.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
-      autoIncrement: true
     },
     uid: {
-      type: Sequelize.STRING(64)
+      type: Sequelize.STRING(64),
+      unique: 'compositeIndex'
     },
     name: {
       type: Sequelize.STRING

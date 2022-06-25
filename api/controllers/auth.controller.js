@@ -37,6 +37,7 @@ exports.signup = (req, res) => {
     });
 };
 exports.signin = (req, res) => {
+  console.log('==================')
   User.findOne({
     where: {
       username: req.body.email
@@ -64,6 +65,7 @@ exports.signin = (req, res) => {
         for (let i = 0; i < roles.length; i++) {
           authorities.push("ROLE_" + roles[i].name.toUpperCase());
         }
+        res.cookie('accessToken',token ,{ httpOnly: true, maxAge: 900000 });
         res.status(200).send({
           id: user.id,
           username: user.username,
