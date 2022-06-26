@@ -7,6 +7,7 @@
 <script>
 export default {
   name: 'IndexPage',
+  layout: 'default',
   async asyncData ({ app, route, params, error, store }) {
     try {
       await store.dispatch('realestate/load')
