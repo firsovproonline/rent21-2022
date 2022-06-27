@@ -2,28 +2,22 @@
   <section>
       <div class="theme-form login-form">
         <div class="form-group">
-          <label>Email Address</label>
+          <label>Email</label>
           <div class="input-group"><span class="input-group-text"><i class="icon-email"></i></span>
             <input class="form-control" ref="email" type="email" required="" placeholder="Test@gmail.com">
           </div>
         </div>
         <div class="form-group">
-          <label>Password</label>
+          <label>Пароль</label>
           <div class="input-group"><span class="input-group-text"><i class="icon-lock"></i></span>
             <input class="form-control" type="password" ref="password" name="password" required="" placeholder="*********">
-            <div class="show-hide"><span class="show">                         </span></div>
           </div>
         </div>
-        <div class="form-group">
-          <div class="checkbox">
-            <input id="checkbox1" type="checkbox">
-            <label for="checkbox1">Remember password</label>
-          </div><a class="link" href="forget-password.html">Forgot password?</a>
-        </div>
-        <div class="form-group">
+        <a class="link" href="forget-password.html">Забыли пароль?</a>
+        <div class="form-group" style="margin-top: 18px ">
           <button class="btn btn-landing" @click="submit">Войти</button>
         </div>
-        <p>Нет аккаунта?<a class="ms-2" href="log-in.html">Создать аккаунт</a></p>
+        <p>Нет аккаунта?<a class="ms-2" href="log-in.html"> Создать аккаунт</a></p>
       </div>
   </section>
 </template>
