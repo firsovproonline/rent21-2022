@@ -1,6 +1,23 @@
 <template>
   <div class="main-block">
-    проверка scc
+    <Modal
+      v-show="isShowModal"
+      :show="isShowModal"
+      :scrollable="true"
+      header-id="modalHeader"
+      body-id="modalBody"
+      @close="toggleModal"
+    >
+      <template #header>
+        Авторизация
+      </template>
+      <template #body>
+        <Login />
+      </template>
+    </Modal>
+    <button class="btn-landing" @click="toggleModal">
+      Авторизация
+    </button>
   </div>
 </template>
 
@@ -19,6 +36,17 @@ export default {
       })
     }
   },
+  data: () => ({
+    isShowModal: false,
+  }),
+  methods: {
+    toggleModal() {
+      this.isShowModal = !this.isShowModal;
+    },
+  },
+  mounted () {
+    document.body.classList.add('landing-wrraper')
+  }
 };
 </script>
 

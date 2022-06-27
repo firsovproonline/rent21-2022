@@ -23,7 +23,6 @@ export const actions = {
   async load (state) {
     try {
       const res = await axios.get("http://localhost:3021/api/realestate/address")
-      console.log(res)
       state.commit('setItems', res.data)
       const spr = await axios.get("http://localhost:3021/api/realestate/spr")
       state.commit('setSpr', spr.data)

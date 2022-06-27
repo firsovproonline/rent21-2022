@@ -1,5 +1,6 @@
 @import "vars/vars";
 @import "fonts/fonts";
+@import "rent21/index";
 
 /*  ----------------------------------------------------------------
 /*  >>> TABLE OF CONTENTS:
@@ -12,15 +13,6 @@
 /*  ----------------------------------------------------------------
 /*  1. Body
 /*  --------------------------------------------------------------*/
-body {
-  position: relative;
-  overflow-x: hidden;
-  min-width: 320px;
-  font-family: $default-font;
-  font-size: $font-size;
-  color: $font-color;
-  background: $background;
-}
 
 /*  --------------------------------------------------------------*/
 /*  2. Selection
