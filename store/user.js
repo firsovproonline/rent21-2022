@@ -1,19 +1,22 @@
 export const state = () => ({
-  user: {}
+  currentUser: null
 })
 
+export const getters = {
+  user: (state) => { return state.currentUser },
+}
+
 export const actions = {
-  setUser ({ commit }, user) {
-    commit('setUser', user)
+  setUser ({ commit }) {
+    this.$api.get("/api/user").then(response => {
+      commit('setUser', response.data)
+    });
   },
 }
 
 export const mutations = {
-  setUser ({ commit }, user) {
-    state.user = user
+  setUser (state, items) {
+    state.currentUser = items
   },
 }
 
-export const getters = {
-  user: (state) => { return state.user },
-}

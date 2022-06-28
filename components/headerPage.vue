@@ -31,7 +31,9 @@
                 </li>
               </ul>
               <div class="buy-block">
-                <div class="btn-landing" style="cursor: pointer" @click="toggleModal">Вход</div>
+                <div v-if="!user" class="btn-landing" style="cursor: pointer" @click="toggleModal">Вход</div>
+                <div v-else class="btn-landing" style="cursor: pointer" @click="exitUser">Выход</div>
+
                 <div class="toggle-menu"><i class="fa fa-bars"></i></div>
               </div>
             </nav>
@@ -49,13 +51,20 @@ export default {
   data: () => ({
     isShowModal: false,
   }),
+  computed: {
+    user() { return this.$store.getters['user/user']}
+  },
   methods: {
     toggleModal() {
       this.isShowModal = !this.isShowModal;
     },
+    exitUser(){
+      localStorage.setItem('user', null);
+      window.location.reload();
+    }
   },
   mounted() {
-    console.log(this)
+    this.$store.dispatch('user/setUser')
   }
 }
 </script>

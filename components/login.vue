@@ -27,19 +27,13 @@ export default {
   name: "login",
   methods: {
     submit() {
-      console.log(this)
-      this.$api.get("/api/test/all").then(response => {
-        console.log(response)
-        // localStorage.setItem('user', JSON.stringify(response.data));
-      });
-
       this.$api.post("/api/auth/signin", {
         password: this.$refs.password.value,
         email: this.$refs.email.value,
         username: this.$refs.email.value
       }).then(response => {
-        console.log(response)
         localStorage.setItem('user', JSON.stringify(response.data));
+        window.location.reload()
       })
 
     }

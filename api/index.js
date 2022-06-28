@@ -13,7 +13,6 @@ const Room_tip = db.room_tip;
 const Room_operation = db.room_operation;
 const Shop_catalog = db.shop_catalog;
 const User = db.user;
-
 function S4() {
   return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 }
@@ -23,12 +22,6 @@ function generateUID() {
 }
 
 function initial() {
-  User.create({
-    email: 'firsovpro@yandex.ru',
-    username: 'firsovpro@yandex.ru',
-    password: '$2a$08$/uunNEX8hzsXR0wx7GT27.EdB5B6bm9LP/vIQpVH6eFbNeYWn2o3e'
-  })
-
   Shop_catalog.generateCatalog()
 
   Adress.create({
@@ -123,6 +116,18 @@ function initial() {
     id: 3,
     name: "admin"
   });
+  User.create({
+    email: 'firsovpro@yandex.ru',
+    username: 'firsovpro@yandex.ru',
+    password: '$2a$08$/uunNEX8hzsXR0wx7GT27.EdB5B6bm9LP/vIQpVH6eFbNeYWn2o3e',
+  }).then(user => {
+    user.addRoles([3])
+  });
+
+  //User.roles.create({
+
+
+
 }
 // db.sequelize.sync();
 
