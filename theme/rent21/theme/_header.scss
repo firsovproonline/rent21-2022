@@ -1,4 +1,4 @@
-$header-size: 76px;
+$header-size: 60px;
 
 /**=====================
     05. Header CSS Start
@@ -77,7 +77,7 @@ $header-size: 76px;
       width: 100%;
       transition: $sidebar-transition;
     }
-    
+
   }
   .page-body-wrapper{
       background-color: $light-background;
@@ -142,7 +142,7 @@ $header-size: 76px;
   .main-header-right{
     width: 100%;
     display: flex;
-    align-items: center;   
+    align-items: center;
     position: relative;
     .main-header-left {
       display:flex;
@@ -253,16 +253,16 @@ $header-size: 76px;
           &:last-child {
             margin-right: 0;
           }
-          .mode{                    
+          .mode{
             .mode-moon,.mode-sun{
               position: absolute;
               top: 0;
               left: 0;
             }
-            .mode-sun{             
+            .mode-sun{
               opacity:0;
               visibility: hidden;
-              z-index: 1;             
+              z-index: 1;
               &.show{
                 opacity: 1;
                 visibility: visible;
@@ -309,7 +309,7 @@ $header-size: 76px;
       }
       &.right-menu {
         ul {
-          justify-content:flex-end;         
+          justify-content:flex-end;
           li {
             position:relative;
             .notification {
@@ -333,11 +333,11 @@ $header-size: 76px;
               }
             }
             &:hover{
-              background-color:rgba($primary-color,0.1);             
+              background-color:rgba($primary-color,0.1);
               .media {
                 .media-body{
                   >span{
-                    color: $dark-card-inbox;  
+                    color: $dark-card-inbox;
                   }
                   p{
                     color:$primary-color ;
@@ -430,7 +430,7 @@ $header-size: 76px;
             >p{
               color: $gray-60;
             }
-          }         
+          }
         }
         &:before, &:after {
            right: 10px !important;
@@ -470,7 +470,7 @@ $header-size: 76px;
         ul {
           li {
             padding-top:10px;
-            padding-bottom:10px;                      
+            padding-bottom:10px;
             &:hover {
               background-color: $light-background;
               .bookmark-icon{
@@ -503,7 +503,7 @@ $header-size: 76px;
                 }
               }
             }
-            
+
           }
         }
       }
@@ -528,14 +528,14 @@ $header-size: 76px;
         top: 52px;
         width: 300px;
         right: -20px !important;
-        left: unset;        
+        left: unset;
         li {
           padding: 15px !important;
           .badge-primary {
             background-color: rgba($primary-color, 0.1);
             color: $primary-color;
           }
-          .media {            
+          .media {
             .notification-bg {
               width: 40px;
               height: 40px;
@@ -546,7 +546,7 @@ $header-size: 76px;
               justify-content: center;
               &.bg-light-primary {
                 background-color: rgba($primary-color, 0.1);
-                color: $primary-color;               
+                color: $primary-color;
               }
               &.bg-light-secondary {
                 background-color: rgba($secondary-color, 0.1);
@@ -636,7 +636,7 @@ $header-size: 76px;
           }
 
 
-          
+
 
           &:hover{
             .notification-bg{
@@ -668,7 +668,7 @@ $header-size: 76px;
                 color:$white;
                 path{
                   color:$white;
-                }      
+                }
               }
             }
           }
@@ -699,7 +699,7 @@ $header-size: 76px;
   top: 80px;
   position: absolute;
   z-index: 8;
-  background-color:$white; 
+  background-color:$white;
   border: 1px solid $light-background;
   transition: all linear 0.3s;
   @extend  %for-animated-hover;
@@ -776,7 +776,7 @@ $header-size: 76px;
       }
     }
   }
-  .onhover-show-div{ 
+  .onhover-show-div{
     width: 1500px;
   }
   .card-body{

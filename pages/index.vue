@@ -18,13 +18,6 @@ export default {
         message: 'Категории не найдены или сервер не доступен'
       })
     }
-  },
-  mounted () {
-    document.body.classList.add('landing-wrraper')
   }
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>

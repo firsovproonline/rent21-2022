@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export const state = () => ({
   vcomponent: null,
+  vleftMenu: null,
   globalevent: null,
   globalMessage: '11111'
 })
@@ -15,6 +16,9 @@ export const actions = {
 
     }
   },
+  setleftMenu ({ commit }, comp) {
+    commit('setleftMenu', comp)
+  },
   setVcomponent ({ commit }, comp) {
     commit('setVcomponent', comp)
   },
@@ -27,6 +31,10 @@ export const actions = {
 }
 
 export const mutations = {
+  setleftMenu (state, vcomponent) {
+    console.log('1111111111111111111111')
+    state.vleftMenu = vcomponent
+  },
   setVcomponent (state, vcomponent) {
     state.vcomponent = vcomponent
   },
@@ -40,6 +48,7 @@ export const mutations = {
 }
 
 export const getters = {
+  leftMenu:  (state) => { return state.vleftMenu },
   vcomponent: (state) => { return state.vcomponent },
   globalevent: (state) => { return state.globalevent },
   globalMessage: (state) => { return state.globalMessage }

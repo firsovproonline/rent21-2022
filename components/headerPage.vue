@@ -25,7 +25,9 @@
                 <li class="nav-item menu-back">
                   back<i class="fa fa-angle-right"></i></li>
                 <li class="nav-item"><a href="/" class="nav-link">Главная</a></li>
-                <li class="nav-item"></li>
+                <li v-if="user" class="nav-item">
+                  <a href="/personal" class="nav-link">Кабинет</a>
+                </li>
                 <li class="nav-item">
                   <a href="/realestate" class="nav-link">Недвижимость</a>
                 </li>
@@ -41,13 +43,15 @@
         </div>
       </div>
     </header>
-
   </section>
 </template>
 
 <script>
+import Modal from "~/components/modal";
+import Login from "~/components/login";
 export default {
   name: "headerPage",
+  components: {Login, Modal},
   data: () => ({
     isShowModal: false,
   }),
