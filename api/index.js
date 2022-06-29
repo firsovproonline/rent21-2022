@@ -116,6 +116,23 @@ function initial() {
     id: 3,
     name: "admin"
   });
+
+  User.create({
+    email: 'moderator@rent21.ru',
+    username: 'moderator@rent21.ru',
+    password: '$2a$08$/uunNEX8hzsXR0wx7GT27.EdB5B6bm9LP/vIQpVH6eFbNeYWn2o3e',
+  }).then(user => {
+    user.addRoles([2])
+  });
+
+  User.create({
+    email: 'admin@rent21.ru',
+    username: 'admin@rent21.ru',
+    password: '$2a$08$CDC.skAJBbHE8/BBzHC5bOf/eIr8jbH5j1GpJTh9x/.PHFY.s7HwO',
+  }).then(user => {
+    user.addRoles([3])
+  });
+
   User.create({
     email: 'firsovpro@yandex.ru',
     username: 'firsovpro@yandex.ru',

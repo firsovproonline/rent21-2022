@@ -13,11 +13,15 @@
             <input class="form-control" type="password" ref="password" name="password" required="" placeholder="*********">
           </div>
         </div>
+        <!--
         <a class="link" href="forget-password.html">Забыли пароль?</a>
+        -->
         <div class="form-group" style="margin-top: 18px ">
           <button class="btn btn-landing" @click="submit">Войти</button>
         </div>
+        <!--
         <p>Нет аккаунта?<a class="ms-2" href="log-in.html"> Создать аккаунт</a></p>
+        -->
       </div>
   </section>
 </template>
