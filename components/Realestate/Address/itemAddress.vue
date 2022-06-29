@@ -5,11 +5,11 @@
         <div class="card profile-header bg-size"
              style="background-image: url(/bg/bgrealestate2.jpg); background-size: cover;
              background-position: center center; display: block;">
-          <img class="img-fluid bg-img-cover" src="/assets/images/user-profile/bg-profile.jpg" alt=""
+          <img class="img-fluid bg-img-cover" src="/images/user-profile/bg-profile.jpg" alt=""
                style="display: none;">
           <div class="userpro-box">
             <div class="img-wrraper">
-              <div class="avatar"><img class="img-fluid" alt="" src="/assets/images/user/7.jpg"></div>
+              <div class="avatar"><img class="img-fluid" alt="" src="/images/user/7.jpg"></div>
               <a class="icon-wrapper" href="edit-profile.html">
                 <i class="icofont icofont-pencil-alt-5"></i>
               </a>

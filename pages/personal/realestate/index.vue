@@ -3,11 +3,15 @@
     <div class="leftMenu">
       <LeftMenu />
     </div>
-    <div class="main-block" style="flex: 1 1 auto;margin: 20px">
+    <div class="main-block" style="flex: 1 1 auto;">
       <div class="row">
-        <div class="card">
-          indexPRealestate
-        </div>
+        <section id="home" class="section-py-space" style="margin-top: 20px;display: block;">
+          <div class="row">
+            <div class="col-12 custom-container">
+              <ListAddress />
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   </section>
@@ -16,11 +20,23 @@
 
 <script>
 import LeftMenu from "~/components/leftMenu";
+import ListAddress from "~/components/Realestate/Address/listAddress";
 
 export default {
   name: "indexPRealestate",
-  components: {LeftMenu},
+  components: {LeftMenu, ListAddress},
   layout: 'default',
+  async asyncData ({ app, route, params, error, store }) {
+    try {
+      await store.dispatch('realestate/load')
+    } catch (err) {
+      console.log(err)
+      return error({
+        statusCode: 404,
+        message: 'Категории не найдены или сервер не доступен'
+      })
+    }
+  },
   data: () => ({
     isAdmin: false,
     isModerator: false,
