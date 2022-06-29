@@ -4,13 +4,13 @@
         <div class="form-group">
           <label>Email</label>
           <div class="input-group"><span class="input-group-text"><i class="icon-email"></i></span>
-            <input class="form-control" ref="email" type="email" required="" placeholder="Test@gmail.com">
+            <input class="form-control" ref="email" type="email" required="" style="width: auto;" placeholder="Test@gmail.com">
           </div>
         </div>
         <div class="form-group">
           <label>Пароль</label>
           <div class="input-group"><span class="input-group-text"><i class="icon-lock"></i></span>
-            <input class="form-control" type="password" ref="password" name="password" required="" placeholder="*********">
+            <input class="form-control" type="password" ref="password" name="password" required="" style="width: auto;" placeholder="*********">
           </div>
         </div>
         <!--
