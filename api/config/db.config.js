@@ -4,6 +4,7 @@ module.exports = {
   PASSWORD: "gst42FIRSOVPRO",
   DB: "firsovpro",
   dialect: "mysql",
+  operatorsAliases: 0,
   pool: {
     max: 5,
     min: 0,
