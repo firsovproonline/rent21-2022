@@ -3,8 +3,12 @@
     <div class="leftMenu">
       <LeftMenu />
     </div>
-    <div class="main-block" style="flex: 1 1 auto;">
-      indexPersonal
+    <div class="main-block" style="flex: 1 1 auto;margin: 20px">
+      <div class="row">
+        <div class="card">
+          users
+        </div>
+      </div>
     </div>
   </section>
   <section v-else>Доступ запрещён !!!</section>
@@ -12,8 +16,9 @@
 
 <script>
 import LeftMenu from "~/components/leftMenu";
+
 export default {
-  name: "indexPersonal",
+  name: "indexUsers",
   components: {LeftMenu},
   layout: 'default',
   data: () => ({
