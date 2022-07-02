@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const state = () => ({
   items: [{name: 33333},{name: 44444},{name: 555555}],
+  total: 0,
   spr: {},
   importItems: {}
 })
@@ -9,6 +10,7 @@ export const state = () => ({
 export const getters = {
   importItems: (state) => { return state.importItems },
   items: (state) => { return state.items },
+  total: (state) => { return state.total },
   spr: (state) => { return state.spr }
 }
 
@@ -21,7 +23,11 @@ export const mutations = {
   },
   setSpr (state, spr) {
     state.spr = spr
+  },
+  setTotal (state, total) {
+    state.total = total
   }
+
 }
 
 export const actions = {

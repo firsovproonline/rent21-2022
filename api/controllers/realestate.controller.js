@@ -3,7 +3,28 @@ const {verify} = require("jsonwebtoken");
 const Realestate_opp = db.realestate_opp;
 const Realestate_client_item = db.realestate_client_item;
 
- exports.oldlids = (req, res) => {
+exports.lids = (req, res) => {
+  let page = 0
+  const limit = 25
+  if(req.body.page) page = req.body.page
+  let offset =  page * limit
+  // console.log(req.body.page)
+  Realestate_client_item.findAll({
+    attributes: [[db.sequelize.fn('COUNT', db.sequelize.col('uid')), 'count']]
+  }).then(items => {
+    // console.log(items[0].dataValues.count)
+    let total = items[0].dataValues.count
+    Realestate_client_item.findAll({
+      limit: limit,
+      offset: offset
+    }).then(items => {
+      // console.log(items[0].dataValues.count)
+      res.send({total: total, rows: items})
+    });
+  });
+};
+
+exports.oldlids = (req, res) => {
   Realestate_client_item.destroy({
     truncate: true,
   }).then(item => {

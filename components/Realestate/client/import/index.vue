@@ -72,8 +72,6 @@ export default {
           this.$refs.progressLoad.style.width = percentCompleted +'%'
         }
       }).then(response => {
-
-        console.log(response.data)
         this.$store.dispatch('realestate/setimportItems', response.data)
 //        this.step ++
       })
