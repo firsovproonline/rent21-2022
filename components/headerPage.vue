@@ -35,7 +35,6 @@
               <div class="buy-block">
                 <div v-if="!user" class="btn-landing" style="cursor: pointer" @click="toggleModal">Вход</div>
                 <div v-else class="btn-landing" style="cursor: pointer" @click="exitUser">Выход</div>
-
                 <div class="toggle-menu"><i class="fa fa-bars"></i></div>
               </div>
             </nav>

@@ -8,6 +8,7 @@ const sequelize = new Sequelize(
     host: config.HOST,
     dialect: config.dialect,
     operatorsAliases: false,
+    logging: true,
     pool: {
       max: config.pool.max,
       min: config.pool.min,
@@ -22,12 +23,18 @@ db.sequelize = sequelize;
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.address = require("../models/address.model.js")(sequelize, Sequelize);
+db.realestate_client_item = require("../models/realestate.client.model.js")(sequelize, Sequelize);
+db.realestate_opp = require("../models/realestate.opp.model.js")(sequelize, Sequelize);
+
+
 db.house = require("../models/house.model.js")(sequelize, Sequelize);
 db.room = require("../models/room.model.js")(sequelize, Sequelize);
 db.house_tip = require("../models/house_tip.model.js")(sequelize, Sequelize);
 db.room_tip = require("../models/room_tip.model.js")(sequelize, Sequelize);
 db.room_operation = require("../models/room_operation.model.js")(sequelize, Sequelize);
 db.shop_catalog = require("../models/shop_catalog.js")(sequelize, Sequelize);
+db.cian_fid = require("../models/cian_fid.model.js")(sequelize, Sequelize);
+db.cian_PropertyType = require("../models/cian_PropertyType.model.js")(sequelize, Sequelize);
 // db.address.belongsToMany(db.role, { });
 
 db.role.belongsToMany(db.user, {

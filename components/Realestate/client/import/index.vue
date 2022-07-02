@@ -18,31 +18,11 @@
       <div v-if="step > 1" class="card" style="padding: 12px">
         <div style="display: flex">
           <div style="display: flex;align-items: center;">
-            <div class="label">Адресов</div>
+            <div class="label">клиентов</div>
             <div>{{items.adres21.length}}</div>
           </div>
           <div class="progress" style="flex:1 0 auto;">
             <div ref="progress1" class="progress-bar-animated bg-primary progress-bar-striped" role="progressbar" style="width: 0" >
-            </div>
-          </div>
-        </div>
-        <div style="display: flex;margin-top: 12px">
-          <div style="display: flex;align-items: center;">
-            <div class="label">зданий</div>
-            <div>{{items.build21.length}}</div>
-          </div>
-          <div class="progress" style="flex:1 0 auto;">
-            <div ref="progress2" class="progress-bar-animated bg-primary progress-bar-striped" role="progressbar" style="width: 0" >
-            </div>
-          </div>
-        </div>
-        <div style="display: flex;margin-top: 12px">
-          <div style="display: flex;align-items: center;">
-            <div class="label">Помещений</div>
-            <div>{{items.ob21.length}}</div>
-          </div>
-          <div class="progress" style="flex:1 0 auto;">
-            <div ref="progress3" class="progress-bar-animated bg-primary progress-bar-striped" role="progressbar" style="width: 0" >
             </div>
           </div>
         </div>
@@ -59,6 +39,7 @@ export default {
   }),
   watch:{
     'items.adres21'(val){
+      console.log(val)
       let current = 0
       const total = parseFloat(val.length)
       this.$nextTick(()=>{
@@ -83,7 +64,7 @@ export default {
     inportAddress(){
       this.step ++
       this.$refs.progressLoad.style.width = '0%'
-      this.$api.get("/api/realestate/oldaddress",{
+      this.$api.get("/api/realestate/oldLids",{
         onDownloadProgress: progressEvent => {
           const total = parseFloat(progressEvent.total)
           const current = progressEvent.loaded
@@ -91,25 +72,10 @@ export default {
           this.$refs.progressLoad.style.width = percentCompleted +'%'
         }
       }).then(response => {
-        /*
-                const outOb = {
-                  adres21: {},
-                  build21: {},
-                  ob21: {},
-                  linc21: response.data.linc21
-                }
-                response.data.adres21.forEach(item => {
-                  outOb.adres21[item.UID] = item;
-                })
-                response.data.build21.forEach(item => {
-                  outOb.build21[item.UID] = item;
-                })
-                response.data.ob21.forEach(item => {
-                  outOb.ob21[item.UID] = item;
-                })
-        */
+
+        console.log(response.data)
         this.$store.dispatch('realestate/setimportItems', response.data)
-        this.step ++
+//        this.step ++
       })
     }
   }

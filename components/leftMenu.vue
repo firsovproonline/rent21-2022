@@ -17,9 +17,24 @@
           <li><a>Комерческая</a></li>
           <li><a>Жилая</a></li>
           <li><a>Загородная</a></li>
-          <li v-if="isAdmin"><a>Импорт</a></li>
+          <li v-if="isAdmin"><a href="/personal/import" >Импорт</a></li>
         </ul>
       </li>
+      <li v-if="isAdmin || isModerator" class="dropdown">
+        <a class="itemTitle" href="/personal/client">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <label>Клиенты</label>
+          <div class="triangle-down"></div>
+        </a>
+        <ul>
+          <li><a>Комерческая</a></li>
+          <li><a>Жилая</a></li>
+          <li><a>Загородная</a></li>
+          <li v-if="isAdmin"><a href="/personal/client/import" >Импорт</a></li>
+        </ul>
+      </li>
+
+
     </ul>
   </section>
 </template>
@@ -42,6 +57,34 @@ export default {
       this.isModerator = false
     }else {
       this.isModerator = true
+    }
+  },
+  methods:{
+    inportAddress(){
+      this.$api.get("/api/realestate/oldaddress").then(response => {
+/*
+        const outOb = {
+          adres21: {},
+          build21: {},
+          ob21: {},
+          linc21: response.data.linc21
+        }
+        response.data.adres21.forEach(item => {
+          outOb.adres21[item.UID] = item;
+        })
+        response.data.build21.forEach(item => {
+          outOb.build21[item.UID] = item;
+        })
+        response.data.ob21.forEach(item => {
+          outOb.ob21[item.UID] = item;
+        })
+*/
+        // console.log(response.data)
+        this.$store.dispatch('realestate/setimportItems', response.data)
+        // console.log(outOb)
+      }).data(data => {
+        console.log(data)
+      })
     }
   }
 

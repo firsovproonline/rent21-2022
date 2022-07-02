@@ -2,15 +2,20 @@ import axios from "axios";
 
 export const state = () => ({
   items: [{name: 33333},{name: 44444},{name: 555555}],
-  spr: {}
+  spr: {},
+  importItems: {}
 })
 
 export const getters = {
+  importItems: (state) => { return state.importItems },
   items: (state) => { return state.items },
   spr: (state) => { return state.spr }
 }
 
 export const mutations = {
+  setimportItems (state, importItems) {
+    state.importItems = importItems
+  },
   setItems (state, items) {
     state.items = items
   },
@@ -29,6 +34,9 @@ export const actions = {
     } catch (err) {
 
     }
+  },
+  setimportItems ({ commit }, importItems) {
+    commit('setimportItems', importItems)
   },
   setItems ({ commit }, items) {
     commit('setItems', items)

@@ -1,10 +1,12 @@
 <template>
-$END$
+  <div>
+    listClient
+  </div>
 </template>
 
 <script>
 export default {
-name: "index"
+  name: "listClient"
 }
 </script>
 

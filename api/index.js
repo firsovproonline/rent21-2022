@@ -3,6 +3,11 @@ const cors = require("cors")
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const db = require("./models");
+
+const Realestate_opp = db.realestate_opp;
+const Realestate_client_item = db.realestate_client_item;
+
+
 const Role = db.role;
 const Adress = db.address;
 const House = db.house;
@@ -13,6 +18,7 @@ const Room_tip = db.room_tip;
 const Room_operation = db.room_operation;
 const Shop_catalog = db.shop_catalog;
 const User = db.user;
+const Cian_PropertyType = db.cian_PropertyType
 function S4() {
   return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 }
@@ -23,6 +29,47 @@ function generateUID() {
 
 function initial() {
   Shop_catalog.generateCatalog()
+
+  Cian_PropertyType.create({
+    value: 'building',
+    caption: 'здание'
+  });
+
+  Cian_PropertyType.create({
+    value: 'freeAppointment',
+    caption: 'помещение свободного назначения'
+  });
+
+  Cian_PropertyType.create({
+    value: 'garage',
+    caption: 'гараж'
+  });
+
+  Cian_PropertyType.create({
+    value: 'industry',
+    caption: 'производство'
+  });
+
+  Cian_PropertyType.create({
+    value: 'land',
+    caption: 'земля'
+  });
+
+  Cian_PropertyType.create({
+    value: 'office',
+    caption: 'офис'
+  });
+
+  Cian_PropertyType.create({
+    value: 'shoppingArea',
+    caption: 'торговая площадь'
+  });
+
+  Cian_PropertyType.create({
+    value: 'warehouse',
+    caption: 'склад'
+  });
+
 
   Adress.create({
     uid: '7dbe816b-5325-49a9-69bc-080b91ffe1ed',
@@ -100,6 +147,15 @@ function initial() {
     tip: 2,
     square: 48,
     operation: 2
+  });
+
+  Realestate_opp.create({
+    id: 1,
+    name: "Аренда"
+  });
+  Realestate_opp.create({
+    id: 2,
+    name: "Продажа"
   });
 
   Role.create({
