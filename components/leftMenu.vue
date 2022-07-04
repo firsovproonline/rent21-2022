@@ -17,7 +17,9 @@
           <li><a>Комерческая</a></li>
           <li><a>Жилая</a></li>
           <li><a>Загородная</a></li>
+          <!--
           <li v-if="isAdmin"><a href="/personal/import" >Импорт</a></li>
+          -->
         </ul>
       </li>
       <li v-if="isAdmin || isModerator" class="dropdown">
@@ -30,7 +32,9 @@
           <li><a>Комерческая</a></li>
           <li><a>Жилая</a></li>
           <li><a>Загородная</a></li>
+          <!--
           <li v-if="isAdmin"><a href="/personal/client/import" >Импорт</a></li>
+          -->
         </ul>
       </li>
 
