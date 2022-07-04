@@ -2,6 +2,8 @@ const db = require("../models");
 const {verify} = require("jsonwebtoken");
 const Realestate_opp = db.realestate_opp;
 const Realestate_client_item = db.realestate_client_item;
+const Realestate_client_status = db.realestate_client_status;
+const Realestate_client_opp = db.realestate_client_opp;
 
 exports.lids = (req, res) => {
   let page = 0
@@ -25,67 +27,106 @@ exports.lids = (req, res) => {
 };
 
 exports.oldlids = (req, res) => {
-  Realestate_client_item.destroy({
-    truncate: true,
-  }).then(item => {
-    db.sequelize.query("SELECT lids.* FROM lids", {
-    }).then(items => {
-      const outOb = {}
-      items[0].forEach(item => {
-        if (!outOb[item.UID])
-          outOb[item.UID] = {}
-        outOb[item.UID][item.TITLE] = item.VAL
+  // загружаем справочники
+  const promiseSpr = []
+  const clientSpr = {}
+  promiseSpr.push(new Promise(function(resolve, reject) {
+    Realestate_client_opp.findAll().then(items =>{
+      clientSpr.opp = [];
+      items.forEach(item =>{
+        clientSpr.opp.push({id: item.dataValues.id, name:item.dataValues.name})
       })
-      function verifyDate(data){
-        try {
-          return new Date(data).getDate()
-        }catch (error) {
-          console.log('********************************')
-          return null;
-        }
-      }
-      const promiseAR = [];
+      resolve()
+    })
+  }));
+  promiseSpr.push(new Promise(function(resolve, reject) {
+    Realestate_client_status.findAll().then(items =>{
+      clientSpr.status = [];
+      items.forEach(item =>{
+        clientSpr.status.push({id: item.dataValues.id, name:item.dataValues.name})
+      })
+      resolve()
+    })
+  }));
 
-      for (let key in outOb) {
-        promiseAR.push(new Promise(function(resolve, reject) {
-          outOb[key].UID = key
-          Realestate_client_item.create({
-            uid: outOb[key].UID,
-            price: outOb[key].CENA  ? {
-              in: (outOb[key].CENA.split('-')[0]) * 1,
-              out: (outOb[key].CENA.split('-')[1]) * 1
-            } : {in: 0, out: 0},
-            // data: (outOb[key].DATA && outOb[key].DATA !== ' ') ? new Date(outOb[key].DATA).getTime() : null,
-            // datap: (outOb[key].DATAP && outOb[key].DATAP !== '') ? new Date(outOb[key].DATAP).getTime() : null,
-            dostup: outOb[key].DOSTUP ? outOb[key].DOSTUP.split('|') : [],
-            email : outOb[key].EMAIL,
-            fio: outOb[key].FIO,
-            gorod: outOb[key].GOROD,
-            industry: outOb[key].INDUSTRY,
-            metro: outOb[key].METRO ? outOb[key].METRO.split('|') : [],
-            square: outOb[key].PL1 ? {
-              in: (outOb[key].PL1.split('-')[0]) * 1,
-              out: (outOb[key].PL1.split('-')[1]) * 1
-            } : {in: 0, out: 0}
-          }).then(item => {
-            resolve(item)
-          }).catch(error => {
-            console.log(error)
-            resolve(error)
+  Promise.all(promiseSpr).then(
+    result => {
+      Realestate_client_item.destroy({
+        truncate: true,
+      }).then(item => {
+        db.sequelize.query("SELECT lids.* FROM lids", {
+        }).then(items => {
+          const outOb = {}
+          items[0].forEach(item => {
+            if (!outOb[item.UID])
+              outOb[item.UID] = {}
+            outOb[item.UID][item.TITLE] = item.VAL
           })
-        }));
-        // return outOb[key];
-      };
-      Promise.all(promiseAR).then(
-        result => {
-          Realestate_client_item.findAll().then(items =>{
-            res.send(outOb)
-          })
-        },
-        error => console.log("Ошибка: ", error.message)
-      );
-    });
-  });
+          function verifyDate(data){
+            try {
+              return new Date(data).getDate()
+            }catch (error) {
+              console.log('********************************')
+              return null;
+            }
+          }
+          const promiseAR = [];
+
+          for (let key in outOb) {
+            promiseAR.push(new Promise(function(resolve, reject) {
+              outOb[key].UID = key
+              Realestate_client_item.create({
+                uid: outOb[key].UID,
+                price: outOb[key].CENA  ? {
+                  in: (outOb[key].CENA.split('-')[0]) * 1,
+                  out: (outOb[key].CENA.split('-')[1]) * 1
+                } : {in: 0, out: 0},
+                // data: (outOb[key].DATA && outOb[key].DATA !== ' ') ? new Date(outOb[key].DATA).getTime() : null,
+                // datap: (outOb[key].DATAP && outOb[key].DATAP !== '') ? new Date(outOb[key].DATAP).getTime() : null,
+                dostup: outOb[key].DOSTUP ? outOb[key].DOSTUP.split('|').map(item => item.trim()) : [],
+                email : outOb[key].EMAIL,
+                fio: outOb[key].FIO,
+                gorod: outOb[key].GOROD,
+                title: outOb[key].TITLE,
+                industry: outOb[key].INDUSTRY,
+                status:  outOb[key].STATUS && outOb[key].STATUS != '' ? clientSpr.status.find(item => item.name == outOb[key].STATUS).id : null,
+                opp:  outOb[key].OPP ? clientSpr.opp.find(item => item.name == outOb[key].OPP).id : null,
+                rajon: outOb[key].RAJON ? outOb[key].RAJON.split('|').map(item => item.trim()) : [],
+                ulitca: outOb[key].ULITCA ? outOb[key].ULITCA.split('|').map(item => item.trim()) : [],
+                metro: outOb[key].METRO ? outOb[key].METRO.split('|').map(item => item.trim()) : [],
+                square: outOb[key].PL1 ? {
+                  in: (outOb[key].PL1.split('-')[0]) * 1,
+                  out: (outOb[key].PL1.split('-')[1]) * 1
+                } : {in: 0, out: 0}
+              }).then(item => {
+                resolve(item)
+              }).catch(error => {
+                console.log(error)
+                resolve(error)
+              })
+            }));
+            // return outOb[key];
+          };
+          Promise.all(promiseAR).then(
+            result => {
+              Realestate_client_item.findAll().then(items =>{
+                res.send(items)
+              })
+              console.log(clientSpr)
+            },
+            error => {
+              Realestate_client_item.findAll().then(items =>{
+                res.send(items)
+              })
+              console.log("Ошибка: ", error)
+            }
+          );
+        });
+      });
+
+    },
+    error => console.log("Ошибка: ", error.message)
+  );
 };
 
 exports.oldAddress = (req, res) => {
@@ -177,8 +218,26 @@ exports.spr = (req, res) => {
   const House_tip = db.house_tip;
   const Room_tip = db.room_tip;
   const Room_operation = db.room_operation;
+  const Realestate_client_status = db.realestate_client_status;
+  const Realestate_client_opp = db.realestate_client_opp;
   const outOb = {};
   const promiseAR = [];
+
+
+  promiseAR.push(new Promise(function(resolve, reject) {
+    Realestate_client_opp.findAll().then(items => {
+      outOb.Realestate_client_opp = items;
+      resolve();
+    })
+  }));
+
+  promiseAR.push(new Promise(function(resolve, reject) {
+    Realestate_client_status.findAll().then(items => {
+      outOb.Realestate_client_status = items;
+      resolve();
+    })
+  }));
+
   promiseAR.push(new Promise(function(resolve, reject) {
     House_tip.findAll().then(items => {
       outOb.house_tip = items;

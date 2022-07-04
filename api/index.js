@@ -5,7 +5,9 @@ const session = require('express-session');
 const db = require("./models");
 
 const Realestate_opp = db.realestate_opp;
+const Realestate_client_opp = db.realestate_client_opp;
 const Realestate_client_item = db.realestate_client_item;
+const Realestate_client_status = db.realestate_client_status;
 
 
 const Role = db.role;
@@ -28,6 +30,63 @@ function generateUID() {
 }
 
 function initial() {
+  Realestate_client_opp.create({
+    id: 0,
+    name: 'Сниму'
+  })
+  Realestate_client_opp.create({
+    id: 1,
+    name: 'Куплю'
+  })
+
+  Realestate_client_status.create({
+    id: 0,
+    name: 'Новый'
+  })
+  Realestate_client_status.create({
+    id: 1,
+    name: 'В работе (Выяснение потребностей)'
+  })
+  Realestate_client_status.create({
+    id: 2,
+    name: 'В работе (Коммерческие предложения)'
+  })
+  Realestate_client_status.create({
+    id: 3,
+    name: 'В работе (Показ объектов)'
+  })
+  Realestate_client_status.create({
+    id: 4,
+    name: 'В работе (Переговоры)'
+  })
+  Realestate_client_status.create({
+    id: 5,
+    name: 'В работе (Принятие решение)'
+  })
+  Realestate_client_status.create({
+    id: 6,
+    name: 'Снял у нас'
+  })
+  Realestate_client_status.create({
+    id: 7,
+    name: 'Снял сам'
+  })
+  Realestate_client_status.create({
+    id: 8,
+    name: 'Отложенный спрос'
+  })
+  Realestate_client_status.create({
+    id: 9,
+    name: 'Остается у себя'
+  })
+  Realestate_client_status.create({
+    id: 10,
+    name: 'Резиновый'
+  })
+
+
+
+
   Shop_catalog.generateCatalog()
 
   Cian_PropertyType.create({

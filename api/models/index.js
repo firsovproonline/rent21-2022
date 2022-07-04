@@ -8,7 +8,7 @@ const sequelize = new Sequelize(
     host: config.HOST,
     dialect: config.dialect,
     operatorsAliases: false,
-    logging: true,
+    logging: false,
     pool: {
       max: config.pool.max,
       min: config.pool.min,
@@ -23,8 +23,11 @@ db.sequelize = sequelize;
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.address = require("../models/address.model.js")(sequelize, Sequelize);
-db.realestate_client_item = require("../models/realestate.client.model.js")(sequelize, Sequelize);
 db.realestate_opp = require("../models/realestate.opp.model.js")(sequelize, Sequelize);
+db.realestate_client_opp = require("../models/realestate.client.opp.model.js")(sequelize, Sequelize);
+db.realestate_client_status = require("../models/realestate.client.status.model")(sequelize, Sequelize);
+
+db.realestate_client_item = require("../models/realestate.client.model.js")(sequelize, Sequelize);
 
 
 db.house = require("../models/house.model.js")(sequelize, Sequelize);

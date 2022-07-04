@@ -9,10 +9,13 @@
       </svg>
     </div>
     <div class="page-wrapper compact-wrapper">
+      <div class="rpanel">rpanel</div>
       <headerPage />
       <div class="page-body-wrapper null">
         <div class="page-body">
-           <Nuxt />
+          <div class="custom-container">
+            <Nuxt />
+          </div>
         </div>
       </div>
     </div>
@@ -84,6 +87,18 @@ export default {
 }
 
 .loaded .preloader {
+  display: none;
+}
+
+.rpanel {
+  top: 0px;
+  position: fixed;
+  background-color: white;
+  width: 600px;
+  z-index: 5000;
+  left: calc(100% - 600px);
+  height: 100vh;
+  border-left: 1px solid;
   display: none;
 }
 </style>
