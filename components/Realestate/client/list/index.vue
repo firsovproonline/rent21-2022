@@ -52,7 +52,7 @@ export default {
 
   },
   mounted() {
-    this.$api.get("http://localhost:3021/api/realestate/spr").then(response => {
+    this.$api.get("/api/realestate/spr").then(response => {
       this.$store.commit('realestate/setSpr', response.data)
       this.$api.post("/api/realestate/lids",{page:this.$route.params.id}).then(response => {
         this.$store.commit('realestate/setItems', response.data.rows)
