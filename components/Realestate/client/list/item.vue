@@ -1,5 +1,5 @@
 <template>
-  <div class="col-xl-4 col-sm-4 col-xl-12" style="padding: 0 0 0 0">
+  <div class="col-xl-12" style="padding: 0 0 0 0">
     <div class="card">
       <div class="product-box">
         <div class="product-details">

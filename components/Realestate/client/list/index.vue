@@ -1,7 +1,7 @@
 <template>
   <div>
     <section v-if="total">
-      <div class="row">
+      <div class="row row-list-title">
         <div class="col-md-12">
           <div class="media">
 

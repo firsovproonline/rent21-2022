@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card card-pagination">
     <nav class="m-b-30" aria-label="Page navigation example">
       <ul class="pagination pagination-lg pagination-primary">
         <li class="page-item">

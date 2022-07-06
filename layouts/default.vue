@@ -45,7 +45,26 @@ export default {
 }
 </script>
 
-<style scoped lang="css">
+<style lang="css">
+
+@media screen and (max-width: 991px) {
+  .leftMenu {
+    display: none;
+  }
+
+  .header-bmenu{
+    display: flex !important;
+  }
+  .blogin{
+    display: none !important;
+  }
+  .row-list-title {
+    display: none;
+  }
+  .card-pagination {
+    display: none;
+  }
+}
 .page-wrapper.compact-wrapper .page-body-wrapper .page-body {
   margin-left: 0px ;
 }
