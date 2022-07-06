@@ -2,14 +2,19 @@
   <div>
     <!-- Прелоадер -->
     <div class="preloader">
-      <svg class="preloader__image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-        <path fill="currentColor"
-              d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z">
-        </path>
-      </svg>
+      <div>
+        <svg class="preloader__image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path fill="currentColor"
+                d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z">
+          </path>
+        </svg>
+      </div>
     </div>
     <div class="page-wrapper compact-wrapper">
-      <div class="rpanel">rpanel</div>
+      <div v-if="showRightPanel" class="rpanel">rpanel</div>
+      <div v-if="showLeftPanel" class="lpanel" >
+        <LeftMenu />
+      </div>
       <headerPage />
       <div class="page-body-wrapper null">
         <div class="page-body">
@@ -24,13 +29,31 @@
 
 <script>
 import HeaderPage from "~/components/headerPage";
+import LeftMenu from "~/components/leftMenu";
+
 export default {
   name: "defaultlayouts",
-  components: {HeaderPage},
+  components: {HeaderPage, LeftMenu},
+  data: () => ({
+    showLeftPanel: false,
+    showRightPanel: false,
+  }),
   computed: {
+    globalEvent(){
+      return this.$store.getters['main/globalevent']
+    },
     vComponent() {
       return this.$store.getters['main/leftMenu']
     },
+  },
+  watch:{
+    globalEvent(val){
+      if(val === 'leftMenu'){
+        this.showLeftPanel = !this.showLeftPanel
+      }
+    }
+  },
+  methods:{
   },
   mounted () {
     document.body.classList.add('landing-wrraper')
@@ -118,6 +141,19 @@ export default {
   left: calc(100% - 600px);
   height: 100vh;
   border-left: 1px solid;
-  display: none;
+  display: block;
 }
+
+.lpanel {
+  top: 50px;
+  position: fixed;
+  background-color: white;
+  width: 600px;
+  z-index: 5000;
+  left: 0px;
+  height: 100vh;
+  border-right: 1px solid;
+  display: block;
+}
+
 </style>
