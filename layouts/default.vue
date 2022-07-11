@@ -136,7 +136,7 @@ export default {
   top: 0px;
   position: fixed;
   background-color: white;
-  width: 600px;
+  width: 390px;
   z-index: 5000;
   left: calc(100% - 600px);
   height: 100vh;
@@ -148,7 +148,7 @@ export default {
   top: 50px;
   position: fixed;
   background-color: white;
-  width: 600px;
+  width: 390px;
   z-index: 5000;
   left: 0px;
   height: 100vh;
