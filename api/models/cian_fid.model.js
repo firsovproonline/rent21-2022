@@ -272,7 +272,563 @@ module.exports = (sequelize, Sequelize) => {
         }
       }
 
-    }
+    },
+    houseRent: {
+      Category: 'houseRent',
+      BedsCount: 0,
+      BuildingCadastralNumber: '',
+      SettlementName: '',
+      TotalArea: 0,
+      BedroomsCount: 0,
+      WcLocationType: ['indoors', 'outdoors'],
+      RepairType: ['cosmetic', 'design', 'euro', 'no'],
+      HasInternet: false,
+      HasFurniture: false,
+      HasPhone: false,
+      HasKitchenFurniture: false,
+      HasTv: false,
+      HasWasher: false,
+      HasConditioner: false,
+      HasBathtub: false,
+      IsInHiddenBase: false,
+      HasShower: false,
+      HasBathhouse: false,
+      HasGarage: false,
+      HasPool: false,
+      HasDishwasher: false,
+      PetsAllowed: false,
+      HasFridge:false,
+      ChildrenAllowed:false,
+      Building: {
+        FloorsCount: 0,
+        BuildYear: 0,
+        MaterialType: [
+          'aerocreteBlock',
+          'boards',
+          'brick',
+          'foamConcreteBlock',
+          'gasSilicateBlock',
+          'monolith',
+          'monolithBrick',
+          'wireframe',
+          'wood'
+        ],
+        HeatingType: [
+          'autonomousGas',
+          'centralCoal',
+          'centralGas',
+          'diesel',
+          'electric',
+          'fireplace',
+          'no',
+          'solidFuelBoiler',
+          'stove'
+        ]
+      },
+      Land: {
+        Area: 0,
+        AreaUnitType: ['hectare', 'sotka'],
+        Status: [
+          'farm',
+          'gardening',
+          'individualHousingConstruction',
+          'industrialLand',
+          'privateFarm',
+          'suburbanNonProfitPartnership'
+        ]
+      },
+      BargainTerms: {
+        Price: 0,
+        UtilitiesTerms: {
+          IncludedInPrice: false,
+          Price: 0,
+          FlowMetersNotIncludedInPrice: false
+        },
+        Currency: ['eur', 'rur', 'usd'],
+        BargainAllowed: false,
+        BargainPrice: 0,
+        BargainConditions: '',
+        LeaseTermType: ['fewMonths','longTerm'],
+        PrepayMonths: 0,
+        Deposit: 0,
+        ClientFee: 0,
+        AgentFee: 0,
+        AgentBonus: {
+          Value: 0,
+          PaymentType: ['fixed', 'percent'],
+          Currency: ['eur', 'rur', 'usd'],
+        }
+      }
+    },
+    cottageRent: {
+      Category: 'cottageRent',
+      BedsCount: 0,
+      BuildingCadastralNumber: '',
+      SettlementName: '',
+      TotalArea: 0,
+      BedroomsCount: 0,
+      WcLocationType: ['indoors','outdoors'],
+      RepairType: ['cosmetic', 'design', 'euro', 'no'],
+      HasInternet: false,
+      HasFurniture: false,
+      HasPhone: false,
+      HasKitchenFurniture: false,
+      HasTv: false,
+      HasWasher: false,
+      HasConditioner: false,
+      HasBathtub: false,
+      IsInHiddenBase: false,
+      HasShower: false,
+      HasBathhouse: false,
+      HasGarage: false,
+      HasPool: false,
+      HasDishwasher: false,
+      PetsAllowed: false,
+      HasFridge:false,
+      ChildrenAllowed:false,
+      Building: {
+        FloorsCount: 0,
+        BuildYear: 0,
+        MaterialType: [
+          'aerocreteBlock',
+          'boards',
+          'brick',
+          'foamConcreteBlock',
+          'gasSilicateBlock',
+          'monolith',
+          'monolithBrick',
+          'wireframe',
+          'wood'
+        ],
+        HeatingType: [
+          'autonomousGas',
+          'centralCoal',
+          'centralGas',
+          'diesel',
+          'electric',
+          'fireplace',
+          'no',
+          'solidFuelBoiler',
+          'stove'
+        ]
+      },
+      Land: {
+        Area: 0,
+        AreaUnitType: ['hectare', 'sotka'],
+        Status: [
+          'farm',
+          'gardening',
+          'individualHousingConstruction',
+          'industrialLand',
+          'privateFarm',
+          'suburbanNonProfitPartnership'
+        ]
+      },
+      BargainTerms: {
+        Price: 0,
+        UtilitiesTerms: {
+          IncludedInPrice: false,
+          Price: 0,
+          FlowMetersNotIncludedInPrice: false
+        },
+        Currency: ['eur', 'rur', 'usd'],
+        BargainAllowed: false,
+        BargainPrice: 0,
+        BargainConditions: '',
+        LeaseTermType: ['fewMonths','longTerm'],
+        PrepayMonths: 0,
+        Deposit: 0,
+        ClientFee: 0,
+        AgentFee: 0,
+        AgentBonus: {
+          Value: 0,
+          PaymentType: ['fixed', 'percent'],
+          Currency: ['eur', 'rur', 'usd'],
+        }
+      }
+    },
+    townhouseRent: {
+      Category: 'townhouseRent',
+      BedsCount: 0,
+      BuildingCadastralNumber: '',
+      SettlementName: '',
+      TotalArea: 0,
+      BedroomsCount: 0,
+      WcLocationType: ['indoors', 'outdoors'],
+      RepairType: ['cosmetic', 'design', 'euro', 'no'],
+      HasInternet: false,
+      HasFurniture: false,
+      HasPhone: false,
+      HasKitchenFurniture: false,
+      HasTv: false,
+      HasWasher: false,
+      HasConditioner: false,
+      HasBathtub: false,
+      IsInHiddenBase: false,
+      HasShower: false,
+      HasBathhouse: false,
+      HasGarage: false,
+      HasPool: false,
+      HasDishwasher: false,
+      PetsAllowed: false,
+      HasFridge:false,
+      ChildrenAllowed:false,
+      Building: {
+        FloorsCount: 0,
+        BuildYear: 0,
+        MaterialType: [
+          'aerocreteBlock',
+          'boards',
+          'brick',
+          'foamConcreteBlock',
+          'gasSilicateBlock',
+          'monolith',
+          'monolithBrick',
+          'wireframe',
+          'wood'
+        ],
+        HeatingType: [
+          'autonomousGas',
+          'centralCoal',
+          'centralGas',
+          'diesel',
+          'electric',
+          'fireplace',
+          'no',
+          'solidFuelBoiler',
+          'stove'
+        ]
+      },
+      Land: {
+        Area: 0,
+        AreaUnitType: ['hectare', 'sotka'],
+        Status: [
+          'farm',
+          'gardening',
+          'individualHousingConstruction',
+          'industrialLand',
+          'privateFarm',
+          'suburbanNonProfitPartnership'
+        ]
+      },
+      BargainTerms: {
+        Price: 0,
+        UtilitiesTerms: {
+          IncludedInPrice: false,
+          Price: 0,
+          FlowMetersNotIncludedInPrice: false
+        },
+        Currency: ['eur', 'rur', 'usd'],
+        BargainAllowed: false,
+        BargainPrice: 0,
+        BargainConditions: '',
+        LeaseTermType: ['fewMonths','longTerm'],
+        PrepayMonths: 0,
+        Deposit: 0,
+        ClientFee: 0,
+        AgentFee: 0,
+        AgentBonus: {
+          Value: 0,
+          PaymentType: ['fixed', 'percent'],
+          Currency: ['eur', 'rur', 'usd'],
+        }
+      }
+    },
+    houseShareRent: {
+      Category: 'houseShareRent',
+      BedsCount: 0,
+      BuildingCadastralNumber: '',
+      SettlementName: '',
+      TotalArea: 0,
+      ShareAmount: '',
+      BedroomsCount: 0,
+      WcLocationType: ['indoors', 'outdoors'],
+      RepairType: ['cosmetic', 'design', 'euro', 'no'],
+      HasInternet: false,
+      HasFurniture: false,
+      HasPhone: false,
+      HasKitchenFurniture: false,
+      HasTv: false,
+      HasWasher: false,
+      HasConditioner: false,
+      HasBathtub: false,
+      IsInHiddenBase: false,
+      HasShower: false,
+      HasBathhouse: false,
+      HasGarage: false,
+      HasPool: false,
+      HasDishwasher: false,
+      PetsAllowed: false,
+      HasFridge:false,
+      ChildrenAllowed:false,
+      Building: {
+        FloorsCount: 0,
+        BuildYear: 0,
+        MaterialType: [
+          'aerocreteBlock',
+          'boards',
+          'brick',
+          'foamConcreteBlock',
+          'gasSilicateBlock',
+          'monolith',
+          'monolithBrick',
+          'wireframe',
+          'wood'
+        ],
+        HeatingType: [
+          'autonomousGas',
+          'centralCoal',
+          'centralGas',
+          'diesel',
+          'electric',
+          'fireplace',
+          'no',
+          'solidFuelBoiler',
+          'stove'
+        ]
+      },
+      Land: {
+        Area: 0,
+        AreaUnitType: ['hectare', 'sotka'],
+        Status: [
+          'farm',
+          'gardening',
+          'individualHousingConstruction',
+          'industrialLand',
+          'privateFarm',
+          'suburbanNonProfitPartnership'
+        ]
+      },
+      BargainTerms: {
+        Price: 0,
+        UtilitiesTerms: {
+          IncludedInPrice: false,
+          Price: 0,
+          FlowMetersNotIncludedInPrice: false
+        },
+        Currency: ['eur', 'rur', 'usd'],
+        BargainAllowed: false,
+        BargainPrice: 0,
+        BargainConditions: '',
+        LeaseTermType: ['fewMonths','longTerm'],
+        PrepayMonths: 0,
+        Deposit: 0,
+        ClientFee: 0,
+        AgentFee: 0,
+        AgentBonus: {
+          Value: 0,
+          PaymentType: ['fixed', 'percent'],
+          Currency: ['eur', 'rur', 'usd'],
+        }
+      }
+    },
+    garageRent: {
+      Category: 'garageRent',
+      Garage: {
+        Type: ['box','garage','parkingPlace'],
+        GarageType: ['builtIn','capital','samostroy','shell'],
+        Material: ['brick','metal'],
+        Status: ['byProxy','cooperative','ownership ']
+      },
+      TotalArea: 0,
+      HasLight: false,
+      HasElectricity: false,
+      HasHeating: false,
+      HasWater: false,
+      HasExtinguishingSystem: false,
+      IsInHiddenBase: false,
+      Building: {
+        Name: '',
+        Parking: {
+          Type: [
+            'ground',
+            'multilevel',
+            'open',
+            'roof',
+            'underground'
+          ],
+        },
+        Infrastructure: {
+          HasCarWash: false,
+          HasCarService: false,
+          HasTire: false,
+          HasInspectionPit: false,
+          HasVideoSurveillance: false,
+          HasHourSecurity: false,
+          HasAutomaticGates: false,
+          HasEntryByPass: false,
+          HasBasement: false
+        }
+      },
+      BargainTerms: {
+        Price: 0,
+        PriceType: ['all','hectare','sotka','squareMeter'],
+        Currency: ['eur', 'rur', 'usd'],
+        PaymentPeriod: ['annual','monthly'],
+        LeaseType: ['direct','sublease'],
+        IncludedOptions: [
+          {
+            IncludedOptionsEnum: ['operationalCosts','utilityCharges']
+          }
+        ],
+        LeaseTermType: ['fewMonths','longTerm'],
+        MinLeaseTerm: 0,
+        PrepayMonths: [1,2,3,4,5,6,7,8,9,10,11,12],
+        ClientFee: 0,
+        SecurityDeposit: 0,
+        AgentBonus: {
+          Value: 0,
+          PaymentType: ['fixed', 'percent'],
+          Currency: ['eur', 'rur', 'usd'],
+        }
+      }
+    },
+    buildingRent: {
+      Category: 'buildingRent',
+      ConditionType: [
+        'cosmeticRepairsRequired',
+        'design',
+        'finishing',
+        'majorRepairsRequired',
+        'typical'
+      ],
+      Layout: [
+        'cabinet',
+        'corridorplan',
+        'mixed',
+        'openSpace'
+      ],
+      HasFurniture: false,
+      InputType: [
+        'commonFromStreet',
+        'commonFromYard',
+        'separateFromStreet',
+        'separateFromYard'
+      ],
+      AvailableFrom: '',
+      TaxNumber: 0,
+      IsInHiddenBase: false,
+      Building: {
+        Name: '',
+        FloorsCount: 0,
+        TotalArea: 0,
+        HeatingType: ['autonomous','central','no'],
+        CeilingHeight: 0,
+        Parking: {
+          Type: [
+            'ground',
+            'multilevel',
+            'open',
+            'roof',
+            'underground'
+          ],
+          PlacesCount: 0,
+          PriceMonthly: 0,
+          IsFree: false
+        },
+        Type: [
+          'administrativeBuilding',
+          'businessCenter',
+          'businessCenter2',
+          'businessHouse',
+          'businessPark',
+          'businessQuarter',
+          'businessQuarter2',
+          'free',
+          'industrialComplex',
+          'industrialPark',
+          'industrialSite',
+          'industrialWarehouseComplex',
+          'logisticsCenter',
+          'logisticsComplex',
+          'logisticsPark',
+          'mansion',
+          'manufactureBuilding',
+          'manufacturingFacility',
+          'modular',
+          'multifunctionalComplex',
+          'officeAndHotelComplex',
+          'officeAndResidentialComplex',
+          'officeAndWarehouse',
+          'officeAndWarehouseComplex',
+          'officeBuilding',
+          'officeCenter',
+          'officeComplex',
+          'officeIndustrialComplex',
+          'officeQuarter',
+          'old',
+          'other',
+          'outlet',
+          'propertyComplex',
+          'residentialComplex',
+          'residentialHouse',
+          'shoppingAndBusinessComplex',
+          'shoppingAndCommunityCenter',
+          'shoppingAndEntertainmentCenter',
+          'shoppingAndWarehouseComplex',
+          'shoppingCenter',
+          'shoppingComplex',
+          'specializedShoppingCenter',
+          'standaloneBuilding',
+          'technopark',
+          'tradeAndExhibitionComplex',
+          'tradingHouse',
+          'tradingOfficeComplex',
+          'warehouse',
+          'warehouseComplex'
+        ],
+        HouseLineType: ['first','other','second'],
+        ClassType: ['a','aPlus','b','bMinus','bPlus','c'],
+        Developer: '',
+        ManagementCompany: '',
+        VentilationType: ['central','local','no'],
+        ExtinguishingSystemType: [
+          'alarm',
+          'gas',
+          'hydrant',
+          'no',
+          'powder',
+          'sprinkler',
+        ],
+        ExtinguishingSystemTypes: [
+          {
+            ExtinguishingSystemTypeEnum: [
+              'alarm',
+              'gas',
+              'hydrant',
+              'no',
+              'powder',
+              'sprinkler'
+            ]
+          }
+        ],
+        LiftTypes: [
+          {
+            LiftTypeSchema: {
+              Type: [
+                'cargo',
+                'escalator',
+                'lift',
+                'passenger',
+                'telpher',
+                'travelator'
+              ],
+              AdditionalType: '',
+              Count: 0
+            }
+          }
+        ],
+        StatusType: ['operational','project','underConstruction'],
+      },
+      Land: {
+        Area: 0,
+        AreaUnitType: ['hectare','sotka'],
+        Type: ['owned','rent ']
+      },
+      BargainTerms:{
+
+      }
+    },
   }
 
   const Cian_fid = sequelize.define("cian_fid", {
