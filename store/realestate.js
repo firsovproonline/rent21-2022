@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const state = () => ({
   items: [{name: 33333},{name: 44444},{name: 555555}],
+  item: {},
   total: 0,
   spr: {},
   importItems: {}
@@ -10,6 +11,7 @@ export const state = () => ({
 export const getters = {
   importItems: (state) => { return state.importItems },
   items: (state) => { return state.items },
+  item: (state) => { return state.item },
   total: (state) => { return state.total },
   spr: (state) => { return state.spr }
 }
@@ -20,6 +22,9 @@ export const mutations = {
   },
   setItems (state, items) {
     state.items = items
+  },
+  setItem (state, item) {
+    state.item = item
   },
   setSpr (state, spr) {
     state.spr = spr
@@ -41,11 +46,23 @@ export const actions = {
 
     }
   },
+  async loadSpr (state) {
+    try {
+      const spr = await axios.get("http://localhost:3021/api/realestate/spr")
+      state.commit('setSpr', spr.data)
+    } catch (err) {
+
+    }
+  },
+
   setimportItems ({ commit }, importItems) {
     commit('setimportItems', importItems)
   },
   setItems ({ commit }, items) {
     commit('setItems', items)
+  },
+  setItem ({ commit }, item) {
+    commit('setItem', item)
   },
   setSpr ({ commit }, spr) {
     commit('setSpr', spr)

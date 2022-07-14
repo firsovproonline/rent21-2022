@@ -1,5 +1,7 @@
 const db = require("../models");
 const {verify} = require("jsonwebtoken");
+const cianItems = require("../config/cian.config.js");
+
 const Realestate_opp = db.realestate_opp;
 const Realestate_client_item = db.realestate_client_item;
 const Realestate_client_status = db.realestate_client_status;
@@ -221,6 +223,25 @@ exports.spr = (req, res) => {
   const Realestate_client_status = db.realestate_client_status;
   const Realestate_client_opp = db.realestate_client_opp;
   const outOb = {};
+  outOb.cianItems = cianItems;
+  outOb.category = [
+    {id: 'flatRent', name: 'Квартира'},
+    {id: 'bedRent', name: 'Койко-место'},
+    {id: 'roomRent', name: 'Комната'},
+    {id: 'houseRent', name: 'Дом/дача'},
+    {id: 'cottageRent', name: 'Коттедж'},
+    {id: 'townhouseRent', name: 'Таунхаус'},
+    {id: 'houseShareRent', name: 'Часть дома'},
+    {id: 'garageRent', name: 'Гараж'},
+    {id: 'buildingRent', name: 'Здание'},
+    {id: 'commercialLandRent', name: 'Коммерческая земля'},
+    {id: 'officeRent', name: 'Офис'},
+    {id: 'freeAppointmentObjectRent', name: 'Помещение свободного назначения'},
+    {id: 'industryRent', name: 'Производство'},
+    {id: 'warehouseRent', name: 'Склад'},
+    {id: 'shoppingAreaRent', name: 'Торговая площадь'},
+
+  ];
   const promiseAR = [];
 
 
