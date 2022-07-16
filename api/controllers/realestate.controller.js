@@ -152,6 +152,21 @@ exports.oldAddress = (req, res) => {
   })
 };
 
+exports.rent21address = (req, res) => {
+  const Address = db.Rent21_address;
+  const { Op } = require('sequelize')
+  Address.findAll({
+    where : {
+      "fields.METRO":{
+        [Op.substring]:  'Марксистская'
+      }
+    }
+  }).then(items=>{
+    res.status(200).send(items);
+  })
+}
+
+
 exports.address = (req, res) => {
   const Address = db.address;
   const House = db.house;

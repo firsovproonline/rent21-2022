@@ -2,20 +2,41 @@
   <section>
     <div class="row">
       <div class="col-lg-4 col-sm-6">
-        <ComboRent21
-          title="Операция"
-          :value="item.opp"
-          field="opp"
-          spr="room_operation"
-        />
+        <div class="card">
+          <div class="title">Тип помещения</div>
+          <ComboRent21
+            title="Операция"
+            :value="item.opp"
+            field="opp"
+            spr="room_operation"
+          />
+          <ComboRent21
+            title="Тип помещения"
+            :value="item.Category"
+            field="Category"
+            spr="category"
+          />
+        </div>
+        <div class="card">
+          <div class="title">Адрес</div>
+          <div class="body">
+            <input type="text" ref="suggest" />
+            <div ref="map" class="map" style="width: 100%; height: 180px"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="title">Здание</div>
+        </div>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <ComboRent21
-          title="Тип помещения"
-          :value="item.Category"
-          field="Category"
-          spr="category"
-        />
+        <div class="card">
+          <div class="title">Собственик</div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <div class="card">
+          <div class="title">Помещение</div>
+        </div>
       </div>
 
     </div>
@@ -40,6 +61,34 @@ export default {
     }
   },
   mounted() {
+    window.ymaps.ready(()=>{
+      const myMap = new window.ymaps.Map(this.$refs.map, {
+        center: [55.76, 37.64],
+        zoom: 7
+      });
+      myMap.events.add('actionend',(e)=>{
+        // отработка позиции карты
+        console.log('map', e)
+      })
+      const suggestView = new ymaps.SuggestView(this.$refs.suggest);
+      suggestView.state.findMap = myMap;
+      suggestView.state.events.add('change',(e)=>{
+        const activeIndex = suggestView.state.get('activeIndex');
+        if (typeof activeIndex == 'number') {
+          const activeItem = suggestView.state.get('items')[activeIndex];
+          const myGeocoder = ymaps.geocode(activeItem.value);
+          myGeocoder.then(
+            function(res) {
+              const v = res.geoObjects.get(0).geometry.getCoordinates();
+              e.originalEvent.target.findMap.setCenter(v, 16);
+            },
+            function(err) {
+              console.log('Ошибка карты');
+            }
+          );
+        }
+      })
+    });
     const ob = this.$store.getters['realestate/spr'].cianItems['rent']['officeRent']
     ob.opp = 1
     this.$store.commit('realestate/setItem', ob);
@@ -75,6 +124,24 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.card{
+  padding: 8px;
+  margin-bottom: 8px;
+  .body{
+    input[type="text"]{
+      margin-bottom: 8px;
+      width: 100%;
+      border: none;
+      border-bottom: 1px dotted;
+    }
+  }
+}
+.title{
+  margin-bottom: 8px;
+  width: 100%;
+  padding: 6px;
+  background-color: #f5f7fb;
+  text-align: center;
+}
 </style>

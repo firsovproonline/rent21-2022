@@ -9,6 +9,8 @@ const Realestate_client_opp = db.realestate_client_opp;
 const Realestate_client_item = db.realestate_client_item;
 const Realestate_client_status = db.realestate_client_status;
 
+const Rent21_address = db.Rent21_address;
+
 
 const Role = db.role;
 const Adress = db.address;
@@ -255,6 +257,18 @@ function initial() {
   }).then(user => {
     user.addRoles([3])
   });
+
+  db.sequelize.query("SELECT * FROM test_adRes21", {
+  }).then(items=>{
+    console.log('length',items[0].length)
+    items[0].forEach(itemAdress => {
+      itemAdress.METRO = itemAdress.METRO.split('|');
+      Rent21_address.create({
+        uid: itemAdress.UID,
+        fields: itemAdress
+      })
+    })
+  })
 
   //User.roles.create({
 

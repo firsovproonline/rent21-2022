@@ -67,6 +67,8 @@ export default {
     position: absolute;
     z-index: 300;
     width: 95%;
+    max-height: 240px;
+    overflow: auto;
     background-color: #ffffff;
     padding-left: 4px;
     .item{
@@ -76,6 +78,8 @@ export default {
   }
 
   .main{
+    height: 32px;
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
     .title{
