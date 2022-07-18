@@ -86,9 +86,10 @@ export default {
                 house: filterOb.house
               }).then(response=>{
                 if(response.data.length >0){
-
-                }else{
+                  this.$store.dispatch('realestate/setItemsAddress',response.data)
+                }else{ //Россия, Москва, Марксистская улица, 10с1
                   console.log('нет данного адреса в базе')
+                  this.$store.dispatch('realestate/setItemsAddress',[])
                 }
               })
             }

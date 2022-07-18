@@ -10,6 +10,8 @@ const Realestate_client_item = db.realestate_client_item;
 const Realestate_client_status = db.realestate_client_status;
 
 const Rent21_address = db.Rent21_address;
+const Rent21_building = db.Rent21_building;
+const Rent21_linc = db.Rent21_linc;
 
 
 const Role = db.role;
@@ -269,6 +271,29 @@ function initial() {
       })
     })
   })
+
+  db.sequelize.query("SELECT * FROM test_buid21", {
+  }).then(items=>{
+    console.log('length',items[0].length)
+    items[0].forEach(itemAdress => {
+      Rent21_building.create({
+        uid: itemAdress.UID,
+        fields: itemAdress
+      })
+    })
+  })
+
+  db.sequelize.query("SELECT * FROM test_linc21", {
+  }).then(items=>{
+    console.log('length',items[0].length)
+    items[0].forEach(itemAdress => {
+      Rent21_linc.create({
+        puid: itemAdress.PUID,
+        val: itemAdress.VAL
+      })
+    })
+  })
+
 
   //User.roles.create({
 

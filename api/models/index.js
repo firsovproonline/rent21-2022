@@ -40,6 +40,8 @@ db.cian_fid = require("../models/cian_fid.model.js")(sequelize, Sequelize);
 db.cian_PropertyType = require("../models/cian_PropertyType.model.js")(sequelize, Sequelize);
 // db.address.belongsToMany(db.role, { });
 db.Rent21_address = require("../models/rent21.address.model.js")(sequelize, Sequelize);
+db.Rent21_building = require("../models/rent21.building.model.js")(sequelize, Sequelize);
+db.Rent21_linc = require("../models/rent21.linc.model.js")(sequelize, Sequelize);
 
 
 
