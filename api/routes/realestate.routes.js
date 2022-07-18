@@ -6,6 +6,6 @@ module.exports = function(app) {
   app.get("/realestate/oldaddress", controller.oldAddress);
   app.get("/realestate/oldLids", controller.oldlids);
   app.post("/realestate/lids", controller.lids);
-  app.get("/realestate/rent21address", controller.rent21address);
+  app.post("/realestate/rent21address", controller.rent21address);
 
 };

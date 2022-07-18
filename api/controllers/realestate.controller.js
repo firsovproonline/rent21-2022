@@ -1,6 +1,7 @@
 const db = require("../models");
 const {verify} = require("jsonwebtoken");
 const cianItems = require("../config/cian.config.js");
+const {Op} = require("sequelize");
 
 const Realestate_opp = db.realestate_opp;
 const Realestate_client_item = db.realestate_client_item;
@@ -157,9 +158,16 @@ exports.rent21address = (req, res) => {
   const { Op } = require('sequelize')
   Address.findAll({
     where : {
-      "fields.METRO":{
-        [Op.substring]:  'Марксистская'
-      }
+      "fields.GOROD":{
+        [Op.substring]:  req.body.locality
+      },
+      "fields.ULITCA":{
+        [Op.substring]:  req.body.street
+      },
+      "fields.DOM":{
+        [Op.substring]:  req.body.house
+      },
+
     }
   }).then(items=>{
     res.status(200).send(items);

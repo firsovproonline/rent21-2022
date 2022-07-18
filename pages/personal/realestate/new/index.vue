@@ -68,7 +68,32 @@ export default {
       });
       myMap.events.add('actionend',(e)=>{
         // отработка позиции карты
-        console.log('map', e)
+        // console.log(this, e.originalEvent.map.getCenter())
+        const v = e.originalEvent.map.getCenter();
+        const url = "//geocode-maps.yandex.ru/1.x/?apikey=fdb945b0-aaa5-4b5d-a837-383abb24dfc4&geocode=" + v[0] + "," + v[1] + "&kind=metro&format=json&spn=0.04,0.04";
+        const url1 = "//geocode-maps.yandex.ru/1.x/?apikey=fdb945b0-aaa5-4b5d-a837-383abb24dfc4&geocode=" + v[1] + "," + v[0] + "&format=json"; //&rspn=1&spn=0.03,0.03";
+        this.$axios.get(url1).then(items=>{
+          items.data.response.GeoObjectCollection.featureMember.forEach(yitem =>{
+            if(yitem.GeoObject.metaDataProperty.GeocoderMetaData.kind=='house'){
+              const filterOb = {};
+              yitem.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components.forEach(item=>{
+                filterOb[item.kind] = item.name
+              })
+              // запрос на получение данных из базы адресов
+              this.$axios.post('/api/realestate/rent21address',{
+                locality: filterOb.locality,
+                street: filterOb.street,
+                house: filterOb.house
+              }).then(response=>{
+                if(response.data.length >0){
+
+                }else{
+                  console.log('нет данного адреса в базе')
+                }
+              })
+            }
+          })
+        })
       })
       const suggestView = new ymaps.SuggestView(this.$refs.suggest);
       suggestView.state.findMap = myMap;

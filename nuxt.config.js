@@ -1,4 +1,5 @@
 export default {
+  ymapkey: 'fdb945b0-aaa5-4b5d-a837-383abb24dfc4',
   // Global page headers: https://go.nuxtjs.dev/config-head
   server: {
     port: 3021 // default: 3000
