@@ -29,10 +29,9 @@
           <div class="body">
             <div v-for="itemAddr in itemsAddress" :key="itemAddr.uid">
               <div v-for="itemHome in itemAddr.build" :key="itemHome.uid">
-                <div v-for="item in itemHome" :key="item.uid">
-
-                {{item.NAME}}
-                </div>
+                  <div v-for="item in itemHome" :key="item.uid">
+                    <div v-if="item.UID" style="border-bottom: 1px dotted;" >{{item.NAME}}</div>
+                  </div>
               </div>
             </div>
           </div>
