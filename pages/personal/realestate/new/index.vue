@@ -26,6 +26,16 @@
         </div>
         <div class="card">
           <div class="title">Здание</div>
+          <div class="body">
+            <div v-for="itemAddr in itemsAddress" :key="itemAddr.uid">
+              <div v-for="itemHome in itemAddr.build" :key="itemHome.uid">
+                <div v-for="item in itemHome" :key="item.uid">
+
+                {{item.NAME}}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -120,6 +130,9 @@ export default {
     this.$store.commit('realestate/setItem', ob);
   },
   computed:{
+    itemsAddress(){
+      return this.$store.getters['realestate/itemsAddress']
+    },
     item(){
       return this.$store.getters['realestate/item']
     },

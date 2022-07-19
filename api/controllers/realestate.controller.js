@@ -1,7 +1,7 @@
 const db = require("../models");
 const {verify} = require("jsonwebtoken");
 const cianItems = require("../config/cian.config.js");
-const {Op} = require("sequelize");
+const {Op, fn} = require("sequelize");
 
 const Realestate_opp = db.realestate_opp;
 const Realestate_client_item = db.realestate_client_item;
@@ -156,6 +156,7 @@ exports.oldAddress = (req, res) => {
 exports.rent21address = (req, res) => {
   const Address = db.Rent21_address;
   const Linc = db.Rent21_linc;
+  const House = db.Rent21_building;
   const { Op, fn } = require('sequelize')
   Address.findAll({
     where : {
@@ -174,7 +175,6 @@ exports.rent21address = (req, res) => {
     const promiseAR = [];
     items.forEach(item =>{
       promiseAR.push(new Promise(function(resolve, reject) {
-        //console.log(JSON.stringify(Object(item.dataValues)))
         Linc.findAll({
           attributes: [
             'val',
@@ -195,12 +195,53 @@ exports.rent21address = (req, res) => {
     })
     Promise.all(promiseAR).then(
       result => {
+        const promiseAR = [];
         result.forEach(resultLinc =>{
-          console.log('=========resultLinc========');
+          // console.log('=========resultLinc========', resultLinc[0]);
           // получаем здания по адресам
-          console.log(resultLinc)
+          const uids = [];
+          let address = null;
+          resultLinc.forEach(item=>{
+            uids.push(item.dataValues.val);
+            address = item.dataValues.address;
+          })
+          promiseAR.push(new Promise(function(resolve, reject) {
+            House.findAll({
+              attributes: [
+                'uid',
+                'fields',
+                [fn('CONCAT',address),'address']
+              ],
+              where: {
+                uid: {
+                  [Op.in]:uids
+                }
+              }
+            }).then(itemsHouse =>{
+              const address = JSON.parse(itemsHouse[0].dataValues.address);
+              itemsHouse.forEach(item=>{
+                delete (item.dataValues.address);
+              });
+              address.build = itemsHouse;
+              resolve(address)
+            }).catch(error => {
+              reject(error)
+            })
+          }));
+
         })
-        res.status(200).send(items);
+        Promise.all(promiseAR).then(
+          result => {
+//            result.forEach(item=>{
+//              console.log(item)
+//            })
+            res.status(200).send(result);
+          },
+          error => {
+            res.status(200).send(items);
+            console.log("Ошибка: ", error)
+          }
+        );
       },
       error => {
         res.status(200).send(items);
