@@ -155,7 +155,8 @@ exports.oldAddress = (req, res) => {
 
 exports.rent21address = (req, res) => {
   const Address = db.Rent21_address;
-  const { Op } = require('sequelize')
+  const Linc = db.Rent21_linc;
+  const { Op, fn } = require('sequelize')
   Address.findAll({
     where : {
       "fields.GOROD":{
@@ -170,7 +171,42 @@ exports.rent21address = (req, res) => {
 
     }
   }).then(items=>{
-    res.status(200).send(items);
+    const promiseAR = [];
+    items.forEach(item =>{
+      promiseAR.push(new Promise(function(resolve, reject) {
+        //console.log(JSON.stringify(Object(item.dataValues)))
+        Linc.findAll({
+          attributes: [
+            'val',
+            'puid',
+            [fn('CONCAT',JSON.stringify(Object(item.dataValues))),'address']
+          ],
+          where: {
+            puid: {
+              [Op.in]:[item.dataValues.uid]
+            }
+          }
+        }).then(itemsLinc =>{
+          resolve(itemsLinc)
+        }).catch(error => {
+          reject(error)
+        })
+      }));
+    })
+    Promise.all(promiseAR).then(
+      result => {
+        result.forEach(resultLinc =>{
+          console.log('=========resultLinc========');
+          // получаем здания по адресам
+          console.log(resultLinc)
+        })
+        res.status(200).send(items);
+      },
+      error => {
+        res.status(200).send(items);
+        console.log("Ошибка: ", error)
+      }
+    );
   })
 }
 
