@@ -12,6 +12,7 @@ const Realestate_client_status = db.realestate_client_status;
 const Rent21_address = db.Rent21_address;
 const Rent21_building = db.Rent21_building;
 const Rent21_linc = db.Rent21_linc;
+const Rent21_ob = db.Rent21_ob;
 
 
 const Role = db.role;
@@ -293,6 +294,18 @@ function initial() {
       })
     })
   })
+
+  db.sequelize.query("SELECT * FROM test_ob21", {
+  }).then(items=>{
+    console.log('length',items[0].length)
+    items[0].forEach(itemAdress => {
+      Rent21_ob.create({
+        uid: itemAdress.UID,
+        fields: itemAdress
+      })
+    })
+  })
+
 
 
   //User.roles.create({

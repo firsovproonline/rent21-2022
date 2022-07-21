@@ -153,6 +153,11 @@ exports.oldAddress = (req, res) => {
   })
 };
 
+exports.rent21uid = (req, res) => {
+  res.status(200).send({});
+};
+
+
 exports.rent21address = (req, res) => {
   const Address = db.Rent21_address;
   const Linc = db.Rent21_linc;
