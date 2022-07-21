@@ -22,6 +22,32 @@
           <div class="body">
             <input type="text" ref="suggest" />
             <div ref="map" class="map" style="width: 100%; height: 180px"></div>
+            <div v-if="itemAddress.uid">
+              <div class="infodiv" style="margin-top: 8px">
+                <div class="label">Нас. пункт</div>
+                <div class="value">{{itemAddress.fields.GOROD}}</div>
+              </div>
+              <div class="infodiv">
+                <div class="label">Район</div>
+                <div class="value">{{itemAddress.fields.RAJON}}</div>
+              </div>
+              <div class="infodiv">
+                <div class="label">Округ</div>
+                <div class="value">{{itemAddress.fields.OKRUG}}</div>
+              </div>
+              <div class="infodiv">
+                <div class="label">Улица</div>
+                <div class="value">{{itemAddress.fields.ULITCA}}</div>
+              </div>
+              <div class="infodiv">
+                <div class="label">Дом</div>
+                <div class="value">{{itemAddress.fields.DOM}}</div>
+              </div>
+              <div class="infodiv">
+                <div class="label">Налоговая</div>
+                <div class="value">{{itemAddress.fields.NALOGNAME}}</div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="card">
@@ -30,7 +56,10 @@
             <div v-for="itemAddr in itemsAddress" :key="itemAddr.uid">
               <div v-for="itemHome in itemAddr.build" :key="itemHome.uid">
                   <div v-for="item in itemHome" :key="item.uid">
+                    <BuildCard v-if="item.UID" :item="item" />
+                    <!--
                     <div v-if="item.UID" style="border-bottom: 1px dotted;" >{{item.NAME}}</div>
+                    -->
                   </div>
               </div>
             </div>
@@ -54,9 +83,10 @@
 
 <script>
 import ComboRent21 from "~/components/combo";
+import BuildCard from "~/components/Realestate/build/card";
 export default {
   name: "index",
-  components: {ComboRent21},
+  components: {BuildCard, ComboRent21},
   layout: 'default',
   async asyncData ({ app, route, params, error, store }) {
     try {
@@ -75,6 +105,9 @@ export default {
         center: [55.76, 37.64],
         zoom: 7
       });
+      myMap.events.add('actionbegin',(e)=>{
+        console.log('start ymap')
+      })
       myMap.events.add('actionend',(e)=>{
         // отработка позиции карты
         // console.log(this, e.originalEvent.map.getCenter())
@@ -96,11 +129,17 @@ export default {
               }).then(response=>{
                 if(response.data.length >0){
                   this.$store.dispatch('realestate/setItemsAddress',response.data)
+                  this.$store.dispatch('realestate/setItemAddress',response.data[0])
                 }else{ //Россия, Москва, Марксистская улица, 10с1
                   console.log('нет данного адреса в базе')
                   this.$store.dispatch('realestate/setItemsAddress',[])
+                  this.$store.dispatch('realestate/setItemAddress',{})
                 }
               })
+            }
+            else {
+              this.$store.dispatch('realestate/setItemsAddress',[])
+              this.$store.dispatch('realestate/setItemAddress',{})
             }
           })
         })
@@ -129,6 +168,9 @@ export default {
     this.$store.commit('realestate/setItem', ob);
   },
   computed:{
+    itemAddress(){
+      return this.$store.getters['realestate/itemAddress']
+    },
     itemsAddress(){
       return this.$store.getters['realestate/itemsAddress']
     },
@@ -167,6 +209,24 @@ export default {
   padding: 8px;
   margin-bottom: 8px;
   .body{
+    .infodiv{
+      .label{
+        color: #242934;
+        font-size: 14px;
+        width: 110px;
+      }
+      .value{
+        border-bottom: 1px dotted;
+        flex: 1 1 auto;
+      }
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-content: center;
+      align-items: center;
+      margin-bottom: 8px;
+    }
     input[type="text"]{
       margin-bottom: 8px;
       width: 100%;
