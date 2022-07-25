@@ -12,6 +12,7 @@
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/axios": "^5.13.6",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
@@ -23,6 +24,7 @@
     "mysql2": "^2.3.3",
     "nuxt": "^2.15.8",
     "sequelize": "^6.21.0",
+    "ts-node": "^10.9.1",
     "vue": "^2.6.14",
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",
@@ -30,7 +32,8 @@
     "webpack": "^4.46.0"
   },
   "devDependencies": {
-    "@nuxt/types": "^2.15.8",
+    "@nuxt/types": "^2.13.2",
+    "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/style-resources": "^1.2.1",
     "@typescript-eslint/eslint-plugin": "^5.28.0",
     "@typescript-eslint/parser": "^5.28.0",

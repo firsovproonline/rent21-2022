@@ -40,10 +40,10 @@ export default {
   }),
   computed: {
     globalEvent(){
-      return this.$store.getters['main/globalevent']
+      return this.$store.getters['main.js/globalevent']
     },
     vComponent() {
-      return this.$store.getters['main/leftMenu']
+      return this.$store.getters['main.js/leftMenu']
     },
   },
   watch:{

@@ -65,9 +65,9 @@ export default {
   },
   methods: {
     tagleLeft(){
-      this.$store.commit('main/setglobalevent', '')
+      this.$store.commit('main.js/setglobalevent', '')
       this.$nextTick(()=>{
-        this.$store.commit('main/setglobalevent', 'leftMenu')
+        this.$store.commit('main.js/setglobalevent', 'leftMenu')
       })
     },
     toggleModal() {

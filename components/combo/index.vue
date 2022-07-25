@@ -48,7 +48,7 @@ export default {
       this.showCombo = ! this.showCombo
     },
     clickItem(el){
-      this.$store.dispatch('main/setglobalevent', {
+      this.$store.dispatch('main.js/setglobalevent', {
         operation: 'setFieldItem',
         field:  this.field,
         value: el.target.getAttribute('value')
