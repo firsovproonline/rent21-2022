@@ -3,7 +3,7 @@ import IPPhone from "~/model/ipphone";
 
 
 export const state = () => ({
-  items: [{name:'ss',key:'ffff'},{name:'ss',key:'ffff'}],
+  IPphoneItems: [],
 // @ts-ignore
   ipphone:new IPPhone(),
   name: 'Me',
@@ -13,14 +13,18 @@ export type RootState = ReturnType<typeof state>
 
 export const getters: GetterTree<RootState, RootState> = {
   name: state => state.name,
-  items:state => state.items
+  IPphoneItems:state => state.IPphoneItems
 }
 
 // @ts-ignore
 export const mutations: MutationTree<RootState> = {
   CHANGE_NAME: (state, newName: string) => (state.name = newName),
   // @ts-ignore
-  setItems: (state, value: Array<ipphone>) => (state.items = value)
+  setIPphoneItems: (state, value: Array<ipphone>) => (state.IPphoneItems = value),
+  insertIPphoneItem: (state) => (
+    // @ts-ignore
+    state.IPphoneItems.push( new IPPhone('','', true))
+  )
 }
 
 export const actions: ActionTree<RootState, RootState> = {
