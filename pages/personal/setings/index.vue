@@ -3,25 +3,29 @@
     <div class="leftMenu">
       <LeftMenu />
     </div>
-    <div class="main-block" style="flex: 1 1 auto;margin: 20px">
+    <div class="main-block" style="flex: 1 1 auto;">
       <div class="row">
-        <div class="card">
-          <ListUsers />
-        </div>
+        <section id="home" class="section-py-space" style="margin-top: 20px;display: block;">
+          <div class="row">
+            <div class="col-12 custom-container">
+
+            </div>
+          </div>
+        </section>
       </div>
     </div>
+
   </section>
   <section v-else>Доступ запрещён !!!</section>
 </template>
 
 <script>
 import LeftMenu from "~/components/leftMenu";
-import ListUsers from "~/components/Realestate/users/listUsers";
 
 export default {
-  name: "indexUsers",
-  components: {ListUsers, LeftMenu},
+  name: "indexSetings",
   layout: 'default',
+  components: {LeftMenu},
   data: () => ({
     isAdmin: false,
     isModerator: false,
@@ -45,6 +49,7 @@ export default {
       }
     }
   },
+
 }
 </script>
 
