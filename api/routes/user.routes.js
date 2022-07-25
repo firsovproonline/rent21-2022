@@ -25,4 +25,10 @@ module.exports = function(app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
   );
+  app.get(
+    "/user/list",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.listUsers
+  );
+
 };

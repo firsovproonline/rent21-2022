@@ -28,6 +28,16 @@ exports.userBoard = (req, res) => {
 exports.adminBoard = (req, res) => {
   res.status(200).send("Admin Content.");
 };
+exports.listUsers = (req, res) => {
+  const User = db.user;
+  User.findAll({
+    attributes: ['id', 'username']
+  }).then(items=>{
+    res.status(200).send(items);
+  })
+
+};
+
 exports.moderatorBoard = (req, res) => {
   res.status(200).send("Moderator Content.");
 };

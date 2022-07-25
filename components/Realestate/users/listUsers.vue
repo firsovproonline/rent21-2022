@@ -16,7 +16,14 @@
 
 <script>
 export default {
-  name: "listUsers"
+  name: "listUsers",
+  mounted() {
+    console.log(this)
+    this.$api.get('/api/user/list').then(items=>{
+      console.log(items.data)
+      this.$store.dispatch('user/setUsers', items.data)
+    })
+  }
 }
 </script>
 
