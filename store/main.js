@@ -4,7 +4,8 @@ export const state = () => ({
   vcomponent: null,
   vleftMenu: null,
   globalevent: null,
-  globalMessage: '11111'
+  globalMessage: '11111',
+  setings:{}
 })
 
 export const actions = {
@@ -15,6 +16,9 @@ export const actions = {
     } catch (err) {
 
     }
+  },
+  setSetings ({ commit }, comp) {
+    commit('setSetings', comp)
   },
   setleftMenu ({ commit }, comp) {
     commit('setleftMenu', comp)
@@ -35,6 +39,9 @@ export const mutations = {
     console.log('1111111111111111111111')
     state.vleftMenu = vcomponent
   },
+  setSetings (state, vcomponent) {
+    state.setings = vcomponent
+  },
   setVcomponent (state, vcomponent) {
     state.vcomponent = vcomponent
   },
@@ -51,5 +58,6 @@ export const getters = {
   leftMenu:  (state) => { return state.vleftMenu },
   vcomponent: (state) => { return state.vcomponent },
   globalevent: (state) => { return state.globalevent },
-  globalMessage: (state) => { return state.globalMessage }
+  globalMessage: (state) => { return state.globalMessage },
+  setings: (state) => { return state.setings },
 }

@@ -3,13 +3,18 @@
     <div class="leftMenu">
       <LeftMenu />
     </div>
-    <div class="main-block" style="flex: 1 1 auto;margin: 20px">
+    <div class="main-block" style="flex: 1 1 auto;">
       <div class="row">
-        <div class="card">
-          <ListUsers />
-        </div>
+        <section id="home" class="section-py-space" style="margin-top: 20px;display: block;">
+          <div class="row">
+            <div class="col-12 custom-container">
+              <ListUsers />
+            </div>
+          </div>
+        </section>
       </div>
     </div>
+
   </section>
   <section v-else>Доступ запрещён !!!</section>
 </template>

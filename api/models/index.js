@@ -43,6 +43,7 @@ db.Rent21_address = require("../models/rent21.address.model.js")(sequelize, Sequ
 db.Rent21_building = require("../models/rent21.building.model.js")(sequelize, Sequelize);
 db.Rent21_linc = require("../models/rent21.linc.model.js")(sequelize, Sequelize);
 db.Rent21_ob = require("../models/rent21.ob.model.js")(sequelize, Sequelize);
+db.Setings = require("../models/setings.model.js")(sequelize, Sequelize);
 
 
 
