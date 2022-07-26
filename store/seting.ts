@@ -4,8 +4,6 @@ import IPPhone from "~/model/ipphone";
 
 export const state = () => ({
   IPphoneItems: [],
-// @ts-ignore
-  ipphone:new IPPhone(),
   name: 'Me',
 })
 
@@ -27,10 +25,21 @@ export const mutations: MutationTree<RootState> = {
   )
 }
 
-export const actions: ActionTree<RootState, RootState> = {
-  async fetchThings({ commit }) {
-    const things = await this.$axios.$get('/things')
-    console.log(things)
-    commit('CHANGE_NAME', 'New name')
+export const actions:
+  ActionTree<RootState, RootState> = {
+    async fetchThings({ commit }) {
+      const things = await this.$axios.$get('/things')
+      console.log(things)
+      commit('CHANGE_NAME', 'New name')
   },
+  insertIPphoneItem({ commit }){
+    commit('insertIPphoneItem');
+    this.commit('main/setglobalevent',null)
+    this.commit('main/setglobalevent','insertIPphone')
+  },
+  saveIPphoneItems({ commit }){
+    this.commit('main/setglobalevent',null)
+    this.commit('main/setglobalevent','saveIPphone')
+  }
+
 }

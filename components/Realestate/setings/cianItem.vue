@@ -24,7 +24,7 @@
 import IPPhone from "~/model/ipphone";
 
 export default {
-  name: "ipphoneItem",
+  name: "cianItem",
   props:{
     item: IPPhone
   },

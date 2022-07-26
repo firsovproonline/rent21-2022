@@ -13,6 +13,24 @@
           </div>
         </section>
       </div>
+      <div class="row">
+        <section class="section-py-space" style="margin-top: 20px;display: block;">
+          <div class="row">
+            <div class="col-12 custom-container">
+              <CianList />
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="row">
+        <section class="section-py-space" style="margin-top: 20px;display: block;">
+          <div class="row">
+            <div class="col-12 custom-container">
+              <AvitoList />
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
 
   </section>
@@ -22,11 +40,13 @@
 <script>
 import LeftMenu from "~/components/leftMenu";
 import IpphoneList from "~/components/Realestate/setings/ipphoneList";
+import CianList from "~/components/Realestate/setings/cianList";
+import AvitoList from "~/components/Realestate/setings/avitoList";
 
 export default {
   name: "indexSetings",
   layout: 'default',
-  components: {IpphoneList, LeftMenu},
+  components: {AvitoList, CianList, IpphoneList, LeftMenu},
   data: () => ({
     isAdmin: false,
     isModerator: false,
@@ -58,5 +78,7 @@ export default {
 </script>
 
 <style scoped>
-
+.landing-wrraper .section-py-space {
+  padding-bottom: 0px;
+}
 </style>
