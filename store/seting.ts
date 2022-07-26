@@ -1,27 +1,41 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import IPPhone from "~/model/ipphone";
+import {request} from "express";
 
 
 export const state = () => ({
   IPphoneItems: [],
-  name: 'Me',
+  cianItems: [],
+  avitoItems: [],
 })
 
 export type RootState = ReturnType<typeof state>
 
 export const getters: GetterTree<RootState, RootState> = {
-  name: state => state.name,
-  IPphoneItems:state => state.IPphoneItems
+  IPphoneItems:state => state.IPphoneItems,
+  cianItems:state => state.cianItems,
+  avitoItems:state => state.avitoItems,
 }
 
-// @ts-ignore
 export const mutations: MutationTree<RootState> = {
-  CHANGE_NAME: (state, newName: string) => (state.name = newName),
   // @ts-ignore
   setIPphoneItems: (state, value: Array<ipphone>) => (state.IPphoneItems = value),
+  setCianItems: (state, value) => (state.cianItems = value),
+  setAvitoItems: (state, value) => (state.avitoItems = value),
   insertIPphoneItem: (state) => (
     // @ts-ignore
     state.IPphoneItems.push( new IPPhone('','', true))
+  ),
+  insertCianItem: (state) => (
+    // @ts-ignore
+    state.cianItems.push( new IPPhone('','', true))
+  ),
+  insertAvitoItem: (state) => (
+    // @ts-ignore
+    state.avitoItems.push( new IPPhone('','', true))
+  ),
+  saveSeting:( state ) => (
+    console.log(this)
   )
 }
 
@@ -30,7 +44,16 @@ export const actions:
     async fetchThings({ commit }) {
       const things = await this.$axios.$get('/things')
       console.log(things)
-      commit('CHANGE_NAME', 'New name')
+  },
+  insertCianItem({ commit }){
+    commit('insertCianItem');
+    this.commit('main/setglobalevent',null)
+    this.commit('main/setglobalevent','insertCian')
+  },
+  insertAvitoItem({ commit }){
+    commit('insertAvitoItem');
+    this.commit('main/setglobalevent',null)
+    this.commit('main/setglobalevent','insertAvito')
   },
   insertIPphoneItem({ commit }){
     commit('insertIPphoneItem');
@@ -40,6 +63,45 @@ export const actions:
   saveIPphoneItems({ commit }){
     this.commit('main/setglobalevent',null)
     this.commit('main/setglobalevent','saveIPphone')
+    // @ts-ignore
+    this.$api.post('/api/setings',{
+      ipphones: this.getters['seting/IPphoneItems'],
+      cianexport: this.getters['seting/cianItems'],
+      avitoexport: this.getters['seting/avitoItems'],
+    }).then((items:object) => {
+      commit('setIPphoneItems', Object(items).data[0].ipphones);
+      commit('setAvitoItems', Object(items).data[0].avitoexport);
+      commit('setCianItems', Object(items).data[0].cianexport);
+    })
+  },
+  saveCianItems({ commit }){
+    this.commit('main/setglobalevent',null)
+    this.commit('main/setglobalevent','saveCian')
+    // @ts-ignore
+    this.$api.post('/api/setings',{
+      ipphones: this.getters['seting/IPphoneItems'],
+      cianexport: this.getters['seting/cianItems'],
+      avitoexport: this.getters['seting/avitoItems'],
+    }).then((items:object) => {
+      commit('setIPphoneItems', Object(items).data[0].ipphones);
+      commit('setAvitoItems', Object(items).data[0].avitoexport);
+      commit('setCianItems', Object(items).data[0].cianexport);
+    })
+  },
+  saveAvitoItems({ commit }){
+    this.commit('main/setglobalevent',null)
+    this.commit('main/setglobalevent','saveAvito')
+    // @ts-ignore
+    this.$api.post('/api/setings',{
+      ipphones: this.getters['seting/IPphoneItems'],
+      cianexport: this.getters['seting/cianItems'],
+      avitoexport: this.getters['seting/avitoItems'],
+    }).then((items:object) => {
+      commit('setIPphoneItems', Object(items).data[0].ipphones);
+      commit('setAvitoItems', Object(items).data[0].avitoexport);
+      commit('setCianItems', Object(items).data[0].cianexport);
+    })
   }
+
 
 }

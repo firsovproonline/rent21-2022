@@ -52,7 +52,12 @@ export default {
     isModerator: false,
   }),
   mounted() {
-    console.log(this)
+    // console.log(this)
+    this.$api.get('/api/setings').then(request=>{
+      this.$store.commit('seting/setIPphoneItems',request.data[0].ipphones);
+      this.$store.commit('seting/setCianItems',request.data[0].cianexport);
+      this.$store.commit('seting/setAvitoItems',request.data[0].avitoexport);
+    })
   },
   computed: {
     user() {

@@ -21,17 +21,15 @@
 </template>
 
 <script>
-import IPPhone from "~/model/ipphone";
-
 export default {
   name: "avitoItem",
   props:{
-    item: IPPhone
+    item: {}
   },
   methods:{
     save(){
-      this.$store.dispatch('seting/saveIPphoneItems')
       this.item.editFlag = false;
+      this.$store.dispatch('seting/saveAvitoItems')
     }
   }
 }

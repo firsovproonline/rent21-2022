@@ -30,7 +30,7 @@ export default {
   }),
   computed:{
     items(){
-      return this.$store.getters['seting/IPphoneItems']
+      return this.$store.getters['seting/avitoItems']
     },
     globalEvent(){
       return this.$store.getters['main/globalevent']
@@ -38,17 +38,17 @@ export default {
   },
   watch:{
     globalEvent(val){
-      if(val === 'insertIPphone'){
+      if(val === 'insertAvito'){
         this.isInsert = false;
       }
-      if(val === 'saveIPphone'){
+      if(val === 'saveAvito'){
         this.isInsert = true;
       }
     }
   },
   methods:{
     insertItem(){
-      this.$store.dispatch('seting/insertIPphoneItem')
+      this.$store.dispatch('seting/insertAvitoItem')
     }
   }
 

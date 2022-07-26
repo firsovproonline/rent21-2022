@@ -29,7 +29,7 @@ export default {
   }),
   computed:{
     items(){
-      return this.$store.getters['seting/IPphoneItems']
+      return this.$store.getters['seting/cianItems']
     },
     globalEvent(){
       return this.$store.getters['main/globalevent']
@@ -37,17 +37,17 @@ export default {
   },
   watch:{
     globalEvent(val){
-      if(val === 'insertIPphone'){
+      if(val === 'insertCian'){
         this.isInsert = false;
       }
-      if(val === 'saveIPphone'){
+      if(val === 'saveCian'){
         this.isInsert = true;
       }
     }
   },
   methods:{
     insertItem(){
-      this.$store.dispatch('seting/insertIPphoneItem')
+      this.$store.dispatch('seting/insertCianItem')
     }
   }
 

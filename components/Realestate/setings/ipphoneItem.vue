@@ -21,12 +21,10 @@
 </template>
 
 <script>
-import IPPhone from "~/model/ipphone";
-
 export default {
   name: "ipphoneItem",
   props:{
-    item: IPPhone
+    item: {}
   },
   methods:{
     save(){

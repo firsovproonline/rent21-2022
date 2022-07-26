@@ -19,6 +19,7 @@ const Role = db.role;
 const Adress = db.address;
 const House = db.house;
 const Room = db.room;
+const Seting = db.Setings;
 
 const House_tip = db.house_tip;
 const Room_tip = db.room_tip;
@@ -89,6 +90,12 @@ function initial() {
     name: 'Резиновый'
   })
 
+  Seting.create({
+    id: 1,
+    ipphones: [],
+    cianexport: [],
+    avitoexport: []
+  });
 
 
 
@@ -343,6 +350,7 @@ require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
 require('./routes/realestate.routes')(app);
 require('./routes/shop.routes')(app);
+require('./routes/sering.routes')(app);
 
 
 export default {

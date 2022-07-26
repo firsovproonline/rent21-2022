@@ -21,16 +21,14 @@
 </template>
 
 <script>
-import IPPhone from "~/model/ipphone";
-
 export default {
   name: "cianItem",
   props:{
-    item: IPPhone
+    item: {}
   },
   methods:{
     save(){
-      this.$store.dispatch('seting/saveIPphoneItems')
+      this.$store.dispatch('seting/saveCianItems')
       this.item.editFlag = false;
     }
   }
