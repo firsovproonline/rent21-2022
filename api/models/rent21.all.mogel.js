@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const Rent21_address = sequelize.define("rent21_address", {
+  const Rent21_all = sequelize.define("rent21_all", {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -28,5 +28,5 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.JSON
     },
   });
-  return Rent21_address;
+  return Rent21_all;
 };

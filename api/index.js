@@ -13,6 +13,7 @@ const Rent21_address = db.Rent21_address;
 const Rent21_building = db.Rent21_building;
 const Rent21_linc = db.Rent21_linc;
 const Rent21_ob = db.Rent21_ob;
+const Rent21_all = db.Rent21_all;
 
 
 const Role = db.role;
@@ -267,7 +268,7 @@ function initial() {
   }).then(user => {
     user.addRoles([3])
   });
-
+/*
   db.sequelize.query("SELECT * FROM test_adRes21", {
   }).then(items=>{
     console.log('length',items[0].length)
@@ -312,8 +313,28 @@ function initial() {
       })
     })
   })
+*/
+  db.sequelize.query("select DISTINCT UID FROM fields", {
+  }).then(items=>{
+    items[0].forEach(item => {
+      //console.log(item);
+      db.sequelize.query("select * FROM fields WHERE UID = '"+item.UID+"'", {
+      }).then(items=>{
+        const ob ={}
+        items[0].forEach(item => {
+          ob.tip = item.TIP
+          ob.uid = item.UID
+          ob[item.TITLE] = item.VAL;
+        })
+        Rent21_all.create({
+          uid:ob.uid,
+          tip:ob.tip,
+          fields: ob
+        })
 
-
+      })
+    })
+  })
 
   //User.roles.create({
 
