@@ -8,7 +8,7 @@
         <section id="home" class="section-py-space" style="margin-top: 20px;display: block;">
           <div class="row">
             <div class="col-12 custom-container">
-<YmapRent />
+              <YmapRent />
             </div>
           </div>
         </section>

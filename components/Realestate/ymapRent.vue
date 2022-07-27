@@ -6,20 +6,38 @@
 
 export default {
   name: "ymapRent",
+  data: () => ({
+    myMap: {}
+  }),
+
   mounted() {
     this.resize();
     window.ymaps.ready(()=> {
-      const myMap = new window.ymaps.Map(this.$refs.map, {
+      this.myMap = new window.ymaps.Map(this.$refs.map, {
         center: [55.76, 37.64],
         zoom: 13
       });
+      this.$api.get('/api/map',{}).then(items =>{
+        const clusterer = new window.ymaps.Clusterer();
+        items.data.forEach(item=>{
+          console.log(item)
+          const myPlacemark = new window.ymaps.Placemark(
+            // Координаты метки
+            [item.LNG, item.LAT], {
+              preset: 'islands#circleIcon',
+              iconColor: '#3caa3c',
+              id: item.uid,
+            }, {
+              preset: 'islands#circleIcon',
+              iconColor: '#3caa3c'
+            }
+          );
+          clusterer.add(myPlacemark);
+        })
+        this.myMap.geoObjects.add(clusterer);
+      })
     });
     window.addEventListener('resize', this.resize);
-
-
-    this.$api.get('/api/map',{}).then(items =>{
-      console.log(items.data)
-    })
   },
   destroyed() {
     window.removeEventListener('resize', this.resize);
