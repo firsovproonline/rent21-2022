@@ -8,7 +8,7 @@
         <section id="home" class="section-py-space" style="margin-top: 20px;display: block;">
           <div class="row">
             <div class="col-12 custom-container">
-
+<YmapRent />
             </div>
           </div>
         </section>
@@ -21,11 +21,12 @@
 
 <script>
 import LeftMenu from "~/components/leftMenu";
+import YmapRent from "~/components/Realestate/ymapRent";
 
 export default {
   name: "indexOwners",
   layout: 'default',
-  components: {LeftMenu},
+  components: {YmapRent, LeftMenu},
   data: () => ({
     isAdmin: false,
     isModerator: false,
