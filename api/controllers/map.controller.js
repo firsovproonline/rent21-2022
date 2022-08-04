@@ -7,6 +7,13 @@ exports.mapget = (req, res) => {
   Adress.findAll({
     attributes:[
       'uid',
+      'fields',
+      'tip',
+      'building',
+      'owners',
+      'contact',
+      'address',
+      'ob',
       [ss.fn('JSON_EXTRACT', ss.col('fields'), ss.literal('"$.LAT"')),'LAT'],
       [ss.fn('JSON_EXTRACT', ss.col('fields'), ss.literal('"$.LNG"')),'LNG']
     ],

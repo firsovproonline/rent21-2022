@@ -1,3 +1,5 @@
+import ss from "sequelize";
+
 const express = require('express')
 const cors = require("cors")
 const cookieParser = require('cookie-parser');
@@ -34,6 +36,588 @@ function S4() {
 
 function generateUID() {
   return (S4() + S4() + "-" + S4() + "-4" + S4().substr(0, 3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();
+}
+
+function generateBuilders(){
+  Rent21_all.findAll({
+    where:{
+      tip: {
+        [ss.Op.in]:['buid21']
+      }
+    }
+  }).then(items=>{
+    const promiseAR1 = [];
+    items.forEach(item=>{
+      promiseAR1.push(new Promise(function(resolve1, reject1) {
+        const uid = item.getDataValue('uid');
+        Rent21_linc.findAll({
+          attributes:[
+            'puid',
+            'val',
+            [ss.fn('CONCAT',uid),'mainuid']
+          ],
+          where:{
+            puid: {
+              [ss.Op.in]:[uid]
+            }
+          }
+        }).then(itemsLink=>{
+          const promiseAR2 = [];
+          if(itemsLink.length && itemsLink.length > 0){
+            itemsLink.forEach(itemLink => {
+              promiseAR2.push(new Promise(function(resolve2, reject2) {
+                Rent21_all.findAll({
+                  attributes:[
+                    'fields',
+                    'uid',
+                    'tip',
+                    [ss.fn('CONCAT',itemLink.dataValues.mainuid),'mainuid']
+                  ],
+                  where:{
+                    uid: {
+                      [ss.Op.in]:[itemLink.dataValues.val]
+                    }
+                  }
+                }).then(items=>{
+                  if(items.length && items.length > 0){
+                    const outOB = {}
+                    let i = items.length;
+                    items.forEach(item=>{
+                      let key = 'ob'
+                      if(item.dataValues.tip === 'soBst21'){
+                        key = 'owners'
+                      }
+                      if(!outOB[key]){
+                        outOB[key] = [];
+                      }
+                      i--
+                      outOB[key].push(item.getDataValue('fields'));
+                      if(i===0){
+                        Rent21_all.update(outOB,{
+                            where:{
+                              uid: {
+                                [ss.Op.in]:[item.getDataValue('mainuid')]
+                              }
+                            },
+                          }
+                        ).then(item=>{
+                          resolve2();
+                        })
+                      }
+                    })
+                  }else{
+                    resolve2()
+                  }
+                })
+              }));
+            })
+          }else{
+            resolve1()
+          }
+          Promise.all(promiseAR2).then(
+            result => {
+              resolve1();
+            }
+          )
+        })
+      }));
+    })
+    Promise.all(promiseAR1).then(
+      result => {
+        console.log('+++++++builders+++++++++++');
+      }
+    );
+
+  })
+
+}
+
+
+function generateAddrees(){
+  Rent21_all.findAll({
+    where:{
+      tip: {
+        [ss.Op.in]:['adRes21']
+      }
+    }
+  }).then(items=>{
+    const promiseAR1 = [];
+    items.forEach(item=>{
+      promiseAR1.push(new Promise(function(resolve1, reject1) {
+        const uid = item.getDataValue('uid');
+        Rent21_linc.findAll({
+          attributes:[
+            'puid',
+            'val',
+            [ss.fn('CONCAT',uid),'mainuid']
+          ],
+          where:{
+            puid: {
+              [ss.Op.in]:[uid]
+            }
+          }
+        }).then(itemsLink=>{
+          const promiseAR2 = [];
+          if(itemsLink.length && itemsLink.length > 0){
+            itemsLink.forEach(itemLink => {
+              promiseAR2.push(new Promise(function(resolve2, reject2) {
+                Rent21_all.findAll({
+                  attributes:[
+                    'fields',
+                    'uid',
+                    'tip',
+                    [ss.fn('CONCAT',itemLink.dataValues.mainuid),'mainuid']
+                  ],
+                  where:{
+                    uid: {
+                      [ss.Op.in]:[itemLink.dataValues.val]
+                    }
+                  }
+                }).then(items=>{
+                  if(items.length && items.length > 0){
+                    const outOB = {building:[]}
+                    let i = items.length;
+                    items.forEach(item=>{
+                      i--
+                      outOB.building.push(item.getDataValue('fields'))
+                      if(i===0){
+                        const mainuid = item.getDataValue('mainuid')
+                        if(outOB.building.length > 1)
+                          console.log(outOB.building.length)
+                        Rent21_all.update(outOB,{
+                            where:{
+                              uid: {
+                                [ss.Op.in]:[item.getDataValue('mainuid')]
+                              }
+                            },
+                          }
+                        ).then(item=>{
+                          resolve2();
+                        })
+                      }
+                    })
+                  }else{
+                    resolve2()
+                  }
+                })
+              }));
+            })
+          }else{
+            resolve1()
+          }
+          Promise.all(promiseAR2).then(
+            result => {
+              resolve1();
+            }
+          )
+        })
+      }));
+    })
+    Promise.all(promiseAR1).then(
+      result => {
+        console.log('++++++++++++++++++++++++++++');
+        generateBuilders();
+      }
+    );
+
+  })
+
+}
+
+
+function generateOwners(){
+  Rent21_all.findAll({
+    where:{
+      tip: {
+        [ss.Op.in]:['soBst21']
+      }
+    }
+  }).then(items=>{
+      const promiseAR1 = [];
+      items.forEach(item=>{
+        promiseAR1.push(new Promise(function(resolve1, reject1) {
+          const uid = item.getDataValue('uid');
+          Rent21_linc.findAll({
+            attributes:[
+              'puid',
+              'val',
+              [ss.fn('CONCAT',uid),'mainuid']
+            ],
+            where:{
+              puid: {
+                [ss.Op.in]:[uid]
+              }
+            }
+          }).then(itemsLink=>{
+            const promiseAR2 = [];
+            if(itemsLink.length && itemsLink.length > 0){
+              itemsLink.forEach(itemLink => {
+                promiseAR2.push(new Promise(function(resolve2, reject2) {
+                  Rent21_all.findAll({
+                    attributes:[
+                      'fields',
+                      'uid',
+                      'tip',
+                      [ss.fn('CONCAT',itemLink.dataValues.mainuid),'mainuid']
+                    ],
+                    where:{
+                      uid: {
+                        [ss.Op.in]:[itemLink.dataValues.val]
+                      }
+                    }
+                  }).then(items=>{
+                    if(items.length && items.length > 0){
+                      const outOB = {contact:[]}
+                      let i = items.length;
+                      items.forEach(item=>{
+                        i--
+                        outOB.contact.push(item.getDataValue('fields'))
+                        if(i===0){
+                          const mainuid = item.getDataValue('mainuid')
+                          if(outOB.contact.length > 1)
+                            console.log(outOB.contact.length)
+                          Rent21_all.update(outOB,{
+                              where:{
+                                uid: {
+                                  [ss.Op.in]:[item.getDataValue('mainuid')]
+                                }
+                              },
+                            }
+                          ).then(item=>{
+                            resolve2();
+                          })
+                        }
+                      })
+                    }else{
+                      resolve2()
+                    }
+                  })
+                }));
+              })
+            }else{
+              resolve1()
+            }
+            Promise.all(promiseAR2).then(
+              result => {
+                resolve1();
+              }
+            )
+          })
+        }));
+      })
+      Promise.all(promiseAR1).then(
+        result => {
+          console.log('++++++++++++++++++++++++++++');
+          generateAddrees();
+        }
+      );
+
+  })
+
+}
+
+function generateAddress(){
+
+}
+function updatebuid21(){
+  Rent21_all.findAll({
+    where:{
+      tip: {
+        [ss.Op.in]:['buid21']
+      }
+    }
+  }).then(koNt21items => {
+    const promiseAR1 = [];
+    koNt21items.forEach(koNt21item=>{
+      promiseAR1.push(new Promise(function(resolve1, reject1) {
+        const koNt21 = JSON.stringify(Object( koNt21item.getDataValue('fields')));
+        Rent21_linc.findAll({
+          attributes:[
+            'puid',
+            'val',
+            [ss.fn('CONCAT',koNt21),'koNt21']
+          ],
+          where:{
+            puid: {
+              [ss.Op.in]:[koNt21item.dataValues.uid]
+            }
+          }
+        }).then(itemsLink =>{
+          if(itemsLink.length>0){
+            console.log(itemsLink.length)
+            const promiseAR2 = [];
+            itemsLink.forEach(itemLink =>{
+              promiseAR2.push(new Promise(function(resolve2, reject2) {
+                Rent21_all.findAll({
+                  attributes:[
+                    'contact',
+                    'uid',
+                    'tip',
+                    [ss.fn('CONCAT',itemLink.dataValues.koNt21),'koNt21']
+                  ],
+                  where:{
+                    uid: {
+                      [ss.Op.in]:[itemLink.dataValues.val]
+                    }
+                  }
+                }).then(items=>{
+                  if(items.forEach){
+                    const promiseAR3 = [];
+                    const outOb = {};
+
+                    items.forEach(item=>{
+                      let key = 'ob21'
+                      if(item.dataValues.tip === 'soBst21'){
+                        key = 'owners'
+                      }
+                      if(!outOb[key]){
+                        outOb[key] = [];
+                      }
+                      outOb[key].push(item.dataValues);
+                      promiseAR3.push(new Promise(function(resolve3, reject3) {
+                        if(!item.getDataValue('contact')){
+                          item.contact = [];
+                        }
+                        item.contact.push(JSON.parse(item.dataValues.koNt21))
+                        Rent21_all.update({
+                            building: item.contact
+                          },{
+                            where:{
+                              uid: {
+                                [ss.Op.in]:[item.uid]
+                              }
+                            },
+                          }
+                        ).then(item=>{
+                          resolve3();
+                        })
+                      }));
+                    })
+                    Promise.all(promiseAR3).then(
+                      result => {
+                        resolve2();
+                      }
+                    );
+                  }
+                  else{
+                    resolve2()
+                  }
+                })
+              }));
+            })
+            Promise.all(promiseAR2).then(
+              result => {
+                resolve1();
+              }
+            )
+          }
+          else{
+            resolve1()
+          }
+        })
+      }));
+    })
+    Promise.all(promiseAR1).then(
+      result => {
+        console.log('end buid21');
+      }
+    );
+  })
+
+}
+
+function updateob(){
+  Rent21_all.findAll({
+    where:{
+      tip: {
+        [ss.Op.in]:['ob21']
+      }
+    }
+  }).then(koNt21items => {
+    const promiseAR1 = [];
+    koNt21items.forEach(koNt21item=>{
+      promiseAR1.push(new Promise(function(resolve1, reject1) {
+        const koNt21 = JSON.stringify(Object( koNt21item.getDataValue('fields')));
+        Rent21_linc.findAll({
+          attributes:[
+            'puid',
+            'val',
+            [ss.fn('CONCAT',koNt21),'koNt21']
+          ],
+          where:{
+            val: {
+              [ss.Op.in]:[koNt21item.dataValues.uid]
+            }
+          }
+        }).then(itemsLink =>{
+          if(itemsLink.length>0){
+            const promiseAR2 = [];
+            itemsLink.forEach(itemLink =>{
+              promiseAR2.push(new Promise(function(resolve2, reject2) {
+                Rent21_all.findAll({
+                  attributes:[
+                    'contact',
+                    'uid',
+                    'tip',
+                    [ss.fn('CONCAT',itemLink.dataValues.koNt21),'koNt21']
+                  ],
+                  where:{
+                    uid: {
+                      [ss.Op.in]:[itemLink.dataValues.puid]
+                    }
+                  }
+                }).then(items=>{
+                  if(items.forEach){
+                    const promiseAR3 = [];
+                    items.forEach(item=>{
+                      promiseAR3.push(new Promise(function(resolve3, reject3) {
+                        if(!item.getDataValue('contact')){
+                          item.contact = [];
+                        }
+                        item.contact.push(JSON.parse(item.dataValues.koNt21))
+                        Rent21_all.update({
+                            ob: item.contact
+                          },{
+                            where:{
+                              uid: {
+                                [ss.Op.in]:[item.uid]
+                              }
+                            },
+                          }
+                        ).then(item=>{
+                          resolve3();
+                        })
+                      }));
+                    })
+                    Promise.all(promiseAR3).then(
+                      result => {
+                        resolve2();
+                      }
+                    );
+                  }
+                  else{
+                    resolve2()
+                  }
+                })
+              }));
+            })
+            Promise.all(promiseAR2).then(
+              result => {
+                resolve1();
+              }
+            )
+          }
+          else{
+            resolve1()
+          }
+        })
+      }));
+    })
+    Promise.all(promiseAR1).then(
+      result => {
+        console.log('end ob');
+        updatebuid21();
+      }
+    );
+  })
+
+}
+
+function updateowners(){
+  Rent21_all.findAll({
+    where:{
+      tip: {
+        [ss.Op.in]:['soBst21']
+      }
+    }
+  }).then(koNt21items => {
+    const promiseAR1 = [];
+    koNt21items.forEach(koNt21item=>{
+      promiseAR1.push(new Promise(function(resolve1, reject1) {
+        const koNt21 = JSON.stringify(Object( koNt21item.getDataValue('fields')));
+        Rent21_linc.findAll({
+          attributes:[
+            'puid',
+            'val',
+            [ss.fn('CONCAT',koNt21),'koNt21']
+          ],
+          where:{
+            val: {
+              [ss.Op.in]:[koNt21item.dataValues.uid]
+            }
+          }
+        }).then(itemsLink =>{
+          if(itemsLink.length>0){
+            const promiseAR2 = [];
+            itemsLink.forEach(itemLink =>{
+              promiseAR2.push(new Promise(function(resolve2, reject2) {
+                Rent21_all.findAll({
+                  attributes:[
+                    'contact',
+                    'uid',
+                    'tip',
+                    [ss.fn('CONCAT',itemLink.dataValues.koNt21),'koNt21']
+                  ],
+                  where:{
+                    uid: {
+                      [ss.Op.in]:[itemLink.dataValues.puid]
+                    }
+                  }
+                }).then(items=>{
+                  if(items.forEach){
+                    const promiseAR3 = [];
+                    items.forEach(item=>{
+                      promiseAR3.push(new Promise(function(resolve3, reject3) {
+                        if(!item.getDataValue('contact')){
+                          item.contact = [];
+                        }
+                        item.contact.push(JSON.parse(item.dataValues.koNt21))
+                        Rent21_all.update({
+                            owners: item.contact
+                          },{
+                            where:{
+                              uid: {
+                                [ss.Op.in]:[item.uid]
+                              }
+                            },
+                          }
+                        ).then(item=>{
+                          resolve3();
+                        })
+                      }));
+                    })
+                    Promise.all(promiseAR3).then(
+                      result => {
+                        resolve2();
+                      }
+                    );
+                  }
+                  else{
+                    resolve2()
+                  }
+                })
+              }));
+            })
+            Promise.all(promiseAR2).then(
+              result => {
+                resolve1();
+              }
+            )
+          }
+          else{
+            resolve1()
+          }
+        })
+      }));
+    })
+    Promise.all(promiseAR1).then(
+      result => {
+        console.log('end owners');
+        updateob();
+      }
+    );
+  })
+
 }
 
 function initial() {
@@ -314,27 +898,81 @@ function initial() {
     })
   })
 */
-  db.sequelize.query("select DISTINCT UID FROM fields", {
+  const ss = require('sequelize')
+  db.sequelize.query("SELECT * FROM test_linc21", {
   }).then(items=>{
-    items[0].forEach(item => {
-      //console.log(item);
-      db.sequelize.query("select * FROM fields WHERE UID = '"+item.UID+"'", {
-      }).then(items=>{
-        const ob ={}
-        items[0].forEach(item => {
-          ob.tip = item.TIP
-          ob.uid = item.UID
-          ob[item.TITLE] = item.VAL;
+    const promiseAR = [];
+    console.log('length',items[0].length)
+    items[0].forEach(itemAdress => {
+      promiseAR.push(new Promise(function(resolve, reject) {
+        Rent21_linc.create({
+          puid: itemAdress.PUID,
+          val: itemAdress.VAL
+        }).then(item=>{
+          resolve()
         })
-        Rent21_all.create({
-          uid:ob.uid,
-          tip:ob.tip,
-          fields: ob
-        })
-
-      })
+      }));
     })
+    Promise.all(promiseAR).then(
+      result => {
+        db.sequelize.query("select DISTINCT UID FROM fields", {
+        }).then(items=>{
+          const promiseAR = [];
+          items[0].forEach(item => {
+            //console.log(item);
+            promiseAR.push(new Promise(function(resolve, reject) {
+              db.sequelize.query("select * FROM fields WHERE UID = '"+item.UID+"'", {
+              }).then(items=>{
+                const ob ={}
+                items[0].forEach(item => {
+                  ob.tip = item.TIP
+                  ob.uid = item.UID
+                  ob[item.TITLE] = item.VAL;
+                })
+                Rent21_all.create({
+                  uid:ob.uid,
+                  tip:ob.tip,
+                  fields: ob
+                }).then(items =>{
+                  resolve()
+                })
+              })
+            }));
+          })
+          Promise.all(promiseAR).then(
+            result => {
+              console.log('Ипорт завершён');
+              Rent21_all.findAll({
+                attributes:[
+                  [ss.literal('DISTINCT `tip`'), 'tip']
+                ],
+              }).then(items=>{
+                items.forEach(item=>{
+                  Rent21_all.findAll({
+                    attributes:[
+                      [ss.fn('COUNT', ss.col('uid')), 'count'],
+                      [ss.fn('CONCAT',item.dataValues.tip),'tip']
+                    ],
+                    where:{
+                      tip: {
+                        [ss.Op.in]:[item.dataValues.tip]
+                      }
+                    }
+                  }).then(items=>{
+                    items.forEach(item=>{
+                      console.log(item.dataValues.tip, item.dataValues.count)
+                    })
+                  })
+                })
+                generateOwners()
+              })
+            }
+          );
+        })
+      }
+    );
   })
+
 
   //User.roles.create({
 

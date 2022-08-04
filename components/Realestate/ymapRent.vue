@@ -20,6 +20,9 @@ export default {
       this.$api.get('/api/map',{}).then(items =>{
         const clusterer = new window.ymaps.Clusterer();
         items.data.forEach(item=>{
+          if(item.building && item.building.length > 1){
+            console.log(item.building.length)
+          }
           const myPlacemark = new window.ymaps.Placemark(
             // Координаты метки
             [item.LNG, item.LAT], {
