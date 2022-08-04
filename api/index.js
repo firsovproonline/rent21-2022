@@ -16,6 +16,7 @@ const Rent21_building = db.Rent21_building;
 const Rent21_linc = db.Rent21_linc;
 const Rent21_ob = db.Rent21_ob;
 const Rent21_all = db.Rent21_all;
+const Rent21_lids = db.Rent21_lids;
 
 
 const Role = db.role;
@@ -36,6 +37,29 @@ function S4() {
 
 function generateUID() {
   return (S4() + S4() + "-" + S4() + "-4" + S4().substr(0, 3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();
+}
+function importLids(){
+  db.sequelize.query("SELECT DISTINCT UID FROM lids", {}).then(items=>{
+    items[0].forEach(item=>{
+      db.sequelize.query("SELECT * FROM lids WHERE UID ='"+item.UID+"'", {}).then(items=>{
+        let i = items[0].length;
+        let outOB = {};
+        items[0].forEach(item=>{
+          if(i === items[0].length){
+            outOB = {};
+          }
+          i--;
+          outOB[item.TITLE] = item.VAL;
+          if(i===0){
+            Rent21_lids.create({
+              uid: item.UID,
+              fields: outOB
+            });
+          }
+        })
+      });
+    })
+  })
 }
 
 function generateBuilders(){
@@ -132,7 +156,6 @@ function generateBuilders(){
 
 }
 
-
 function generateAddrees(){
   Rent21_all.findAll({
     where:{
@@ -223,7 +246,6 @@ function generateAddrees(){
   })
 
 }
-
 
 function generateOwners(){
   Rent21_all.findAll({
@@ -621,6 +643,7 @@ function updateowners(){
 }
 
 function initial() {
+  importLids();
   Realestate_client_opp.create({
     id: 0,
     name: 'Сниму'
