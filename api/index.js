@@ -1033,7 +1033,8 @@ require('./routes/user.routes')(app);
 require('./routes/realestate.routes')(app);
 require('./routes/shop.routes')(app);
 require('./routes/sering.routes')(app);
- require('./routes/map.routes')(app);
+require('./routes/map.routes')(app);
+require('./routes/lids.routers')(app);
 
 
 export default {

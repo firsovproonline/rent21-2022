@@ -8,5 +8,5 @@ module.exports = function(app) {
     );
     next();
   });
-  app.get("/lids", [authJwt.verifyToken,authJwt.isAdmin], controller.get);
+  app.post("/lids", [authJwt.verifyToken,authJwt.isAdmin], controller.get);
 }

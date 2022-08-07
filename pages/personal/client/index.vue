@@ -2,6 +2,8 @@
   <section v-if="isAdmin || isModerator" style="display: flex">
     <div class="leftMenu">
       <LeftMenu />
+      <hr/>
+      <FilterLids />
     </div>
     <div class="main-block" style="flex: 1 1 auto;">
       <div class="row">
@@ -22,11 +24,12 @@
 <script>
 import LeftMenu from "~/components/leftMenu";
 import ListClient from "~/components/Realestate/client/list";
+import FilterLids from "~/components/Realestate/client/filter";
 
 export default {
   name: "indexClientPage",
   layout: 'default',
-  components: {ListClient, LeftMenu},
+  components: {FilterLids, ListClient, LeftMenu},
   data: () => ({
     isAdmin: false,
     isModerator: false,

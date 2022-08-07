@@ -26,7 +26,9 @@
         <div class="product-wrapper-grid list-view" style="opacity: 1;">
           <div class="row">
             <section v-for="item in listItem" :key="item.uid">
+
               <item :item="item" />
+
             </section>
           </div>
         </div>
@@ -54,7 +56,7 @@ export default {
   mounted() {
     this.$api.get("/api/realestate/spr").then(response => {
       this.$store.commit('realestate/setSpr', response.data)
-      this.$api.post("/api/realestate/lids",{page:this.$route.params.id}).then(response => {
+      this.$api.post("/api/lids",{page:this.$route.params.id}).then(response => {
         this.$store.commit('realestate/setItems', response.data.rows)
         this.$store.commit('realestate/setTotal', response.data.total)
       })
