@@ -1,6 +1,18 @@
 const db = require("../models");
 const {fn, col} = require("sequelize");
 const ss = require("sequelize");
+exports.getID = (req, res) => {
+  const Table = db.Rent21_lids;
+  Table.findOne({
+    where: {
+      uid: req.query.id
+    }
+  }).then(item=>{
+    res.send(item)
+  })
+}
+
+
 exports.get = (req, res) => {
   let page = 0
   const limit = 25

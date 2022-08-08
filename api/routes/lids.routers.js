@@ -9,4 +9,5 @@ module.exports = function(app) {
     next();
   });
   app.post("/lids", [authJwt.verifyToken,authJwt.isAdmin], controller.get);
+  app.get("/lid", [authJwt.verifyToken,authJwt.isAdmin], controller.getID);
 }
