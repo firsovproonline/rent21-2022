@@ -32,6 +32,7 @@
     "nuxt": "^2.15.8",
     "sequelize": "^6.21.0",
     "ts-node": "^10.9.1",
+    "v-mask": "^2.3.0",
     "vue": "^2.7.8",
     "vue-server-renderer": "^2.7.8",
     "vue-template-compiler": "^2.7.8",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@nuxt/types": "^2.15.8",
     "@nuxt/typescript-build": "^2.1.0",
+    "@nuxtjs/style-resources": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.31.0",
     "babel-eslint": "^9.0.0",
@@ -50,9 +52,8 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-nuxt": "^3.2.0",
     "eslint-plugin-vue": "^9.1.1",
-    "typescript": "^4.7.4",
-    "@nuxtjs/style-resources": "^1.0.0",
     "node-sass": "^4.14.1",
-    "sass-loader": "^10.0.1"
+    "sass-loader": "^10.0.1",
+    "typescript": "^4.7.4"
   }
 }

@@ -38,6 +38,26 @@ function S4() {
 function generateUID() {
   return (S4() + S4() + "-" + S4() + "-4" + S4().substr(0, 3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();
 }
+
+function getPhones(val){
+  const outAr = [];
+  if(val){
+    val.split('|').map(item => item.trim()).forEach(item=>{
+      if(item!== ''){
+         const v = item.split(';');
+         if(v.length > 0){
+           if(v[1]==='')
+             v[1] = 'Мобильный';
+           outAr.push({val:v[0],typ:v[1]});
+         }else{
+           outAr.push({val:v[0],typ:'Мобильный'});
+         }
+      }
+    })
+  }
+  return outAr;
+}
+
 function importLids(){
   db.sequelize.query("SELECT DISTINCT UID FROM lids", {}).then(items=>{
     items[0].forEach(item=>{
@@ -51,6 +71,20 @@ function importLids(){
           i--;
           outOB[item.TITLE] = item.VAL;
           if(i===0){
+            if(outOB['TEL']){
+              outOB['TEL'] =  getPhones(outOB['TEL'])
+            }
+            if(outOB['KLEMAIL']){
+              outOB['KLEMAIL'] =  outOB['KLEMAIL'] != '' ? outOB['KLEMAIL'].split('|').map(item => item.trim()) : []
+            }
+            if(outOB['DOSTUP']){
+              outOB['DOSTUP'] =  outOB['DOSTUP'] != '' ? outOB['DOSTUP'].split('|').map(item => item.trim()) : []
+            }
+            if(outOB['METRO']){
+              outOB['METRO'] =  outOB['METRO'] != '' ? outOB['METRO'].split('|').map(item => item.trim()) : []
+            }
+
+
             Rent21_lids.create({
               uid: item.UID,
               fields: outOB
@@ -338,9 +372,6 @@ function generateOwners(){
 
 }
 
-function generateAddress(){
-
-}
 function updatebuid21(){
   Rent21_all.findAll({
     where:{
@@ -875,54 +906,9 @@ function initial() {
   }).then(user => {
     user.addRoles([3])
   });
-/*
-  db.sequelize.query("SELECT * FROM test_adRes21", {
-  }).then(items=>{
-    console.log('length',items[0].length)
-    items[0].forEach(itemAdress => {
-      itemAdress.METRO = itemAdress.METRO.split('|');
-      Rent21_address.create({
-        uid: itemAdress.UID,
-        fields: itemAdress
-      })
-    })
-  })
 
-  db.sequelize.query("SELECT * FROM test_buid21", {
-  }).then(items=>{
-    console.log('length',items[0].length)
-    items[0].forEach(itemAdress => {
-      Rent21_building.create({
-        uid: itemAdress.UID,
-        fields: itemAdress
-      })
-    })
-  })
-
-  db.sequelize.query("SELECT * FROM test_linc21", {
-  }).then(items=>{
-    console.log('length',items[0].length)
-    items[0].forEach(itemAdress => {
-      Rent21_linc.create({
-        puid: itemAdress.PUID,
-        val: itemAdress.VAL
-      })
-    })
-  })
-
-  db.sequelize.query("SELECT * FROM test_ob21", {
-  }).then(items=>{
-    console.log('length',items[0].length)
-    items[0].forEach(itemAdress => {
-      Rent21_ob.create({
-        uid: itemAdress.UID,
-        fields: itemAdress
-      })
-    })
-  })
-*/
   const ss = require('sequelize')
-  db.sequelize.query("SELECT * FROM test_linc21", {
+  db.sequelize.query("SELECT * FROM fields WHERE TIP = 'linc21'", {
   }).then(items=>{
     const promiseAR = [];
     console.log('length',items[0].length)
@@ -1002,14 +988,14 @@ function initial() {
 
 
 }
-// db.sequelize.sync();
+db.sequelize.sync();
 
-
+/*
 db.sequelize.sync({force: true}).then(() => {
   console.log('Drop and Resync Db');
   initial();
 });
-
+*/
 
 const corsOptions = {
   // origin: "http://localhost:3000"

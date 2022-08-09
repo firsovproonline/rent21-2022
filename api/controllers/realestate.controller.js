@@ -368,6 +368,12 @@ exports.spr = (req, res) => {
     {id: 'Офис', name: 'Офис'},
     {id: 'Склад', name: 'Склад'},
   ]
+  outOb.clientTipPhone = [
+    {id: 'Мобильный', name: 'Мобильный'},
+    {id: 'Домашний', name: 'Домашний'},
+    {id: 'Рабочий', name: 'Рабочий'},
+  ]
+
   const promiseAR = [];
 
 

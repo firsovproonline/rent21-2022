@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main">
-      <div class="title">{{title}}</div>
+      <div v-if="title!=''" class="title">{{title}}</div>
       <div v-if="this.spr" class="value">
         {{
           Object(this.guide[this.spr].find(aitem => aitem.id == value)).name
@@ -62,6 +62,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
   .selectDiv{
     border: 1px solid;
     position: absolute;
@@ -74,6 +75,9 @@ export default {
     .item{
       padding: 4px;
       cursor: pointer;
+    }
+    .item:hover{
+      background-color: #f5f7fb;
     }
   }
 

@@ -33,10 +33,29 @@
                 <div class="col">
                   <div class="mb-3" v-if="item.fields">
                     <ul class="nav nav-tabs border-tab" id="top-tab" >
-                      <li class="nav-item"><a class="nav-link active"><i class="icofont icofont-ui-home"></i>Телефон</a></li>
-                      <li class="nav-item"><a class="nav-link" ><i class="icofont icofont-man-in-glasses"></i>Емаил</a></li>
-                      <li class="nav-item"><a class="nav-link" ><i class="icofont icofont-contacts"></i>Сайт</a></li>
+                      <li class="nav-item" @click="tab1active='phone'">
+                        <a :class="tab1active==='phone' ?  'nav-link active':'nav-link'">
+                          <i class="icofont icofont-ui-home"></i>
+                          Телефон
+                        </a>
+                      </li>
+                      <li class="nav-item" @click="tab1active='email'">
+                        <a :class="tab1active==='email' ?  'nav-link active':'nav-link'" >
+                          <i class="icofont icofont-man-in-glasses"></i>
+                          Емаил
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" >
+                          <i class="icofont icofont-contacts"></i>
+                          Сайт
+                        </a>
+                      </li>
                     </ul>
+                    <div v-if="item.fields">
+                      <EditPhones :items="item.fields.TEL" v-if="tab1active==='phone'" />
+                      <EditEmails v-if="tab1active==='email'"/>
+                    </div>
                   </div>
                 </div>
 
@@ -61,6 +80,27 @@
                   field="tip"
                   spr="clientTip"
                 />
+                <div v-if="item.fields && flagYmap" class="input-h">
+                  <div class="label">Город</div>
+                  <input id="suggest" v-model="item.fields.GOROD" @change="imputChange()" class="form-control" type="text" placeholder="наименование">
+
+                </div>
+                <ul class="nav nav-tabs border-tab" >
+                  <li class="nav-item" @click="tab2active='region'">
+                    <a :class="tab2active==='region' ?  'nav-link active':'nav-link'">
+                      <i class="icofont icofont-ui-home"></i>
+                      Регион
+                    </a>
+                  </li>
+                  <li class="nav-item" @click="tab2active='setings'">
+                    <a :class="tab2active==='setings' ?  'nav-link active':'nav-link'" >
+                      <i class="icofont icofont-man-in-glasses"></i>
+                      Особенности
+                    </a>
+                  </li>
+                </ul>
+
+
               </div>
             </div>
           </div>
@@ -72,10 +112,19 @@
 
 <script>
 import ComboRent21 from "~/components/combo";
+import EditPhones from "~/components/Realestate/client/editphones";
+import EditEmails from "~/components/Realestate/client/editemails";
 export default {
   name: "index",
-  components: {ComboRent21},
+  components: {EditEmails, EditPhones, ComboRent21},
   layout: 'default',
+  data: () => ({
+    tab1active : 'phone',
+    tab2active : 'region',
+    flagYmap : false,
+    suggestView: null
+  }),
+
   async asyncData ({ app, route, params, error, store }) {
     try {
       await store.dispatch('realestate/loadSpr')
@@ -107,8 +156,28 @@ export default {
     this.$api.get('/api/lid?id='+this.$route.params.id).then(item=>{
       this.$store.dispatch('realestate/setItem',item.data)
     })
+    window.ymaps.ready(()=>{
+      this.flagYmap = true
+    })
+
   },
   watch: {
+    item(val){
+      if(this.flagYmap){
+        this.$nextTick(()=>{
+          if(document.getElementById('suggest'))
+          this.suggestView = new window.ymaps.SuggestView(document.getElementById('suggest'));
+        })
+
+      }
+    },
+    flagYmap(){
+      if(this.item.fields){
+        this.$nextTick(()=>{
+            this.suggestView = new window.ymaps.SuggestView(document.getElementById('suggest'));
+        })
+      }
+    },
     globalevent(val) {
       const ob = this.item
       switch (val.operation){
@@ -139,6 +208,25 @@ export default {
 </script>
 
 <style scoped>
+.border-tab.nav-tabs {
+  margin-bottom: 10px;
+}
+.input-h{
+  display: flex;
+  align-items: center;
+}
+
+.input-h .label {
+  border-radius: 2px;
+  color: #0c5460;
+  min-width: 140px;
+  width: 140px;
+}
+
+.nav-tabs .nav-item {
+  cursor: pointer;
+}
+
 .card .card-header {
   padding: 16px;
   background-color: #fff;
