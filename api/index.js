@@ -75,7 +75,7 @@ function importLids(){
               outOB['TEL'] =  getPhones(outOB['TEL'])
             }
             if(outOB['KLEMAIL']){
-              outOB['KLEMAIL'] =  outOB['KLEMAIL'] != '' ? outOB['KLEMAIL'].split('|').map(item => item.trim()) : []
+              outOB['KLEMAIL'] =   getPhones(outOB['KLEMAIL'])
             }
             if(outOB['DOSTUP']){
               outOB['DOSTUP'] =  outOB['DOSTUP'] != '' ? outOB['DOSTUP'].split('|').map(item => item.trim()) : []
@@ -995,7 +995,9 @@ db.sequelize.sync({force: true}).then(() => {
   console.log('Drop and Resync Db');
   initial();
 });
-*/
+
+ */
+
 
 const corsOptions = {
   // origin: "http://localhost:3000"

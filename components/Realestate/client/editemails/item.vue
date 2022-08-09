@@ -1,11 +1,11 @@
 <template>
   <div class="item">
-    <input v-model="item.val" v-mask="'(###) ###-##-##'" class="form-control phone" type="text" placeholder="Телефон">
+    <input v-model="item.val" class="form-control email" type="email" placeholder="email" >
     <ComboRent21 v-if="item.typ"
                  title=""
                  :value="item.typ"
                  :itemkey="itemkey"
-                 field="tempstatus"
+                 field="tempemail"
                  spr="clientTipPhone"
                  style="flex: 1 1 auto; margin-left: 6px;margin-right: 6px"
     />
@@ -34,7 +34,7 @@ export default {
     globalevent(val){
       switch (val.operation){
         case 'setFieldItem':
-          if(val.itemkey === this.itemkey)
+          if(val.itemkey === this.itemkey && val.field === 'tempemail')
             this.item.typ = val.value
           break
         default:
@@ -46,7 +46,7 @@ export default {
   methods:{
     deleteItem(){
       this.$store.dispatch('main/setglobalevent', {
-        operation: 'deleteClientPhone',
+        operation: 'deleteClientEmail',
         field: null,
         value: this.itemkey
       })
@@ -56,8 +56,8 @@ export default {
 </script>
 
 <style scoped>
-  .phone{
-    width: 140px;
+  .email{
+    width: 200px;
   }
   .upr{
     display: flex;

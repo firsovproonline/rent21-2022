@@ -3,7 +3,7 @@
     <div class="addB" @click="insertItem" >
       Добавить
     </div>
-    <Item v-for="(item, key) in items" :key="key" :item="item"  />
+    <Item v-for="(item, key) in items" :key="key" :item="item" :itemkey="key"  />
   </div>
 </template>
 

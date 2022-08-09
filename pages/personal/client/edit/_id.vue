@@ -54,7 +54,7 @@
                     </ul>
                     <div v-if="item.fields">
                       <EditPhones :items="item.fields.TEL" v-if="tab1active==='phone'" />
-                      <EditEmails v-if="tab1active==='email'"/>
+                      <EditEmails :items="item.fields.KLEMAIL" v-if="tab1active==='email'"/>
                     </div>
                   </div>
                 </div>
@@ -181,6 +181,18 @@ export default {
     globalevent(val) {
       const ob = this.item
       switch (val.operation){
+        case 'deleteClientEmail':
+          ob.fields.KLEMAIL.splice(val.value,1);
+          break;
+        case 'deleteClientPhone':
+          ob.fields.TEL.splice(val.value,1);
+          break;
+        case 'insertClientEmail':
+          ob.fields.KLEMAIL.push({typ:'Рабочий',val:''})
+          break;
+        case 'insertClientPhone':
+          ob.fields.TEL.push({typ:'Рабочий',val:''})
+          break;
         case 'setFieldItem':
           switch (val.field){
             case 'status':
@@ -235,5 +247,9 @@ export default {
 .card .card-body {
   padding: 16px;
   background-color: transparent;
+}
+
+.col{
+  padding-left: 0px;
 }
 </style>
