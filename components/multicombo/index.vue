@@ -30,7 +30,11 @@ export default {
   }),
   methods:{
     showList(){
-      this.$store.dispatch('main/setVcomponent', () => import('./list'))
+      this.$store.dispatch('main/setVcomponent', {
+        comp:() => import('./list'),
+        field: null,
+        spr: this.$store.getters['realestate/spr'][this.spr]
+      })
     }
   }
 }
