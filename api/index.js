@@ -83,6 +83,9 @@ function importLids(){
             if(outOB['METRO']){
               outOB['METRO'] =  outOB['METRO'] != '' ? outOB['METRO'].split('|').map(item => item.trim()) : []
             }
+            if(outOB['RAJON']){
+              outOB['RAJON'] =  outOB['RAJON'] != '' ? outOB['RAJON'].split('|').map(item => item.trim()) : []
+            }
 
 
             Rent21_lids.create({
@@ -995,8 +998,8 @@ db.sequelize.sync({force: true}).then(() => {
   console.log('Drop and Resync Db');
   initial();
 });
+*/
 
- */
 
 
 const corsOptions = {

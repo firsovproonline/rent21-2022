@@ -11,7 +11,9 @@
       </div>
     </div>
     <div class="page-wrapper compact-wrapper">
-      <div v-if="showRightPanel" class="rpanel">rpanel</div>
+      <div v-if="vComponent" class="rpanel">
+        <component :is="vComponent" v-if="vComponent" />
+      </div>
       <div v-if="showLeftPanel" class="lpanel" >
         <LeftMenu />
       </div>
@@ -36,14 +38,14 @@ export default {
   components: {HeaderPage, LeftMenu},
   data: () => ({
     showLeftPanel: false,
-    showRightPanel: false,
+    showRightPanel: true,
   }),
   computed: {
     globalEvent(){
-      return this.$store.getters['main.js/globalevent']
+      return this.$store.getters['main/globalevent']
     },
     vComponent() {
-      return this.$store.getters['main.js/leftMenu']
+      return this.$store.getters['main/vcomponent']
     },
   },
   watch:{
@@ -138,7 +140,7 @@ export default {
   background-color: white;
   width: 390px;
   z-index: 5000;
-  left: calc(100% - 600px);
+  left: calc(100% - 390px);
   height: 100vh;
   border-left: 1px solid;
   display: block;

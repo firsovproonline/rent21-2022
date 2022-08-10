@@ -99,6 +99,12 @@
                     </a>
                   </li>
                 </ul>
+                <div v-if="tab2active==='region'">
+                  <Multicombo v-if="item.fields"
+                    title="Район"
+                    :value="item.fields.RAJON"
+                  />
+                </div>
 
 
               </div>
@@ -114,9 +120,10 @@
 import ComboRent21 from "~/components/combo";
 import EditPhones from "~/components/Realestate/client/editphones";
 import EditEmails from "~/components/Realestate/client/editemails";
+import Multicombo from "~/components/multicombo";
 export default {
   name: "index",
-  components: {EditEmails, EditPhones, ComboRent21},
+  components: {Multicombo, EditEmails, EditPhones, ComboRent21},
   layout: 'default',
   data: () => ({
     tab1active : 'phone',
@@ -150,6 +157,14 @@ export default {
         const ob = this.item
         this.$store.commit('realestate/setItem', ob);
       })
+    },
+    setRegion(){
+      console.log('setRegion', this.item.fields.GOROD)
+      const url = "//geocode-maps.yandex.ru/1.x/?apikey=fdb945b0-aaa5-4b5d-a837-383abb24dfc4&format=json&geocode=" + this.item.fields.GOROD;
+      this.$axios.get(url).then(items=>{
+        console.log(items)
+      })
+
     }
   },
   mounted() {
@@ -162,6 +177,11 @@ export default {
 
   },
   watch: {
+    'item.fields.GOROD'(val){
+      if(this.flagYmap){
+        console.log(this.flagYmap, val);
+      }
+    },
     item(val){
       if(this.flagYmap){
         this.$nextTick(()=>{
@@ -175,6 +195,7 @@ export default {
       if(this.item.fields){
         this.$nextTick(()=>{
             this.suggestView = new window.ymaps.SuggestView(document.getElementById('suggest'));
+            this.setRegion()
         })
       }
     },
