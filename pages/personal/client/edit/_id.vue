@@ -102,6 +102,7 @@
                 <div v-if="tab2active==='region'">
                   <Multicombo v-if="item.fields"
                     title="Район"
+                    spr="clientRajon"
                     :value="item.fields.RAJON"
                   />
                 </div>

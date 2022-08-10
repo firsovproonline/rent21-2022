@@ -4,6 +4,7 @@ export const state = () => ({
   vcomponent: null,
   vleftMenu: null,
   globalevent: null,
+  multiItems: [],
   globalMessage: '11111',
   setings:{}
 })
@@ -16,6 +17,9 @@ export const actions = {
     } catch (err) {
 
     }
+  },
+  setmultiItems ({ commit }, comp) {
+    commit('setmultiItems', comp)
   },
   setSetings ({ commit }, comp) {
     commit('setSetings', comp)
@@ -39,6 +43,9 @@ export const mutations = {
     console.log('1111111111111111111111')
     state.vleftMenu = vcomponent
   },
+  setmultiItems (state, vcomponent) {
+    state.multiItems = vcomponent
+  },
   setSetings (state, vcomponent) {
     state.setings = vcomponent
   },
@@ -60,4 +67,5 @@ export const getters = {
   globalevent: (state) => { return state.globalevent },
   globalMessage: (state) => { return state.globalMessage },
   setings: (state) => { return state.setings },
+  multiItems: (state) => { return state.multiItems }
 }
