@@ -54,7 +54,6 @@ export default {
         field:  this.field,
         value: el.target.getAttribute('value'),
         itemkey: this.itemkey
-
       })
       this.$nextTick(()=>{
         this.showCombo = false;

@@ -1,10 +1,13 @@
 <template>
   <div class="main">
-    <div class="label" @click="showList">{{title}}</div>
+    <div>
+      <div class="label" @click="showList">{{title}}</div>
+      <div v-if="field==='METRO'" style="margin-top: 12px" class="label" @click="showMetro">Карта</div>
+    </div>
     <div class="body">
-      <ul style="display: flex">
+      <div style="display: flex;flex-wrap: wrap;">
         <item v-for="(item, key) in value" :key="key" :item="item"  />
-      </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -30,12 +33,24 @@ export default {
   }),
   methods:{
     showList(){
-      this.$store.dispatch('main/setVcomponent', {
+      const p = {
         comp:() => import('./list'),
-        field: null,
+        field: this.field,
+        value: this.value,
         spr: this.$store.getters['realestate/spr'][this.spr]
-      })
-    }
+      }
+      this.$store.dispatch('main/setVcomponent', p)
+    },
+    showMetro(){
+      const p = {
+        comp:() => import('@/components/metromap'),
+        field: this.field,
+        value: this.value,
+        spr: this.$store.getters['realestate/spr'][this.spr]
+      }
+      this.$store.dispatch('main/setVcomponent', p)
+    },
+
   }
 }
 </script>

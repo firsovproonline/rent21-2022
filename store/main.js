@@ -7,7 +7,9 @@ export const state = () => ({
   multiItems: [],
   globalMessage: '11111',
   setings:{},
-  combospr: ''
+  combospr: '',
+  combofield: '',
+  combovalue: ''
 })
 
 export const actions = {
@@ -51,8 +53,10 @@ export const mutations = {
     state.setings = vcomponent
   },
   setVcomponent (state, vcomponent) {
-    state.vcomponent = vcomponent.comp,
+    state.vcomponent = vcomponent.comp
     state.combospr = vcomponent.spr
+    state.combofield = vcomponent.field
+    state.combovalue = vcomponent.value
   },
   setglobamessage (state, globalMessage) {
     state.globalMessage = globalMessage
@@ -70,5 +74,7 @@ export const getters = {
   globalMessage: (state) => { return state.globalMessage },
   setings: (state) => { return state.setings },
   multiItems: (state) => { return state.multiItems },
-  combospr: (state) => { return state.combospr }
+  combospr: (state) => { return state.combospr },
+  combofield: (state) => { return state.combofield },
+  combovalue: (state) => { return state.combovalue },
 }

@@ -101,9 +101,25 @@
                 </ul>
                 <div v-if="tab2active==='region'">
                   <Multicombo v-if="item.fields"
-                    title="Район"
+                    title="Округ"
                     spr="clientRajon"
                     :value="item.fields.RAJON"
+                    field = "RAJON"
+
+                  />
+                  <hr>
+                  <Multicombo v-if="item.fields"
+                              title="Район"
+                              spr="clientOkrug"
+                              :value="item.fields.OKRUG"
+                              field = "OKRUG"
+                  />
+                  <hr>
+                  <Multicombo v-if="item.fields"
+                              title="Метро"
+                              spr="clientRajon"
+                              :value="item.fields.METRO"
+                              field = "METRO"
                   />
                 </div>
 
@@ -130,7 +146,8 @@ export default {
     tab1active : 'phone',
     tab2active : 'region',
     flagYmap : false,
-    suggestView: null
+    suggestView: null,
+    flagRefresh : false
   }),
 
   async asyncData ({ app, route, params, error, store }) {
@@ -163,7 +180,7 @@ export default {
       console.log('setRegion', this.item.fields.GOROD)
       const url = "//geocode-maps.yandex.ru/1.x/?apikey=fdb945b0-aaa5-4b5d-a837-383abb24dfc4&format=json&geocode=" + this.item.fields.GOROD;
       this.$axios.get(url).then(items=>{
-        console.log(items)
+        // console.log(items)
       })
 
     }
@@ -184,6 +201,8 @@ export default {
       }
     },
     item(val){
+      console.log('item', val)
+
       if(this.flagYmap){
         this.$nextTick(()=>{
           if(document.getElementById('suggest'))
@@ -226,7 +245,13 @@ export default {
             case 'tip':
               ob.fields.TIP = val.value
               break
+            case 'OKRUG':
+            case 'RAJON':
+              ob.fields[val.field] = val.value
+              this.$store.dispatch('main/setVcomponent', {comp: null})
+              break
             default:
+              console.log('Нет поля' ,val)
               break
           }
           break
@@ -234,6 +259,13 @@ export default {
           break
       }
       this.$store.commit('realestate/setItem', ob);
+      this.$nextTick(()=>{
+        const temp = this.tab2active;
+        this.tab2active = null
+        this.$nextTick(()=>{
+          this.tab2active = temp
+        })
+      })
     }
   }
 

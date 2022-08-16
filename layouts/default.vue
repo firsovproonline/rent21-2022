@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="page-wrapper compact-wrapper">
-      <div v-if="vComponent" class="rpanel">
+      <div v-if="vComponent" :class="ifmetro ? 'rpanel-big' : 'rpanel'">
         <component :is="vComponent" v-if="vComponent" />
       </div>
       <div v-if="showLeftPanel" class="lpanel" >
@@ -32,15 +32,25 @@
 <script>
 import HeaderPage from "~/components/headerPage";
 import LeftMenu from "~/components/leftMenu";
+import Metromap from "~/components/metromap";
 
 export default {
   name: "defaultlayouts",
-  components: {HeaderPage, LeftMenu},
+  components: {Metromap, HeaderPage, LeftMenu},
   data: () => ({
     showLeftPanel: false,
     showRightPanel: true,
   }),
   computed: {
+    ifmetro(){
+      if(this.vComponent){
+        if(this.vComponent.toString().indexOf('metromap') > -1){
+          return true
+        }else
+          return false
+      }else
+        return false
+    },
     globalEvent(){
       return this.$store.getters['main/globalevent']
     },
@@ -71,8 +81,38 @@ export default {
 </script>
 
 <style lang="css">
+.rpanel-big{
+  top: 0px;
+  position: fixed;
+  background-color: white;
+  width: 390px;
+  z-index: 5000;
+  left: calc(100% - 390px);
+  height: 100vh;
+  border-left: 1px solid;
+  display: block;
+  overflow: hidden;
+}
+
+@media screen and (max-device-width: 990px) {
+  .rpanel-big{
+    width: 100%;
+    z-index: 5000;
+    left: 0;
+  }
+}
+
+
+@media screen and (min-device-width: 1200px) {
+  .rpanel-big{
+    width: 50%;
+    z-index: 5000;
+    left: calc(50%);
+  }
+}
 
 @media screen and (max-width: 991px) {
+
   .leftMenu {
     display: none;
   }
@@ -158,4 +198,11 @@ export default {
   display: block;
 }
 
+@media (max-width: 600px) {
+  .rpanel{
+    width: 100%;
+    z-index: 5000;
+    left: 0;
+  }
+}
 </style>

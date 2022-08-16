@@ -22,7 +22,8 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', type: 'text/css', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'}
+      { rel: 'stylesheet', type: 'text/css', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'},
+      //{ rel: 'stylesheet', type: 'text/css', href: 'https://yastatic.net/s3/front-maps-static/maps-front-maps/build/client/metro/chunks/metrobase/261cad53d70ba047b22b.css'}
 
     ],
   },
@@ -73,6 +74,9 @@ export default {
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    babel: {
+      compact: true,
+    },
     extend (config, { isDev, isClient }) {
       config.node = {
         fs: "empty",

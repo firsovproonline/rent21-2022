@@ -1,7 +1,7 @@
 <template>
-  <li>
+  <div class="item">
     {{item}}
-  </li>
+  </div>
 </template>
 
 <script>
@@ -14,8 +14,9 @@ export default {
 </script>
 
 <style scoped>
-  li{
+  .item{
     margin-left: 4px;
     border-bottom: 1px #1c222b dotted;
+    white-space: nowrap;
   }
 </style>
