@@ -1945,8 +1945,8 @@
       </div>
     </div>
     <div class="footer">
-      <button type="button" class="btn btn-pill btn-primary btn-air-primary btn-sm">Сохранить</button>
-      <button type="button" class="btn btn-pill btn-secondary btn-air-secondary btn-sm">Отменить</button>
+      <button @click="close" type="button" class="btn btn-pill btn-primary btn-air-primary btn-sm">Сохранить</button>
+      <button @click="close" type="button" class="btn btn-pill btn-secondary btn-air-secondary btn-sm">Отменить</button>
     </div>
 
   </div>
@@ -1969,6 +1969,13 @@ export default {
     }
   },
   methods:{
+    close(){
+      this.$store.dispatch('main/setVcomponent', {
+        comp: null,
+        field: null,
+        spr: null
+      })
+    },
     wheel(e){
       if(e.deltaY > 0){
         this.zoom = this.zoom - 0.2

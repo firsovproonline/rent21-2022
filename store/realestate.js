@@ -49,7 +49,8 @@ export const actions = {
   async load (state) {
     try {
       const res = await axios.get("http://localhost:3021/api/realestate/address")
-      state.commit('setItems', res.data)
+      state.commit('setItems', res.data.rows)
+      state.commit('setTotal', res.data.total)
       const spr = await axios.get("http://localhost:3021/api/realestate/spr")
       state.commit('setSpr', spr.data)
     } catch (err) {

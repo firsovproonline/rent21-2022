@@ -26,6 +26,7 @@ export default {
   name: "indexPRealestate",
   components: {LeftMenu, ListAddress},
   layout: 'default',
+  /*
   async asyncData ({ app, route, params, error, store }) {
     try {
       await store.dispatch('realestate/load')
@@ -37,6 +38,7 @@ export default {
       })
     }
   },
+   */
   data: () => ({
     isAdmin: false,
     isModerator: false,
@@ -60,6 +62,9 @@ export default {
       }
     }
   },
+  mounted() {
+    this.$store.dispatch('realestate/load')
+  }
 }
 </script>
 

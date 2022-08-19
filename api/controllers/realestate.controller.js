@@ -2,6 +2,7 @@ const db = require("../models");
 const {verify} = require("jsonwebtoken");
 const cianItems = require("../config/cian.config.js");
 const {Op, fn} = require("sequelize");
+const fs = require('fs')
 
 const Realestate_opp = db.realestate_opp;
 const Realestate_client_item = db.realestate_client_item;
@@ -256,60 +257,24 @@ exports.rent21address = (req, res) => {
   })
 }
 
+exports.room = (req, res) => {
+  const Address = db.Rent21_all;
+  const build = db.Rent21_all;
+  const Ob = db.Rent21_all;
+  const nextDb = db;
+  const { Op, fn } = require('sequelize')
+  const fileContent = fs.readFileSync(__dirname +'/dynamic/returnRoom.js', "utf8");
+  eval(fileContent);
+};
 
 exports.address = (req, res) => {
-  const Address = db.address;
-  const House = db.house;
-  const Room = db.room;
-  Address.findAll().then(items => {
-    const promiseAR = [];
-    items.forEach(itemAddress => {
-      promiseAR.push(new Promise(function(resolve, reject) {
-        House.findAll({
-          where: {
-            addressUid: itemAddress.uid,
-          },
-        }).then(houses => {
-          if(houses.length > 0){
-            let itemHouse = items.find(item => item.uid === houses[0].addressUid);
-            itemHouse.dataValues.houses = houses;
-            itemHouse.dataValues.roomsCount = 0;
-            const promiseARHouse = [];
-            houses.forEach(house => {
-              promiseARHouse.push(new Promise(function(resolve, reject) {
-                Room.findAll({
-                  where: {
-                    houseUid: house.uid,
-                  },
-                }).then(rooms =>{
-                  if(rooms.length > 0){
-                    itemHouse.dataValues.houses.find(item => item.uid === rooms[0].houseUid).dataValues.rooms = rooms;
-                    itemHouse.dataValues.roomsCount = itemHouse.dataValues.roomsCount + rooms.length;
-                    resolve()
-                  }else
-                    resolve()
-                });
-              }));
-            })
-            Promise.all(promiseARHouse).then(
-              result => {
-                resolve()
-              },
-              error => console.log("Ошибка: ", error.message)
-            );
-          } else
-            resolve()
-        })
-      }));
-
-    })
-    Promise.all(promiseAR).then(
-      result => {
-        res.status(200).send(items);
-      },
-      error => console.log("Ошибка: ", error.message)
-    );
-  })
+  const Address = db.Rent21_all;
+  const build = db.Rent21_all;
+  const Ob = db.Rent21_all;
+  const nextDb = db;
+  const { Op, fn } = require('sequelize')
+  const fileContent = fs.readFileSync(__dirname +'/dynamic/returnBuilds.js', "utf8");
+  eval(fileContent);
 };
 
 exports.house = (req, res) => {
@@ -364,6 +329,13 @@ exports.spr = (req, res) => {
     {id: 'Сниму', name: 'Сниму'},
     {id: 'Куплю', name: 'Куплю'},
   ]
+
+  outOb.propertytype = [
+    {id: 'Коммерческая', name: 'Коммерческая'},
+    {id: 'Жилая', name: 'Жилая'},
+    {id: 'Загородная', name: 'Загородная'},
+  ]
+
   outOb.clientTip = [
     {id: 'Квартира', name: 'Квартира'},
     {id: 'Койко-место', name: 'Койко-место'},
