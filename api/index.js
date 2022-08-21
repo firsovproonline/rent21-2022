@@ -368,7 +368,7 @@ function generateOwners(){
       })
       Promise.all(promiseAR1).then(
         result => {
-          console.log('++++++++++++++++++++++++++++');
+          console.log('+++++++++++generateAddrees+++++++++++++++++');
           generateAddrees();
         }
       );
@@ -938,11 +938,39 @@ function initial() {
               db.sequelize.query("select * FROM fields WHERE UID = '"+item.UID+"'", {
               }).then(items=>{
                 const ob ={}
+                const metro = {}
                 items[0].forEach(item => {
                   ob.tip = item.TIP
                   ob.uid = item.UID
-                  ob[item.TITLE] = item.VAL;
+                  // работаем с метро
+                  switch (item.TITLE)
+                  {
+                    case "METRO":
+                    case "GLMETRO":
+                    case "UD":
+                    case "UDTIP":
+                      if(!metro[item.PUID]){
+                        metro[item.PUID] = {}
+                      }
+                      metro[item.PUID][item.TITLE] = item.VAL;
+                      break;
+                    default:
+                      ob[item.TITLE] = item.VAL;
+                  }
                 })
+
+                if(Object.keys(metro).length > 0){
+                  ob['METRO'] = [];
+                  Object.values(metro).forEach(valM=>{
+                    ob['METRO'].push({
+                      NAME: valM.METRO,
+                      GLMETRO: valM.GLMETRO,
+                      UD: valM.UD,
+                      UDTIP: valM.UDTIP,
+                    })
+                  })
+                }
+                ob.cian = {};
                 Rent21_all.create({
                   uid:ob.uid,
                   tip:ob.tip,
@@ -993,19 +1021,16 @@ function initial() {
 
 
 }
-db.sequelize.sync();
 
-
-/*
-db.sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync Db');
-  initial();
-});
-
- */
-
-
-
+const flagCreate = false;
+if(flagCreate){
+  db.sequelize.sync({force: true}).then(() => {
+    console.log('Drop and Resync Db');
+    initial();
+  });
+}else{
+  db.sequelize.sync();
+}
 
 const corsOptions = {
   // origin: "http://localhost:3000"

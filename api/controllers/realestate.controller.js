@@ -312,6 +312,11 @@ exports.spr = (req, res) => {
     {id: 'shoppingAreaRent', name: 'Торговая площадь'},
 
   ];
+  outOb.opp = [
+    {id: 'Аренда', name: 'Аренда'},
+    {id: 'Продажа', name: 'Продажа'},
+  ]
+
   outOb.clientStatus = [
     {id: 'Новый', name: 'Новый'},
     {id: 'В работе (Выяснение потребностей)', name: 'В работе (Выяснение потребностей)'},
