@@ -943,6 +943,7 @@ module.exports = {
       TotalArea: 0,
       MinArea: 0,
       FloorNumber: 0,
+      AreaParts: [],
       ConditionType: [
         'cosmeticRepairsRequired',
         'finishing',

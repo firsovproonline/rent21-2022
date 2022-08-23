@@ -178,7 +178,7 @@ export default {
       return this.$store.getters['realestate/item']
     },
     globalevent(){
-      return this.$store.getters['main.js/globalevent']
+      return this.$store.getters['main/globalevent']
     }
   },
   watch:{

@@ -294,6 +294,16 @@ exports.spr = (req, res) => {
   const Realestate_client_opp = db.realestate_client_opp;
   const outOb = {};
   outOb.cianItems = cianItems;
+  outOb.rentCommercial = [
+    {id: 'garageRent', name: 'Гараж'},
+    {id: 'buildingRent', name: 'Здание'},
+    {id: 'commercialLandRent', name: 'Коммерческая земля'},
+    {id: 'officeRent', name: 'Офис'},
+    {id: 'freeAppointmentObjectRent', name: 'Помещение свободного назначения'},
+    {id: 'industryRent', name: 'Производство'},
+    {id: 'warehouseRent', name: 'Склад'},
+    {id: 'shoppingAreaRent', name: 'Торговая площадь'}
+  ];
   outOb.category = [
     {id: 'flatRent', name: 'Квартира'},
     {id: 'bedRent', name: 'Койко-место'},

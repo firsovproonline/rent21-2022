@@ -19,20 +19,66 @@
               <Labelfromfield label="Класс" :value="item.build.KLASS" />
             </div>
           </div>
-          <div class="col-md-70" style="flex: auto">
-            <Tabs />
-            <ComboRent21 v-if="item.ob"
-                         title="Операция"
-                         :value="item.ob.OPP"
-                         field="opp"
-                         spr="opp"
-            />
-            <ComboRent21 v-if="item.ob"
-                         title="Вид недвижимости"
-                         :value="propertytype"
-                         field="propertytype"
-                         spr="propertytype"
-            />
+          <div v-if="showFlag" class="col-md-70" style="flex: auto">
+            <Tabs activeTab="tab1" >
+              <template  #tab1 >
+                <div title="основные поля" style="padding-top: 12px">
+                  <ComboRent21 v-if="item.ob"
+                               title="Вид недвижимости"
+                               :value="item.ob.propertytype"
+                               field="propertytype"
+                               spr="propertytype"
+                  />
+                  <ComboRent21 v-if="item.ob"
+                               title="Операция"
+                               :value="item.ob.OPP"
+                               field="OPP"
+                               spr="opp"
+                  />
+                  <ComboRent21 v-if="item.ob && item.ob.OPP === 'Аренда' && item.ob.propertytype === 'Коммерческая'"
+                               title="Тип"
+                               :value="item.ob.cian && item.ob.cian.Category? item.ob.cian.Category : ''"
+                               field="Category"
+                               spr="rentCommercial"
+                  />
+                  <div v-if="item.ob && item.ob.cian &&  typeof (item.ob.cian.FloorNumber) !== 'undefined' " class="field-div" >
+                    <label for="FloorNumber">Этаж</label>
+                    <input v-model="item.ob.cian.FloorNumber"
+                           id="FloorNumber"
+                           class="form-control"
+                           type="text"
+                           placeholder=""
+                           style="margin-left: 12px;width: 50px">
+                  </div>
+                  <div v-if="item.ob && item.ob.cian &&  typeof (item.ob.cian.TotalArea) !== 'undefined' " class="field-div" >
+                    <label for="TotalArea">Общая площадь м²</label>
+                    <input v-model="item.ob.cian.TotalArea"
+                           id="TotalArea"
+                           class="form-control"
+                           type="text"
+                           placeholder=""
+                           style="margin-left: 12px;width: 60px">
+                  </div>
+                  <AreaParts v-if="item.ob && item.ob.cian &&  typeof (item.ob.cian.AreaParts) !== 'undefined'" />
+
+                  <div v-if="item.ob && item.ob.cian && item.ob.cian.Category && item.ob.cian.Category === 'officeRent'">
+
+                  </div>
+                </div>
+              </template>
+              <template #tab2 >
+                <div title="Фото">Фото</div>
+              </template>
+              <template #tab3 >
+                <div title="Экспорт">Экспорт</div>
+              </template>
+              <template #tab4 >
+                <div title="Витрина">Витрина</div>
+              </template>
+              <template #tab5 >
+                <div title="Показы">Показы</div>
+              </template>
+            </Tabs>
           </div>
 
         </div>
@@ -45,22 +91,61 @@
 import ComboRent21 from "~/components/combo";
 import Labelfromfield from "~/components/labelfromfield";
 import Tabs from "~/components/tabs";
+import AreaParts from "~/components/cian/officeRent/AreaParts";
 
 export default {
   name: "index",
-  components: {Tabs, ComboRent21, Labelfromfield},
+  components: {AreaParts, Tabs, ComboRent21, Labelfromfield},
   layout: 'default',
   data: () => ({
     propertytype: '',
+    showFlag: true
   }),
   computed: {
     item() {
       return this.$store.getters['realestate/item']
     },
+    globalevent(){
+      return this.$store.getters['main/globalevent']
+    }
+  },
+  watch:{
+    globalevent(val){
+      let ob = {};
+      switch (val.operation){
+        case 'setFieldItem':
+          switch (val.field){
+            case 'propertytype':
+            case 'OPP':
+              this.item.ob[val.field] = val.value
+              this.$store.commit('realestate/setItem', this.item);
+              break
+            case 'Category':
+              // поменялся ключевой параметр - скачиваем структуру обьекта
+              this.item.ob.cian = this.$store.getters['realestate/spr']['cianItems']['rent'][val.value]
+              this.item.ob.cian[val.field] = val.value
+              this.$store.commit('realestate/setItem', this.item);
+
+              this.showFlag = false
+              this.$nextTick(()=>{
+                this.showFlag = true
+              })
+              break
+            default:
+              console.log('not field', val.field)
+              break
+          }
+          break
+        default:
+          console.log('not operation', val.operation)
+          break
+      }
+    }
   },
   mounted() {
     this.$store.dispatch('realestate/loadSpr')
     this.$api.get('/api/realestate/room?id='+this.$route.params.id).then(item=>{
+      item.data.row.ob.propertytype = ""
       this.$store.dispatch('realestate/setItem',item.data.row)
     })
 
@@ -105,5 +190,14 @@ export default {
     min-width: 290px;
     padding: 8px;
     padding-right: 0px;
+  }
+
+  .field-div{
+    display: flex;
+    align-items: center;
+  }
+  .field-div label{
+    width: 140px;
+    font-weight: normal;
   }
 </style>

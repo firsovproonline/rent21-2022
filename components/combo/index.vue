@@ -9,7 +9,7 @@
       </div>
       <div class="triangle-up" style="margin-left: 6px" @click="tagleShowCombo()"></div>
     </div>
-    <div v-if="showCombo" class="selectDiv">
+    <div v-if="showCombo && this.spr" class="selectDiv">
       <div
         v-for="item in this.guide[this.spr]"
         :key="item.id"
