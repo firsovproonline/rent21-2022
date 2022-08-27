@@ -3,7 +3,7 @@
     <div class="media">
       id page
     </div>
-    <div class="row" style="padding: 12px;justify-content: space-evenly;margin-left: 1px;margin-right: 1px">
+    <div v-if="showFlag" class="row" style="padding: 12px;justify-content: space-evenly;margin-left: 1px;margin-right: 1px">
       <div class="product-details col-main">
         <div style="display: flex">
           <div class="col-md-30">
@@ -13,7 +13,8 @@
               <Labelfromfield label="Улица" :value="item.address.ULITCA" />
               <Labelfromfield label="Округ" :value="item.address.OKRUG" />
               <Labelfromfield label="Район" :value="item.address.RAJON" />
-
+              <hr/>
+              <Building />
               <Labelfromfield label="Тип здания" :value="item.build.TIPZD" />
               <Labelfromfield label="Этажность" :value="item.build.ETAGALL" />
               <Labelfromfield label="Класс" :value="item.build.KLASS" />
@@ -50,18 +51,17 @@
                            placeholder=""
                            style="margin-left: 12px;width: 50px">
                   </div>
-                  <div v-if="item.ob && item.ob.cian &&  typeof (item.ob.cian.TotalArea) !== 'undefined' " class="field-div" >
-                    <label for="TotalArea">Общая площадь м²</label>
-                    <input v-model="item.ob.cian.TotalArea"
-                           id="TotalArea"
-                           class="form-control"
-                           type="text"
-                           placeholder=""
-                           style="margin-left: 12px;width: 60px">
-                  </div>
-                  <AreaParts v-if="item.ob && item.ob.cian &&  typeof (item.ob.cian.AreaParts) !== 'undefined'" />
-
                   <div v-if="item.ob && item.ob.cian && item.ob.cian.Category && item.ob.cian.Category === 'officeRent'">
+                    <div v-if="item.ob && item.ob.cian &&  typeof (item.ob.cian.TotalArea) !== 'undefined' " class="field-div" >
+                      <label for="TotalArea">Общая площадь м²</label>
+                      <input v-model="item.ob.cian.TotalArea"
+                             id="TotalArea"
+                             class="form-control"
+                             type="text"
+                             placeholder=""
+                             style="margin-left: 12px;width: 60px">
+                    </div>
+                    <AreaParts v-if="item.ob && item.ob.cian &&  typeof (item.ob.cian.AreaParts) !== 'undefined'" />
 
                   </div>
                 </div>
@@ -92,10 +92,11 @@ import ComboRent21 from "~/components/combo";
 import Labelfromfield from "~/components/labelfromfield";
 import Tabs from "~/components/tabs";
 import AreaParts from "~/components/cian/officeRent/AreaParts";
+import Building from "~/components/cian/Building";
 
 export default {
   name: "index",
-  components: {AreaParts, Tabs, ComboRent21, Labelfromfield},
+  components: {Building, AreaParts, Tabs, ComboRent21, Labelfromfield},
   layout: 'default',
   data: () => ({
     propertytype: '',
@@ -110,6 +111,15 @@ export default {
     }
   },
   watch:{
+    item(val){
+      console.log('item', val)
+      this.showFlag = false
+      this.$nextTick(()=>{
+        this.showFlag = true
+      })
+
+    },
+
     globalevent(val){
       let ob = {};
       switch (val.operation){
@@ -145,7 +155,6 @@ export default {
   mounted() {
     this.$store.dispatch('realestate/loadSpr')
     this.$api.get('/api/realestate/room?id='+this.$route.params.id).then(item=>{
-      item.data.row.ob.propertytype = ""
       this.$store.dispatch('realestate/setItem',item.data.row)
     })
 

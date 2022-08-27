@@ -12,23 +12,11 @@ module.exports = (sequelize, Sequelize) => {
     fields: {
       type: Sequelize.JSON
     },
+    cian: {
+      type: Sequelize.JSON
+    },
     tip: {
       type: Sequelize.STRING(16)
-    },
-    building:{
-      type: Sequelize.JSON
-    },
-    owners:{
-      type: Sequelize.JSON
-    },
-    contact:{
-      type: Sequelize.JSON
-    },
-    address:{
-      type: Sequelize.JSON
-    },
-    ob:{
-      type: Sequelize.JSON
     },
   });
   return Rent21_all;

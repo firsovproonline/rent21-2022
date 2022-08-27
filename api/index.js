@@ -927,6 +927,7 @@ function initial() {
         })
       }));
     })
+    const listTIP = [];
     Promise.all(promiseAR).then(
       result => {
         db.sequelize.query("select DISTINCT UID FROM fields", {
@@ -970,11 +971,111 @@ function initial() {
                     })
                   })
                 }
-                ob.cian = {};
+                if(listTIP.indexOf(ob.TIP)=== -1){
+                  listTIP.push(ob.TIP)
+                }
+                ob.cian = {
+
+                };
+                if(ob.tip === 'ob21'){
+                  ob.cian.Category = ''
+                  if(ob.OPP  === 'Аренда'){
+                    if (ob.TIP === 'Офис' ){
+                      ob.cian.Category = 'officeRent'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Помещение свободного назначения' ){
+                      ob.cian.Category = 'freeAppointmentObjectRent'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Здание' ){
+                      ob.cian.Category = 'buildingRent'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Квартира' ){
+                      ob.cian.Category = 'flatRent'
+                      ob.propertytype = 'Жилая'
+                    }
+                    if (ob.TIP === 'Торговая площадь' ){
+                      ob.cian.Category = 'shoppingAreaRent'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Склад' ){
+                      ob.cian.Category = 'warehouseRent'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Производство' ){
+                      ob.cian.Category = 'industryRent'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Гараж' ){
+                      ob.cian.Category = 'garageRent'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Дом/дача' ){
+                      ob.cian.Category = 'houseRent'
+                      ob.propertytype = 'Загородная'
+                    }
+
+
+
+                  }
+                  if(ob.OPP  === 'Продажа'){
+                    if (ob.TIP === 'Офис'){
+                      ob.cian.Category = 'officeSale'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Помещение свободного назначения' ){
+                      ob.cian.Category = 'freeAppointmentObjectSale'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Здание' ){
+                      ob.cian.Category = 'buildingSale'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Квартира' ){
+                      ob.cian.Category = 'flatSale'
+                      ob.propertytype = 'Жилая'
+                    }
+                    if (ob.TIP === 'Торговая площадь' ){
+                      ob.cian.Category = 'shoppingAreaSale'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Склад' ){
+                      ob.cian.Category = 'warehouseSale'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Квартира новостройка' ){
+                      ob.cian.Category = 'newBuildingFlatSale'
+                      ob.propertytype = 'Жилая'
+                    }
+                    if (ob.TIP === 'Готовый бизнес' ){
+                      ob.cian.Category = 'businessSale'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Производство' ){
+                      ob.cian.Category = 'industrySale'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Гараж' ){
+                      ob.cian.Category = 'garageSale'
+                      ob.propertytype = 'Коммерческая'
+                    }
+                    if (ob.TIP === 'Дом/дача' ){
+                      ob.cian.Category = 'houseSale'
+                      ob.propertytype = 'Загородная'
+                    }
+
+                  }
+                  ob.cian.FloorNumber = ob.ETAG
+
+                }
+
                 Rent21_all.create({
                   uid:ob.uid,
                   tip:ob.tip,
-                  fields: ob
+                  fields: ob,
+                  cian: ob.cian
                 }).then(items =>{
                   resolve()
                 })
@@ -1006,7 +1107,9 @@ function initial() {
                     })
                   })
                 })
-                generateOwners()
+                // generateOwners()
+                console.log(listTIP)
+
               })
             }
           );
@@ -1022,7 +1125,7 @@ function initial() {
 
 }
 
-const flagCreate = false;
+const flagCreate = true;
 if(flagCreate){
   db.sequelize.sync({force: true}).then(() => {
     console.log('Drop and Resync Db');
