@@ -8,7 +8,13 @@ module.exports = (sequelize, Sequelize) => {
     },
     password: {
       type: Sequelize.STRING
-    }
+    },
+    fields: {
+      type:Sequelize.JSON
+    },
+    photo: {
+      type:Sequelize.BLOB('medium')
+    },
   });
   return User;
 };

@@ -1,5 +1,9 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
+const multer = require("multer");
+const upload = multer({
+  dest: './temp'
+})
 module.exports = function(app) {
   app.use(function(req, res, next) {
     res.header(
@@ -8,6 +12,8 @@ module.exports = function(app) {
     );
     next();
   });
+  app.post("/user/photo", [authJwt.verifyToken, upload.single('file')], controller.postphoto);
+  app.get("/user/photo", controller.photo);
   app.get("/user", [authJwt.verifyToken], controller.allAccess);
   app.get("/test/all", controller.allAccess);
   app.get(

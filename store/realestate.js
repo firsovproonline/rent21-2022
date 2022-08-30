@@ -5,6 +5,7 @@ export const state = () => ({
   itemsAddress: [],
   itemAddress: {},
   item: {},
+  obfoto:{},
   total: 0,
   spr: {},
   importItems: {}
@@ -16,6 +17,7 @@ export const getters = {
   itemAddress: (state) => { return state.itemAddress },
   items: (state) => { return state.items },
   item: (state) => { return state.item },
+  obfoto: (state) => { return state.obfoto },
   total: (state) => { return state.total },
   spr: (state) => { return state.spr }
 }
@@ -33,6 +35,10 @@ export const mutations = {
   setItems (state, items) {
     state.items = items
   },
+  setobfoto (state, item) {
+    state.obfoto = item
+  },
+
   setItem (state, item) {
     state.item = item
   },
@@ -80,6 +86,9 @@ export const actions = {
   },
   setItem ({ commit }, item) {
     commit('setItem', item)
+  },
+  setobfoto ({ commit }, item) {
+    commit('setobfoto', item)
   },
   setSpr ({ commit }, spr) {
     commit('setSpr', spr)

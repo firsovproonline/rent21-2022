@@ -67,7 +67,14 @@
                 </div>
               </template>
               <template #tab2 >
-                <div title="Фото">Фото</div>
+                <div title="Фото">
+                  <div style="display: flex;flex-wrap: wrap;">
+                    <div v-for="(item,index) in obfoto" :key="index" style="margin: 4px">
+                      <img :src="'/api/foto/get?id='+item.ID" />
+                    </div>
+
+                  </div>
+                </div>
               </template>
               <template #tab3 >
                 <div title="Экспорт">Экспорт</div>
@@ -105,6 +112,9 @@ export default {
   computed: {
     item() {
       return this.$store.getters['realestate/item']
+    },
+    obfoto() {
+      return this.$store.getters['realestate/obfoto']
     },
     globalevent(){
       return this.$store.getters['main/globalevent']
@@ -158,6 +168,24 @@ export default {
       this.$store.dispatch('realestate/setItem',item.data.row)
     })
 
+    this.$api.get('/api/foto/list?id='+this.$route.params.id).then(item=>{
+      this.$store.dispatch('realestate/setobfoto',item.data.row)
+    })
+
+    let user = JSON.parse(window.localStorage.getItem('user'))
+    let atoken = ''
+    if (user && user.accessToken) {
+      // for Node.js Express back-end
+      atoken =  user.accessToken
+    } else {
+      atoken =  ''
+    }
+/*
+    this.socket = this.$nuxtSocket({
+      channel: '/',
+      extraHeaders: {token:atoken}
+    })
+ */
   }
 }
 </script>

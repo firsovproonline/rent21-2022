@@ -33,6 +33,9 @@ const Room_operation = db.room_operation;
 const Shop_catalog = db.shop_catalog;
 const User = db.user;
 const Cian_PropertyType = db.cian_PropertyType
+
+const cianItems = require("../api/config/cian.config.js");
+
 function S4() {
   return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 }
@@ -971,49 +974,60 @@ function initial() {
                     })
                   })
                 }
-                if(listTIP.indexOf(ob.TIP)=== -1){
-                  listTIP.push(ob.TIP)
-                }
                 ob.cian = {
 
                 };
                 if(ob.tip === 'ob21'){
+                  Object.keys(ob).forEach(item=>{
+                    if(listTIP.indexOf(item)=== -1){
+                      listTIP.push(item)
+                    }
+                  })
                   ob.cian.Category = ''
                   if(ob.OPP  === 'Аренда'){
                     if (ob.TIP === 'Офис' ){
-                      ob.cian.Category = 'officeRent'
+                      ob.cian = cianItems.rent.officeRent
+                      // ob.cian.Category = 'officeRent'
                       ob.propertytype = 'Коммерческая'
                     }
                     if (ob.TIP === 'Помещение свободного назначения' ){
-                      ob.cian.Category = 'freeAppointmentObjectRent'
+                      ob.cian = cianItems.rent.freeAppointmentObjectRent
+//                      ob.cian.Category = 'freeAppointmentObjectRent'
                       ob.propertytype = 'Коммерческая'
                     }
                     if (ob.TIP === 'Здание' ){
-                      ob.cian.Category = 'buildingRent'
+                      ob.cian = cianItems.rent.buildingRent
+//                      ob.cian.Category = 'buildingRent'
                       ob.propertytype = 'Коммерческая'
                     }
                     if (ob.TIP === 'Квартира' ){
-                      ob.cian.Category = 'flatRent'
+                      ob.cian = cianItems.rent.flatRent
+//                      ob.cian.Category = 'flatRent'
                       ob.propertytype = 'Жилая'
                     }
                     if (ob.TIP === 'Торговая площадь' ){
-                      ob.cian.Category = 'shoppingAreaRent'
+                      ob.cian = cianItems.rent.shoppingAreaRent
+                      // ob.cian.Category = 'shoppingAreaRent'
                       ob.propertytype = 'Коммерческая'
                     }
                     if (ob.TIP === 'Склад' ){
-                      ob.cian.Category = 'warehouseRent'
+                      ob.cian = cianItems.rent.warehouseRent
+                      // ob.cian.Category = 'warehouseRent'
                       ob.propertytype = 'Коммерческая'
                     }
                     if (ob.TIP === 'Производство' ){
-                      ob.cian.Category = 'industryRent'
+                      ob.cian = cianItems.rent.industryRent
+                      // ob.cian.Category = 'industryRent'
                       ob.propertytype = 'Коммерческая'
                     }
                     if (ob.TIP === 'Гараж' ){
-                      ob.cian.Category = 'garageRent'
+                      ob.cian = cianItems.rent.garageRent
+//                      ob.cian.Category = 'garageRent'
                       ob.propertytype = 'Коммерческая'
                     }
                     if (ob.TIP === 'Дом/дача' ){
-                      ob.cian.Category = 'houseRent'
+                      ob.cian = cianItems.rent.houseRent
+                      // ob.cian.Category = 'houseRent'
                       ob.propertytype = 'Загородная'
                     }
 
@@ -1108,8 +1122,9 @@ function initial() {
                   })
                 })
                 // generateOwners()
-                console.log(listTIP)
-
+                listTIP.forEach(item=>{
+                  // console.log(item)
+                })
               })
             }
           );
@@ -1117,15 +1132,9 @@ function initial() {
       }
     );
   })
-
-
-  //User.roles.create({
-
-
-
 }
 
-const flagCreate = true;
+const flagCreate = false;
 if(flagCreate){
   db.sequelize.sync({force: true}).then(() => {
     console.log('Drop and Resync Db');
@@ -1136,7 +1145,7 @@ if(flagCreate){
 }
 
 const corsOptions = {
-  // origin: "http://localhost:3000"
+  origin: "*"
 }
 const app = express()
 app.use(cookieParser());
@@ -1150,7 +1159,16 @@ app.use(cors(corsOptions));
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+/*
+const io = require('socket.io')({  cors: {
+    origin: "http://localhost:3021"
+  }});
+io.on('connection', client => {
+  console.log('client', client.handshake.headers.token);
+});
+io.listen(3022);
 
+ */
 
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
@@ -1159,6 +1177,7 @@ require('./routes/shop.routes')(app);
 require('./routes/sering.routes')(app);
 require('./routes/map.routes')(app);
 require('./routes/lids.routers')(app);
+require('./routes/foto.routes')(app);
 
 
 export default {

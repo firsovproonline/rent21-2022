@@ -52,7 +52,15 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/style-resources',
+    'nuxt-socket-io'
   ],
+  io: {
+    // module options
+    sockets: [{
+      name: '/',
+      url: 'http://localhost:3022'
+    }]
+  },
 
   styleResources: {
     sass: [],
