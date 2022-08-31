@@ -9,6 +9,7 @@ module.exports = function(app) {
     next();
   });
   app.get("/setings", [authJwt.verifyToken,authJwt.isAdmin], controller.setings);
+  app.get("/setings", [authJwt.verifyToken], controller.setingsSmall);
   app.post("/setings", [authJwt.verifyToken,authJwt.isAdmin], controller.savesetings);
 
 };

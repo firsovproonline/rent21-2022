@@ -5,6 +5,14 @@ exports.setings = (req, res) => {
     res.status(200).send(items);
   })
 }
+
+exports.setingsSmall = (req, res) => {
+  const Setings = db.Setings;
+  Setings.findAll({}).then(items=>{
+    res.status(200).send(items);
+  })
+}
+
 exports.savesetings = (req, res) => {
   const Setings = db.Setings;
   console.log(req.body)

@@ -4,6 +4,5 @@ const where = `
 `;
 const sql = 'SELECT THUMBNAIL,ID from foto '+where
 db.sequelize.query(sql).then(items=>{
-  const buffer = new Buffer(items[0][0].THUMBNAIL, 'binary');
-  res.status(200).send(buffer);
+  res.status(200).send(items[0][0].THUMBNAIL);
 })

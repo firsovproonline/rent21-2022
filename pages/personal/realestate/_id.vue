@@ -6,7 +6,7 @@
     <div v-if="showFlag" class="row" style="padding: 12px;justify-content: space-evenly;margin-left: 1px;margin-right: 1px">
       <div class="product-details col-main">
         <div style="display: flex">
-          <div class="col-md-30">
+          <div class="col-md-30" style="max-width: 280px">
             <div v-if="item.address" style="width: 100%">
               <Labelfromfield label="Город" :value="item.address.GOROD" />
               <Labelfromfield label="Метро" :value="item.address.METRO" />
@@ -29,18 +29,21 @@
                                :value="item.ob.propertytype"
                                field="propertytype"
                                spr="propertytype"
+                               style="width: 300px"
                   />
                   <ComboRent21 v-if="item.ob"
                                title="Операция"
                                :value="item.ob.OPP"
                                field="OPP"
                                spr="opp"
+                               style="width: 300px"
                   />
                   <ComboRent21 v-if="item.ob && item.ob.OPP === 'Аренда' && item.ob.propertytype === 'Коммерческая'"
                                title="Тип"
                                :value="item.ob.cian && item.ob.cian.Category? item.ob.cian.Category : ''"
                                field="Category"
                                spr="rentCommercial"
+
                   />
                   <div v-if="item.ob && item.ob.cian &&  typeof (item.ob.cian.FloorNumber) !== 'undefined' " class="field-div" >
                     <label for="FloorNumber">Этаж</label>
@@ -51,19 +54,104 @@
                            placeholder=""
                            style="margin-left: 12px;width: 50px">
                   </div>
-                  <div v-if="item.ob && item.ob.cian && item.ob.cian.Category && item.ob.cian.Category === 'officeRent'">
-                    <div v-if="item.ob && item.ob.cian &&  typeof (item.ob.cian.TotalArea) !== 'undefined' " class="field-div" >
-                      <label for="TotalArea">Общая площадь м²</label>
-                      <input v-model="item.ob.cian.TotalArea"
-                             id="TotalArea"
-                             class="form-control"
-                             type="text"
-                             placeholder=""
-                             style="margin-left: 12px;width: 60px">
-                    </div>
-                    <AreaParts v-if="item.ob && item.ob.cian &&  typeof (item.ob.cian.AreaParts) !== 'undefined'" />
-
+                  <div v-if="item.ob && item.ob.cian && item.ob.cian.Category && item.ob.cian.Category != 'officeRent11'">
+                    <TotalArea
+                      v-if="item.ob && item.ob.cian &&  typeof (item.ob.cian.TotalArea) !== 'undefined'"
+                      :item="item"
+                    >
+                    </TotalArea>
                   </div>
+                  <div v-if="item.ob && item.ob.cian && typeof(item.ob.cian.TaxNumber) !== 'undefined'" class="div-input">
+                    <label for="FloorNumber" class="labelInput">Номер налоговой</label>
+                    <input v-model="item.ob.cian.TaxNumber"
+                           id="TaxNumber"
+                           class="form-control"
+                           type="text"
+                           placeholder=""
+                           style="width: 90px">
+                  </div>
+                  <div v-if="item.ob && item.ob.cian && typeof(item.ob.cian.IsLegalAddressProvided) !== 'undefined'" class="div-input">
+                    <label class="labelInput">Юридический адрес</label>
+                    <div class="checkdiv">
+                      <label class="container">
+                        <input type="checkbox" v-model="item.ob.cian.IsLegalAddressProvided">
+                        <span class="checkmark" style="margin-top: -8px" ></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div v-if="item.ob && item.ob.cian && item.ob.cian.Building && typeof(item.ob.cian.Building.CeilingHeight) !== 'undefined'" class="div-input">
+                    <label for="CeilingHeight" class="labelInput">Высота потолков, м</label>
+                    <input v-model="item.ob.cian.Building.CeilingHeight"
+                           id="CeilingHeight"
+                           class="form-control"
+                           type="text"
+                           placeholder=""
+                           style="width: 50px">
+                  </div>
+
+                  <div v-if="item.ob && item.ob.cian && typeof(item.ob.cian.IsOccupied) !== 'undefined'" class="div-input">
+                    <label class="labelInput">Помещение занято</label>
+                    <div class="checkdiv">
+                      <label class="container">
+                        <input type="checkbox" v-model="item.ob.cian.IsOccupied">
+                        <span class="checkmark" style="margin-top: -8px" ></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <ComboNoSpr v-if="item.ob && item.ob.cian && typeof(item.ob.cian.Layout) !== 'undefined'"
+                              title="Планировка"
+                              :value="item.ob.cian.Layout"
+                              :change="LayoutChange"
+                              style="width: 290px"
+                              labelWidth="155px"
+                  >
+                    <option value="cabinet">Кабинетная</option>
+                    <option value="corridorplan">Коридорная</option>
+                    <option value="mixed">Смешанная</option>
+                    <option value="openSpace">Открытая</option>
+                  </ComboNoSpr>
+
+                  <ComboNoSpr v-if="item.ob && item.ob.cian && typeof(item.ob.cian.WaterPipesCount) !== 'undefined'"
+                              title="Кол-во мокрых точек"
+                              :value="item.ob.cian.WaterPipesCount"
+                              :change="WaterPipesCountChange"
+                              style="width: 290px"
+                              labelWidth="155px"
+                  >
+                    <option value="0">Нет</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </ComboNoSpr>
+
+                  <ComboNoSpr v-if="item.ob && item.ob.cian && typeof(item.ob.cian.ConditionType) !== 'undefined'"
+                              title="Состояние"
+                              :value="item.ob.cian.ConditionType"
+                              :change="ConditionTypeChange"
+                              style="width: 410px"
+                              labelWidth="155px"
+                  >
+                    <option value="cosmeticRepairsRequired">Требуется косметический ремонт</option>
+                    <option value="finishing">Под чистовую отделку</option>
+                    <option value="majorRepairsRequired">Требуется капитальный ремонт</option>
+                    <option value="office">Офисная отделка</option>
+                  </ComboNoSpr>
+
+                  <ComboNoSpr v-if="item.ob && item.ob.cian && typeof(item.ob.cian.FurniturePresence) !== 'undefined'"
+                              title="Мебель"
+                              :value="item.ob.cian.FurniturePresence"
+                              :change="FurniturePresenceChange"
+                              style="width: 210px"
+                              labelWidth="155px"
+                  >
+                    <option value="no">Нет</option>
+                    <option value="yes">Есть</option>
+                  </ComboNoSpr>
+
+
                 </div>
               </template>
               <template #tab2 >
@@ -100,10 +188,12 @@ import Labelfromfield from "~/components/labelfromfield";
 import Tabs from "~/components/tabs";
 import AreaParts from "~/components/cian/officeRent/AreaParts";
 import Building from "~/components/cian/Building";
+import TotalArea from "~/components/cian/officeRent/TotalArea";
+import ComboNoSpr from "~/components/comboNotSpr";
 
 export default {
   name: "index",
-  components: {Building, AreaParts, Tabs, ComboRent21, Labelfromfield},
+  components: {ComboNoSpr, TotalArea, Building, AreaParts, Tabs, ComboRent21, Labelfromfield},
   layout: 'default',
   data: () => ({
     propertytype: '',
@@ -162,6 +252,20 @@ export default {
       }
     }
   },
+  methods:{
+    FurniturePresenceChange(val){
+      this.item.ob.cian.FurniturePresence = val
+    },
+    ConditionTypeChange(val){
+      this.item.ob.cian.ConditionType = val
+    },
+    WaterPipesCountChange(val){
+      this.item.ob.cian.WaterPipesCount = val
+    },
+    LayoutChange(val){
+      this.item.ob.cian.Layout = val
+    }
+  },
   mounted() {
     this.$store.dispatch('realestate/loadSpr')
     this.$api.get('/api/realestate/room?id='+this.$route.params.id).then(item=>{
@@ -191,6 +295,77 @@ export default {
 </script>
 
 <style scoped>
+  .div-input{
+    display: flex;
+    align-items: center;
+    margin-top: 4px;
+  }
+  .labelInput{
+    font-weight: normal;
+    width: 154px !important;
+  }
+
+  .div-input label{
+    font-weight: normal;
+  }
+
+  .container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    user-select: none;
+  }
+
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #ffffff;
+  }
+
+  .container:hover input ~ .checkmark {
+    background-color: #ffffff;
+  }
+
+  .container input:checked ~ .checkmark {
+    background-color: #2196F3;
+  }
+
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  .container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 8px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
   .bg-client{
     background-image: url("/bg/bgrealestate2.jpg");
     background-size: cover;

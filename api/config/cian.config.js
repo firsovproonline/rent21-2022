@@ -683,19 +683,8 @@ module.exports = {
     },
     buildingRent: {
       Category: 'buildingRent',
-      ConditionType: [
-        'cosmeticRepairsRequired',
-        'design',
-        'finishing',
-        'majorRepairsRequired',
-        'typical'
-      ],
-      Layout: [
-        'cabinet',
-        'corridorplan',
-        'mixed',
-        'openSpace'
-      ],
+      ConditionType: 'typical',
+      Layout: 'cabinet',
       HasFurniture: false,
       InputType: [
         'commonFromStreet',
@@ -852,12 +841,7 @@ module.exports = {
     },
     commercialLandRent: {
       Category: 'commercialLandRent',
-      Layout: [
-        'cabinet',
-        'corridorplan',
-        'mixed',
-        'openSpace'
-      ],
+      Layout: 'cabinet',
       AvailableFrom: '',
       TaxNumber: 0,
       IsInHiddenBase: false,
@@ -944,20 +928,10 @@ module.exports = {
       MinArea: 0,
       FloorNumber: 0,
       AreaParts: [],
-      ConditionType: [
-        'cosmeticRepairsRequired',
-        'finishing',
-        'majorRepairsRequired',
-        'office'
-      ],
+      ConditionType: 'finishing',
       IsOccupied: false,
-      Layout: [
-        'cabinet',
-        'corridorplan',
-        'mixed',
-        'openSpace'
-      ],
-      FurniturePresence: ['no','yes'],
+      Layout: 'cabinet',
+      FurniturePresence:'no',
       AvailableFrom: '',
       IsLegalAddressProvided: false,
       WaterPipesCount: 0,
@@ -1145,14 +1119,7 @@ module.exports = {
       TotalArea: 0,
       MinArea: 0,
       FloorNumber: 0,
-      ConditionType: [
-        'cosmeticRepairsRequired',
-        'design',
-        'finishing',
-        'majorRepairsRequired',
-        'office',
-        'typical'
-      ],
+      ConditionType: 'finishing',
       IsOccupied: false,
       Specialty:  {
         Types : {
@@ -1162,12 +1129,7 @@ module.exports = {
           String: ''
         }
       },
-      Layout: [
-        'cabinet',
-        'corridorplan',
-        'mixed',
-        'openSpace'
-      ],
+      Layout: 'cabinet',
       InputType: [
         'commonFromStreet',
         'commonFromYard',
@@ -1302,12 +1264,8 @@ module.exports = {
       TotalArea: 0,
       MinArea: 0,
       FloorNumber: 0,
-      ConditionType: [
-        'cosmeticRepairsRequired',
-        'majorRepairsRequired',
-        'typical'
-      ],
-      Layout: ['cabinet','corridorplan','mixed','openSpace'],
+      ConditionType: 'typical',
+      Layout: 'cabinet',
       AvailableFrom: 0,
       FloorMaterialTypeType: [
         'asphalt',
@@ -1493,12 +1451,8 @@ module.exports = {
       TotalArea: 0,
       MinArea: 0,
       FloorNumber: 0,
-      ConditionType: [
-        'cosmeticRepairsRequired',
-        'majorRepairsRequired',
-        'typical'
-      ],
-      Layout: ['cabinet','corridorplan','mixed','openSpace'],
+      ConditionType: 'typical',
+      Layout: 'cabinet',
       AvailableFrom: 0,
       FloorMaterialTypeType: [
         'asphalt',
@@ -1685,13 +1639,7 @@ module.exports = {
       TotalArea: 0,
       MinArea: 0,
       FloorNumber: 0,
-      ConditionType: [
-        'cosmeticRepairsRequired',
-        'design',
-        'finishing',
-        'majorRepairsRequired',
-        'typical'
-      ],
+      ConditionType: 'finishing',
       Specialty: [
         {
           Types: {
@@ -1702,7 +1650,7 @@ module.exports = {
           }
         }
       ],
-      Layout: ['cabinet','corridorplan','mixed','openSpace'],
+      Layout: 'cabinet',
       HasInternet: false,
       HasFurniture: false,
       InputType: [
