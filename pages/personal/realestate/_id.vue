@@ -6,18 +6,27 @@
     <div v-if="showFlag" class="row" style="padding: 12px;justify-content: space-evenly;margin-left: 1px;margin-right: 1px">
       <div class="product-details col-main">
         <div style="display: flex">
-          <div class="col-md-30" style="max-width: 280px">
+          <div class="col-md-30" style="max-width: 400px;min-width: 400px;">
             <div v-if="item.address" style="width: 100%">
-              <Labelfromfield label="Город" :value="item.address.GOROD" />
-              <Labelfromfield label="Метро" :value="item.address.METRO" />
-              <Labelfromfield label="Улица" :value="item.address.ULITCA" />
-              <Labelfromfield label="Округ" :value="item.address.OKRUG" />
-              <Labelfromfield label="Район" :value="item.address.RAJON" />
-              <hr/>
-              <Building />
-              <Labelfromfield label="Тип здания" :value="item.build.TIPZD" />
-              <Labelfromfield label="Этажность" :value="item.build.ETAGALL" />
-              <Labelfromfield label="Класс" :value="item.build.KLASS" />
+              <div style="background-color: white;padding: 4px;box-shadow: 0px 5px 10px 2px rgb(34 60 80 / 20%);">
+                <Labelfromfield label="Город" :value="item.address.GOROD" />
+                <Labelfromfield label="Метро" :value="item.address.METRO" />
+                <Labelfromfield label="Улица" :value="item.address.ULITCA" />
+                <Labelfromfield label="Округ" :value="item.address.OKRUG" />
+                <Labelfromfield label="Район" :value="item.address.RAJON" />
+                <Labelfromfield label="Дом" :value="item.address.DOM" />
+              </div>
+              <Building :item="item" style="margin-top: 12px" />
+              <DivCombo title="Другие помещения в здании" style="margin-top: 12px">
+                <template #body >
+                  список по этажам
+                </template>
+              </DivCombo>
+              <DivCombo title="Собственики в здании" style="margin-top: 12px">
+                <template #body >
+                  список собствеников
+                </template>
+              </DivCombo>
             </div>
           </div>
           <div v-if="showFlag" class="col-md-70" style="flex: auto">
@@ -151,6 +160,24 @@
                     <option value="yes">Есть</option>
                   </ComboNoSpr>
 
+                  <ComboNoSpr v-if="item.ob
+                  && item.ob.cian.Building
+                  && item.ob.cian.Building.AccessType
+                  && typeof(item.ob.cian.Building.AccessType) !== 'undefined'"
+                              title="Доступ"
+                              :value="item.ob.cian.Building.AccessType"
+                              :change="AccessTypeChange"
+                              style="width: 360px"
+                              labelWidth="155px"
+                  >
+                    <option value="free">Свободный</option>
+                    <option value="passSystem">Пропускная система</option>
+                  </ComboNoSpr>
+
+                  <Parking v-if="item.ob
+                  && item.ob.cian.Building
+                  && item.ob.cian.Building.Parking
+                  && typeof(item.ob.cian.Building.Parking) !== 'undefined'"></Parking>
 
                 </div>
               </template>
@@ -190,10 +217,12 @@ import AreaParts from "~/components/cian/officeRent/AreaParts";
 import Building from "~/components/cian/Building";
 import TotalArea from "~/components/cian/officeRent/TotalArea";
 import ComboNoSpr from "~/components/comboNotSpr";
+import Parking from "~/components/cian/Building/Parking";
+import DivCombo from "~/components/divCombo";
 
 export default {
   name: "index",
-  components: {ComboNoSpr, TotalArea, Building, AreaParts, Tabs, ComboRent21, Labelfromfield},
+  components: {DivCombo, Parking, ComboNoSpr, TotalArea, Building, AreaParts, Tabs, ComboRent21, Labelfromfield},
   layout: 'default',
   data: () => ({
     propertytype: '',
@@ -253,6 +282,9 @@ export default {
     }
   },
   methods:{
+    AccessTypeChange(val){
+      this.item.ob.cian.Building.AccessType = val
+    },
     FurniturePresenceChange(val){
       this.item.ob.cian.FurniturePresence = val
     },

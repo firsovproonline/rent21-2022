@@ -61,15 +61,7 @@ module.exports = {
         PassengerLiftsCount: 0,
         CargoLiftsCount: 0,
         HasGarbageChute: false,
-        Parking: {
-          Type: [
-            'ground',
-            'multilevel',
-            'open',
-            'roof',
-            'underground'
-          ]
-        }
+        Parking: {}
       },
       Apartment: '',
       BargainTerms: {
@@ -148,15 +140,7 @@ module.exports = {
         PassengerLiftsCount: 0,
         CargoLiftsCount: 0,
         HasGarbageChute: false,
-        Parking: {
-          Type: [
-            'ground',
-            'multilevel',
-            'open',
-            'roof',
-            'underground'
-          ]
-        }
+        Parking: {}
       },
       BargainTerms: {
         Price: 0,
@@ -236,15 +220,7 @@ module.exports = {
         PassengerLiftsCount: 0,
         CargoLiftsCount: 0,
         HasGarbageChute: false,
-        Parking: {
-          Type: [
-            'ground',
-            'multilevel',
-            'open',
-            'roof',
-            'underground'
-          ]
-        }
+        Parking: {}
       },
       BargainTerms: {
         Price: 0,
@@ -637,15 +613,7 @@ module.exports = {
       IsInHiddenBase: false,
       Building: {
         Name: '',
-        Parking: {
-          Type: [
-            'ground',
-            'multilevel',
-            'open',
-            'roof',
-            'underground'
-          ],
-        },
+        Parking: {},
         Infrastructure: {
           HasCarWash: false,
           HasCarService: false,
@@ -701,18 +669,7 @@ module.exports = {
         TotalArea: 0,
         HeatingType: ['autonomous','central','no'],
         CeilingHeight: 0,
-        Parking: {
-          Type: [
-            'ground',
-            'multilevel',
-            'open',
-            'roof',
-            'underground'
-          ],
-          PlacesCount: 0,
-          PriceMonthly: 0,
-          IsFree: false
-        },
+        Parking: {},
         Type: [
           'administrativeBuilding',
           'businessCenter',
@@ -962,19 +919,7 @@ module.exports = {
         TotalArea: 0,
         HeatingType: ['autonomous','central','no'],
         CeilingHeight: 0,
-        Parking: {
-          Type: [
-            'ground',
-            'multilevel',
-            'open',
-            'roof',
-            'underground'
-          ],
-          PlacesCount: 0,
-          PriceMonthly: 0,
-          Currency: ['eur','rur','usd'],
-          IsFree: false,
-        },
+        Parking: {},
         Type: [
           'administrativeBuilding',
           'businessCenter',
@@ -1052,7 +997,7 @@ module.exports = {
           }
         ],
         StatusType: ['operational','project','underConstruction'],
-        AccessType: ['free','passSystem'],
+        AccessType: 'free',
         Infrastructure : {
           HasCarWash: false,
           HasBuffet: false,
@@ -1292,19 +1237,7 @@ module.exports = {
         TotalArea: 0,
         HeatingType: ['autonomous','central','no'],
         CeilingHeight: 0,
-        Parking: {
-          Type: [
-            'ground',
-            'multilevel',
-            'open',
-            'roof',
-            'underground'
-          ],
-          PlacesCount: 0,
-          PriceMonthly: 0,
-          Currency: ['eur','rur','usd'],
-          IsFree: false,
-        },
+        Parking: {},
         Type: [
           'administrativeBuilding',
           'businessCenter',
@@ -1479,19 +1412,7 @@ module.exports = {
         TotalArea: 0,
         HeatingType: ['autonomous','central','no'],
         CeilingHeight: 0,
-        Parking: {
-          Type: [
-            'ground',
-            'multilevel',
-            'open',
-            'roof',
-            'underground'
-          ],
-          PlacesCount: 0,
-          PriceMonthly: 0,
-          Currency: ['eur','rur','usd'],
-          IsFree: false,
-        },
+        Parking: {},
         Type: [
           'administrativeBuilding',
           'businessCenter',
