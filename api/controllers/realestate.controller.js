@@ -9,7 +9,13 @@ const Realestate_client_item = db.realestate_client_item;
 const Realestate_client_status = db.realestate_client_status;
 const Realestate_client_opp = db.realestate_client_opp;
 
-exports.lids = (req, res) => {
+  exports.roomfromaddress = (req, res) => {
+    const Ob = db.Rent21_all;
+    const fileContent = fs.readFileSync(__dirname +'/dynamic/realestate/roomfromaddress.js', "utf8");
+    eval(fileContent);
+  }
+
+  exports.lids = (req, res) => {
   let page = 0
   const limit = 25
   if(req.body.page) page = req.body.page

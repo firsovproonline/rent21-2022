@@ -1031,8 +1031,6 @@ function initial() {
                       ob.propertytype = 'Загородная'
                     }
 
-
-
                   }
                   if(ob.OPP  === 'Продажа'){
                     if (ob.TIP === 'Офис'){
@@ -1081,8 +1079,12 @@ function initial() {
                     }
 
                   }
-                  ob.cian.FloorNumber = ob.ETAG
-
+                  if(typeof(ob.cian.FloorNumber) !=='undefined'){
+                    ob.cian.FloorNumber = ob.ETAG
+                  }
+                  if(typeof(ob.cian.TotalArea) !=='undefined'){
+                    ob.cian.TotalArea = ob.PLALL
+                  }
                 }
 
                 Rent21_all.create({

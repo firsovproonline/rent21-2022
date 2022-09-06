@@ -17,9 +17,25 @@
                 <Labelfromfield label="Дом" :value="item.address.DOM" />
               </div>
               <Building :item="item" style="margin-top: 12px" />
-              <DivCombo title="Другие помещения в здании" style="margin-top: 12px">
+              <DivCombo title="Другие помещения в здании" style="margin-top: 12px" :open="roomfromaddress">
                 <template #body >
-                  список по этажам
+                  <div style="background-color: white;padding: 8px;box-shadow: 0px 5px 10px 2px rgb(34 60 80 / 20%);">
+                    <div v-for="(itemRoom, index) in listRoom" :key="index">
+                      Этаж {{itemRoom.id}}
+                      <div v-for="(itemListRoom, index) in itemRoom.items" :key="index"
+                           @click = "listRoomClick(itemListRoom.UID)"
+                           style="display: flex;align-items:center;margin-right: 12px;
+                           margin-left: 12px;cursor: pointer;
+                           border-bottom: 1px dotted">
+                        <div v-if="itemListRoom.UID === item.ob.uid" class="triangle-right" style="margin-right: 4px"></div>
+                        <div v-else style="width: 12px"></div>
+                        <div>
+                          {{itemListRoom.OPP}} {{itemListRoom.TIP}} {{itemListRoom.PLALL}}
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
                 </template>
               </DivCombo>
               <DivCombo title="Собственики в здании" style="margin-top: 12px">
@@ -226,7 +242,8 @@ export default {
   layout: 'default',
   data: () => ({
     propertytype: '',
-    showFlag: true
+    showFlag: true,
+    listRoom: []
   }),
   computed: {
     item() {
@@ -241,12 +258,10 @@ export default {
   },
   watch:{
     item(val){
-      console.log('item', val)
       this.showFlag = false
       this.$nextTick(()=>{
         this.showFlag = true
       })
-
     },
 
     globalevent(val){
@@ -282,6 +297,17 @@ export default {
     }
   },
   methods:{
+    listRoomClick(val){
+      this.$api.get('/api/realestate/room?id='+val).then(item=>{
+        this.$store.dispatch('realestate/setItem',item.data.row)
+      })
+    },
+    roomfromaddress(){
+      this.listRoom = []
+      this.$api.get('/api/realestate/roomfromaddress?id='+this.item.build.UID).then(item=>{
+        this.listRoom = item.data.rows;
+      })
+    },
     AccessTypeChange(val){
       this.item.ob.cian.Building.AccessType = val
     },
@@ -327,6 +353,14 @@ export default {
 </script>
 
 <style scoped>
+  .triangle-right {
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-left: 7px solid #000000;
+    border-bottom: 7px solid transparent;
+  }
+
   .div-input{
     display: flex;
     align-items: center;

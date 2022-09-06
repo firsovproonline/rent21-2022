@@ -15,7 +15,8 @@
 export default {
   name: "divCombo",
   props:{
-    title: ''
+    title: '',
+    open: null
   },
   data () {
     return {
@@ -25,6 +26,9 @@ export default {
   methods: {
     tagleShowCombo() {
       this.showCombo = !this.showCombo
+      if(this.showCombo && this.open){
+        this.open()
+      }
     },
   }
 }

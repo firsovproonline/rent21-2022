@@ -2,6 +2,8 @@
   <section v-if="isAdmin || isModerator" style="display: flex">
     <div class="leftMenu">
       <LeftMenu />
+      <hr/>
+      <FiterOb />
     </div>
     <div class="main-block" style="flex: 1 1 auto;">
       <div class="row">
@@ -21,10 +23,11 @@
 <script>
 import LeftMenu from "~/components/leftMenu";
 import ListAddress from "~/components/Realestate/Address/listAddress";
+import FiterOb from "~/components/Realestate/Address/filter";
 
 export default {
   name: "indexPRealestate",
-  components: {LeftMenu, ListAddress},
+  components: {FiterOb, LeftMenu, ListAddress},
   layout: 'default',
   /*
   async asyncData ({ app, route, params, error, store }) {
