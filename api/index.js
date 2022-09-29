@@ -3,6 +3,7 @@ import ss from "sequelize";
 const express = require('express')
 const cors = require("cors")
 const fs = require('fs')
+const request = require('request');
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -13,12 +14,16 @@ const Realestate_client_opp = db.realestate_client_opp;
 const Realestate_client_item = db.realestate_client_item;
 const Realestate_client_status = db.realestate_client_status;
 
+const Rent21_owner = db.Rent21_owner;
+const Rent21_contact = db.Rent21_contact;
 const Rent21_address = db.Rent21_address;
 const Rent21_building = db.Rent21_building;
 const Rent21_linc = db.Rent21_linc;
 const Rent21_ob = db.Rent21_ob;
 const Rent21_all = db.Rent21_all;
 const Rent21_lids = db.Rent21_lids;
+const Rent21_export = db.Rent21_export;
+const Rent21_report = db.Rent21_report;
 
 
 const Role = db.role;
@@ -372,7 +377,7 @@ function generateOwners(){
       Promise.all(promiseAR1).then(
         result => {
           console.log('+++++++++++generateAddrees+++++++++++++++++');
-          generateAddrees();
+          //generateAddrees();
         }
       );
 
@@ -1123,27 +1128,103 @@ function initial() {
                     })
                   })
                 })
-                // generateOwners()
-                listTIP.forEach(item=>{
-                  // console.log(item)
+              })
+              // Выносим собственников в отдельную таблицу
+              Rent21_all.findAll({
+                where:{
+                  tip: {
+                    [ss.Op.in]:['soBst21', 'koNt21']
+                  }
+                }
+              }).then(items=>{
+                const notUid = []
+                items.forEach(item=>{
+                  if(notUid.indexOf(item.dataValues.uid)===-1){
+                    if(item.dataValues.tip === 'soBst21'){
+                      Rent21_owner.create({
+                        fields: item.dataValues.fields,
+                        uid: item.dataValues.uid
+                      })
+                      notUid.push(item.dataValues.uid)
+                    }
+                    if(item.dataValues.tip === 'koNt21'){
+                      Rent21_contact.create({
+                        fields: item.dataValues.fields,
+                        uid: item.dataValues.uid
+                      })
+                      notUid.push(item.dataValues.uid)
+                    }
+                  }
                 })
               })
+
             }
           );
         })
       }
     );
   })
+  // загружаем конфиг
+  const fileContent = fs.readFileSync(__dirname +'../../config/config.json', "utf8");
+  JSON.parse(fileContent).cian.forEach(item =>{
+    Rent21_export.create({
+      uid: item.uid,
+      tip: item.tip,
+      fields: item.fields,
+      name: item.name
+    })
+  })
 }
 
-const flagCreate = false;
+const flagCreate = true;
 if(flagCreate){
   db.sequelize.sync({force: true}).then(() => {
     console.log('Drop and Resync Db');
     initial();
   });
 }else{
-  db.sequelize.sync();
+  db.sequelize.sync().then(()=>{
+      const timerIdCian = setInterval( ()=>{
+        request({
+          url: "https://public-api.cian.ru/v1/get-order",
+          method: "GET",
+          headers: {
+            "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjI0MTQzNDd9.tnl_IpjFbd6npeK5eZawYTOxmBudZMLey70YhS3jRQs",
+            "content-type": "application/json"
+          },
+          body: ""
+        }, function(error, response, body) {
+          if (error) {
+            console.log('Ошибка запроса Циан')
+          }
+          else {
+            if (response.statusCode == 200) {
+              const J = JSON.parse(body).result.offers;
+              Rent21_report.destroy({
+                truncate: true,
+              }).then(()=>{
+                J.forEach(item=>{
+                  Rent21_report.create({
+                    offerId: item.offerId,
+                    externalId: item.externalId,
+                    status: item.status,
+                    errors: item.errors,
+                    warnings: item.warnings,
+                    url: item.url
+                  })
+                })
+                console.log('cian загружен', new Date())
+              })
+            }
+            else {
+
+            }
+          }
+        });
+
+      },200000)
+    }
+  );
 }
 
 const corsOptions = {

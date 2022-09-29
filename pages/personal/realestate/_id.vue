@@ -17,7 +17,7 @@
                 <Labelfromfield label="Дом" :value="item.address.DOM" />
               </div>
               <Building :item="item" style="margin-top: 12px" />
-              <DivCombo title="Другие помещения в здании" style="margin-top: 12px" :open="roomfromaddress">
+              <DivCombo title="Другие помещения в здании" style="margin-top: 12px" :open="roomfromaddress" show="true">
                 <template #body >
                   <div style="background-color: white;padding: 8px;box-shadow: 0px 5px 10px 2px rgb(34 60 80 / 20%);">
                     <div v-for="(itemRoom, index) in listRoom" :key="index">
@@ -29,8 +29,11 @@
                            border-bottom: 1px dotted">
                         <div v-if="itemListRoom.UID === item.ob.uid" class="triangle-right" style="margin-right: 4px"></div>
                         <div v-else style="width: 12px"></div>
-                        <div>
-                          {{itemListRoom.OPP}} {{itemListRoom.TIP}} {{itemListRoom.PLALL}}
+                        <div style="display: flex; width: 100%">
+                          <div style="flex: 0 0 auto">
+                            {{itemListRoom.OPP}} {{itemListRoom.TIP}} {{itemListRoom.PLALL}}
+                          </div>
+                          <Info style="margin-left: 12px" />
                         </div>
                       </div>
 
@@ -38,9 +41,9 @@
                   </div>
                 </template>
               </DivCombo>
-              <DivCombo title="Собственики в здании" style="margin-top: 12px">
+              <DivCombo title="Собственики в здании" style="margin-top: 12px" :open="ownerfromaddress" show="true">
                 <template #body >
-                  список собствеников
+                  <ownerList />
                 </template>
               </DivCombo>
             </div>
@@ -193,7 +196,119 @@
                   <Parking v-if="item.ob
                   && item.ob.cian.Building
                   && item.ob.cian.Building.Parking
-                  && typeof(item.ob.cian.Building.Parking) !== 'undefined'"></Parking>
+                  && typeof(item.ob.cian.Building.Parking) !== 'undefined'"
+                  labelWidth="155px"
+                  title="Парковка"
+                  ></Parking>
+                  <hr/>
+                  <div v-if="item.ob && item.ob.cian && item.ob.cian.Building && typeof(item.ob.cian.Building.Name) !== 'undefined'" class="div-input">
+                    <label for="BuildingName" class="labelInput">Название </label>
+                    <input v-model="item.ob.cian.Building.Name"
+                           id="BuildingName"
+                           class="form-control"
+                           type="text"
+                           placeholder=""
+                           style="width: 250px">
+                  </div>
+                  <div v-if="item.ob && item.ob.cian && item.ob.cian.Building && typeof(item.ob.cian.Building.BuildYear) !== 'undefined'" class="div-input">
+                    <label for="BuildingBuildYear" class="labelInput">Год постройки</label>
+                    <input v-model="item.ob.cian.Building.BuildYear"
+                           id="BuildingBuildYear"
+                           class="form-control"
+                           type="text"
+                           placeholder=""
+                           style="width: 60px">
+                  </div>
+                  <ComboNoSpr v-if="item.ob
+                  && item.ob.cian.Building
+                  && item.ob.cian.Building.Type
+                  && typeof(item.ob.cian.Building.Type) !== 'undefined'"
+                              title="Тип здания"
+                              :value="item.ob.cian.Building.Type"
+                              :change="BuildingTypeChange"
+                              style="width: 460px"
+                              labelWidth="155px"
+                  >
+                    <option value="administrativeBuilding">Административное здание</option>
+                    <option value="businessCenter">Бизнес-центр</option>
+                    <option value="businessCenter2">Деловой центр</option>
+                    <option value="businessHouse">Деловой дом</option>
+                    <option value="businessPark">Бизнес-парк</option>
+                    <option value="businessQuarter">Бизнес-квартал</option>
+                    <option value="businessQuarter2">Деловой квартал</option>
+                    <option value="free">Объект свободного назначения</option>
+                    <option value="industrialComplex">Производственный комплекс</option>
+                    <option value="industrialPark">Индустриальный парк</option>
+                    <option value="industrialSite">Промплощадка</option>
+                    <option value="industrialWarehouseComplex">Производственно-складской комплекс</option>
+                    <option value="logisticsCenter">Логистический центр</option>
+                    <option value="logisticsComplex">Логистический комплекс</option>
+                    <option value="logisticsPark">Логистический парк</option>
+                    <option value="mansion">Особняк</option>
+                    <option value="manufactureBuilding">Производственное здание</option>
+                    <option value="manufacturingFacility">Производственный цех</option>
+                    <option value="modular">Модульное здание</option>
+                    <option value="multifunctionalComplex">Многофункциональный комплекс</option>
+                    <option value="officeAndHotelComplex">Офисно-гостиничный комплекс</option>
+                    <option value="officeAndResidentialComplex">Офисно-жилой комплекс</option>
+                    <option value="officeAndWarehouse">Офисно-складское здание</option>
+                    <option value="officeAndWarehouseComplex">Офисно-складской комплекс</option>
+                    <option value="officeBuilding">Офисное здание</option>
+                    <option value="officeCenter">Офисный центр</option>
+                    <option value="officeComplex">Офисный комплекс</option>
+                    <option value="officeIndustrialComplex">Офисно-производственный комплекс</option>
+                    <option value="officeQuarter">Офисный квартал</option>
+                    <option value="old">Старый фонд</option>
+                    <option value="other">Другое</option>
+                    <option value="outlet">Аутлет</option>
+                    <option value="propertyComplex">Имущественный комплекс</option>
+                    <option value="residentialComplex">Жилой комплекс</option>
+                    <option value="residentialHouse">Жилой дом</option>
+                    <option value="shoppingAndBusinessComplex">Торгово-деловой комплекс</option>
+                    <option value="shoppingAndCommunityCenter">Торгово-общественный центр</option>
+                    <option value="shoppingAndEntertainmentCenter">Торгово-развлекательный центр</option>
+                    <option value="shoppingAndWarehouseComplex">Торгово-складской комплекс</option>
+                    <option value="shoppingCenter">Торговый центр</option>
+                    <option value="shoppingComplex">Торговый комплекс</option>
+                    <option value="specializedShoppingCenter">Специализированный торговый центр</option>
+                    <option value="standaloneBuilding">Отдельно стоящее здание</option>
+                    <option value="technopark">Технопарк</option>
+                    <option value="tradeAndExhibitionComplex">Торгово-выставочный комплекс</option>
+                    <option value="tradingHouse">Торговый дом</option>
+                    <option value="tradingOfficeComplex">Торгово-офисный комплекс</option>
+                    <option value="warehouse">Склад</option>
+                    <option value="warehouseComplex">Складской комплекс</option>
+                  </ComboNoSpr>
+                  <ComboNoSpr v-if="item.ob
+                  && item.ob.cian.Building
+                  && item.ob.cian.Building.ClassType
+                  && typeof(item.ob.cian.Building.ClassType) !== 'undefined'"
+                              title="Класс здания"
+                              :value="item.ob.cian.Building.ClassType"
+                              :change="BuildingClassTypeChange"
+                              style="width: 460px"
+                              labelWidth="155px"
+                  >
+                    <option value="a">A</option>
+                    <option value="aPlus">A+</option>
+                    <option value="b">B</option>
+                    <option value="bMinus">B-</option>
+                    <option value="bPlus">B+</option>
+                    <option value="c">C</option>
+                  </ComboNoSpr>
+                  <div v-if="item.ob && item.ob.cian && item.ob.cian.Building && typeof(item.ob.cian.Building.TotalArea) !== 'undefined'" class="div-input">
+                    <label for="BuildingBuildTotalArea" class="labelInput">Площадь здание</label>
+                    <input v-model="item.ob.cian.Building.TotalArea"
+                           id="BuildingBuildTotalArea"
+                           class="form-control"
+                           type="text"
+                           placeholder=""
+                           style="width: 90px">
+                  </div>
+                  <Land v-if="item.ob && item.ob.cian && item.ob.cian.Land && typeof(item.ob.cian.Land) !== 'undefined'"
+                    title="Участок"
+                  />
+                  <div style="margin-bottom: 120px"></div>
 
                 </div>
               </template>
@@ -235,15 +350,22 @@ import TotalArea from "~/components/cian/officeRent/TotalArea";
 import ComboNoSpr from "~/components/comboNotSpr";
 import Parking from "~/components/cian/Building/Parking";
 import DivCombo from "~/components/divCombo";
+import Info from "~/components/Realestate/export/info/info";
+import Land from "~/components/cian/Land";
+import OwnerList from "~/components/Realestate/owner/list";
 
 export default {
   name: "index",
-  components: {DivCombo, Parking, ComboNoSpr, TotalArea, Building, AreaParts, Tabs, ComboRent21, Labelfromfield},
+  components: {
+    OwnerList,
+    Land,
+    Info, DivCombo, Parking, ComboNoSpr, TotalArea, Building, AreaParts, Tabs, ComboRent21, Labelfromfield},
   layout: 'default',
   data: () => ({
     propertytype: '',
     showFlag: true,
-    listRoom: []
+    listRoom: [],
+    listOwner: []
   }),
   computed: {
     item() {
@@ -302,11 +424,20 @@ export default {
         this.$store.dispatch('realestate/setItem',item.data.row)
       })
     },
+    ownerfromaddress(){
+
+    },
     roomfromaddress(){
       this.listRoom = []
       this.$api.get('/api/realestate/roomfromaddress?id='+this.item.build.UID).then(item=>{
         this.listRoom = item.data.rows;
       })
+    },
+    BuildingClassTypeChange(val){
+      this.item.ob.cian.Building.ClassType = val
+    },
+    BuildingTypeChange(val){
+      this.item.ob.cian.Building.Type = val
     },
     AccessTypeChange(val){
       this.item.ob.cian.Building.AccessType = val

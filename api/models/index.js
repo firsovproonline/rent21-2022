@@ -46,7 +46,11 @@ db.Rent21_ob = require("../models/rent21.ob.model.js")(sequelize, Sequelize);
 db.Rent21_all = require("../models/rent21.all.mogel.js")(sequelize, Sequelize);
 db.Setings = require("../models/setings.model.js")(sequelize, Sequelize);
 db.Rent21_lids = require("../models/rent21.lids.model.js")(sequelize, Sequelize);
+db.Rent21_owner = require("../models/rent21.owner.model.js")(sequelize, Sequelize);
+
 db.Rent21_export = require("../models/export.model.js")(sequelize, Sequelize);
+db.Rent21_report = require("../models/report.model.js")(sequelize, Sequelize);
+db.Rent21_contact = require("../models/rent21.contact.model.js")(sequelize, Sequelize);
 
 
 

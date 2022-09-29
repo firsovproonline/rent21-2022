@@ -16,7 +16,8 @@ export default {
   name: "divCombo",
   props:{
     title: '',
-    open: null
+    open: null,
+    show: false
   },
   data () {
     return {
@@ -30,6 +31,12 @@ export default {
         this.open()
       }
     },
+  },
+  mounted() {
+    if(this.show){
+      this.showCombo = true
+      this.open()
+    }
   }
 }
 </script>
