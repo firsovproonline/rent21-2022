@@ -1,4 +1,5 @@
 const controller = require("../controllers/realestate.controller");
+const ownercontroller = require("../controllers/owner.controller");
 const {authJwt} = require("../middleware");
 module.exports = function(app) {
   app.get("/realestate/address", controller.address);
@@ -11,5 +12,6 @@ module.exports = function(app) {
   app.post("/realestate/lids", controller.lids);
   app.post("/realestate/rent21address", controller.rent21address);
   app.get("/realestate/rent21uid", controller.rent21uid);
+  app.get("/realestate/owner", ownercontroller.list);
 
 };

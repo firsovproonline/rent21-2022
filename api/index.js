@@ -948,6 +948,10 @@ function initial() {
               }).then(items=>{
                 const ob ={}
                 const metro = {}
+                const phone = {}
+                const site = {}
+                const email = {}
+                const messenger = {}
                 items[0].forEach(item => {
                   ob.tip = item.TIP
                   ob.uid = item.UID
@@ -963,10 +967,75 @@ function initial() {
                       }
                       metro[item.PUID][item.TITLE] = item.VAL;
                       break;
+                    case "PHONE":
+                    case "PHONEREM":
+                      if(!phone[item.PUID]){
+                        phone[item.PUID] = {}
+                      }
+                      phone[item.PUID][item.TITLE] = item.VAL;
+                      break;
+                    case "EMAIL":
+                    case "EMAILREM":
+                      if(!email[item.PUID]){
+                        email[item.PUID] = {}
+                      }
+                      email[item.PUID][item.TITLE] = item.VAL;
+                      break;
+                    case "SITE":
+                    case "SITEREM":
+                      if(!site[item.PUID]){
+                        site[item.PUID] = {}
+                      }
+                      site[item.PUID][item.TITLE] = item.VAL;
+                      break;
+                    case "MESSENGER":
+                    case "MESSENGERREM":
+                      if(!messenger[item.PUID]){
+                        messenger[item.PUID] = {}
+                      }
+                      messenger[item.PUID][item.TITLE] = item.VAL;
+                      break;
                     default:
                       ob[item.TITLE] = item.VAL;
                   }
                 })
+
+                if(Object.keys(phone).length > 0){
+                  ob['PHONES'] = [];
+                  Object.values(phone).forEach(valM=>{
+                    ob['PHONES'].push({
+                      NAME: valM.PHONE,
+                      REM: valM.PHONEREM,
+                    })
+                  })
+                }
+                if(Object.keys(email).length > 0){
+                  ob['EMAILS'] = [];
+                  Object.values(email).forEach(valM=>{
+                    ob['EMAILS'].push({
+                      NAME: valM.EMAIL,
+                      REM: valM.EMAILREM,
+                    })
+                  })
+                }
+                if(Object.keys(messenger).length > 0){
+                  ob['MESSENGERS'] = [];
+                  Object.values(messenger).forEach(valM=>{
+                    ob['MESSENGERS'].push({
+                      NAME: valM.MESSENGER,
+                      REM: valM.MESSENGERREM,
+                    })
+                  })
+                }
+                if(Object.keys(site).length > 0){
+                  ob['SITES'] = [];
+                  Object.values(site).forEach(valM=>{
+                    ob['SITES'].push({
+                      NAME: valM.SITE,
+                      REM: valM.SITEREM,
+                    })
+                  })
+                }
 
                 if(Object.keys(metro).length > 0){
                   ob['METRO'] = [];
@@ -979,9 +1048,26 @@ function initial() {
                     })
                   })
                 }
+
                 ob.cian = {
 
                 };
+                if(ob.tip === 'koNt21'){
+                  if(!ob['SITES']){
+                    ob['SITES'] = []
+                  }
+                  if(!ob['MESSENGERS']){
+                    ob['MESSENGERS'] = []
+                  }
+                  if(!ob['EMAILS']){
+                    ob['EMAILS'] = []
+                  }
+                  if(!ob['PHONES']){
+                    ob['PHONES'] = []
+                  }
+                  delete ob.cian
+                  // delete ob.tip
+                }
                 if(ob.tip === 'ob21'){
                   Object.keys(ob).forEach(item=>{
                     if(listTIP.indexOf(item)=== -1){

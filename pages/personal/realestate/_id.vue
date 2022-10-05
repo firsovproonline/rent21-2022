@@ -43,7 +43,9 @@
               </DivCombo>
               <DivCombo title="Собственики в здании" style="margin-top: 12px" :open="ownerfromaddress" show="true">
                 <template #body >
-                  <ownerList />
+                  <div style="background-color: white;padding: 8px;box-shadow: 0px 5px 10px 2px rgb(34 60 80 / 20%);">
+                    <ownerList :list="listOwner"/>
+                  </div>
                 </template>
               </DivCombo>
             </div>
@@ -370,6 +372,7 @@ export default {
   computed: {
     item() {
       return this.$store.getters['realestate/item']
+      //95.174.126.120
     },
     obfoto() {
       return this.$store.getters['realestate/obfoto']
@@ -425,6 +428,11 @@ export default {
       })
     },
     ownerfromaddress(){
+      this.listOwner = []
+      this.$api.get('/api/realestate/owner?id='+this.item.build.UID).then(item=>{
+        this.listOwner = item.data.rows;
+        console.log(this.listOwner)
+      })
 
     },
     roomfromaddress(){
