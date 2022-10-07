@@ -1052,7 +1052,7 @@ function initial() {
                 ob.cian = {
 
                 };
-                if(ob.tip === 'koNt21'){
+                if(ob.tip === 'koNt21' || ob.tip === 'soBst21'){
                   if(!ob['SITES']){
                     ob['SITES'] = []
                   }

@@ -1,13 +1,21 @@
 <template>
-  <div>contactList</div>
+  <div class="main">
+    <div>{{value.FIRSTNAME}} {{value.LASTNAME}}</div>
+    <PhoneList :value="value.PHONES"/>
+  </div>
 </template>
 
 <script>
+import PhoneList from "~/components/Realestate/contact/list/phoneList";
 export default {
-  name: "contactList"
+  name: "contactList",
+  components: {PhoneList},
+  props:{
+    value: {}
+  }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

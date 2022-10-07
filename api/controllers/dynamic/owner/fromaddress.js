@@ -46,8 +46,9 @@ Linc.findAll({
           ON rent21_owners.uid = rent21_lincs.puid
         INNER JOIN rent21_contacts
           ON rent21_lincs.val = rent21_contacts.uid
-      WHERE rent21_owners.uid IN('d6799d4f-36ad-4d87-2322-8776cd2ae0d1', '3abcbab5-8c27-4fa0-cef2-74fdfac8dd47')
+      WHERE rent21_owners.uid IN('`+ outAr.join("','") + `')
       ORDER BY rent21_owners.uid`
+    // console.log(sql)
     db.sequelize.query(sql).then(items=>{
       const outOb = {}
       items[0].forEach(item=>{
