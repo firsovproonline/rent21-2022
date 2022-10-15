@@ -54,6 +54,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this['_uid'])
     if(this.$scopedSlots){
       this.$scopedSlots.default().forEach(item =>{
         if(item.tag === 'option'){

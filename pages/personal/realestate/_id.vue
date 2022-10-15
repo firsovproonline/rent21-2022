@@ -464,6 +464,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this['_uid'])
     this.$store.dispatch('realestate/loadSpr')
     this.$api.get('/api/realestate/room?id='+this.$route.params.id).then(item=>{
       this.$store.dispatch('realestate/setItem',item.data.row)

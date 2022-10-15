@@ -9,7 +9,8 @@ export const state = () => ({
   setings:{},
   combospr: '',
   combofield: '',
-  combovalue: ''
+  combovalue: '',
+  disableds: []
 })
 
 export const actions = {
@@ -23,6 +24,9 @@ export const actions = {
   },
   setmultiItems ({ commit }, comp) {
     commit('setmultiItems', comp)
+  },
+  setdisableds ({ commit }, comp) {
+    commit('setdisableds', comp)
   },
   setSetings ({ commit }, comp) {
     commit('setSetings', comp)
@@ -45,6 +49,9 @@ export const mutations = {
   setleftMenu (state, vcomponent) {
     console.log('1111111111111111111111')
     state.vleftMenu = vcomponent
+  },
+  setdisableds (state, vcomponent) {
+    state.disableds = vcomponent
   },
   setmultiItems (state, vcomponent) {
     state.multiItems = vcomponent
@@ -69,6 +76,7 @@ export const mutations = {
 
 export const getters = {
   leftMenu:  (state) => { return state.vleftMenu },
+  disableds:  (state) => { return state.disableds },
   vcomponent: (state) => { return state.vcomponent },
   globalevent: (state) => { return state.globalevent },
   globalMessage: (state) => { return state.globalMessage },

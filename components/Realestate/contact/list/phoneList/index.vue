@@ -1,7 +1,10 @@
 <template>
   <div class="main">
-    <div class="title">Телефон</div>
-    <item v-for="(val,index) in value" :key="index" :value="val" />
+    <div style="display: flex">
+      <div class="title">Телефон</div>
+      <div class="buttonHref" @click="addItem">добавить</div>
+    </div>
+    <item v-for="(val,index) in value" :key="index" :value="val" :index="index" :flagDelete="value.length===1 ? false: true " />
   </div>
 </template>
 
@@ -9,9 +12,20 @@
 import Item from "~/components/Realestate/contact/list/phoneList/item";
 export default {
   name: "phoneList",
+  emits: ['deleteitem'],
   components: {Item},
   props:{
     value: []
+  },
+  methods:{
+    addItem(){
+      this.value.push({NAME: '', REM: '',flagEdit: true})
+    },
+  },
+  created() {
+    this.$on('deleteitem', index => {
+      this.value.splice(index, 1)
+    });
   }
 }
 </script>
@@ -19,6 +33,10 @@ export default {
 <style lang="scss" scoped>
   .main{
     margin-left: 10px;
+    .buttonHref{
+      text-decoration: underline;
+      cursor: pointer;
+    }
     .title{
       color: #1b4c43;
       text-align: left;
