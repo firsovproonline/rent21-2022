@@ -1,4 +1,6 @@
 const db = require("../models");
+const gm = require('gm');
+
 const {Op, fn} = require("sequelize");
 const fs = require('fs')
 
@@ -34,17 +36,20 @@ exports.adminBoard = (req, res) => {
 
 exports.postphoto = (req, res) => {
   const User = db.user;
-  User.update(
-    {
-      photo: fs.readFileSync('././temp/'+req.file.filename)
-    },
-    {
-      where: {
-        id: req.header('iduser'),
+  let photo = fs.readFileSync('././temp/'+req.file.filename);
+  gm('././temp/'+req.file.filename).resize(null, 170).toBuffer('JPG', function(err, buffer) {
+    User.update(
+      {
+        photo: buffer
       },
-    }
-  ).then(items=>{
-    res.status(200).send('=====');
+      {
+        where: {
+          id: req.header('iduser'),
+        },
+      }
+    ).then(items=>{
+      res.status(200).send('=====');
+    })
   })
 }
 

@@ -12,7 +12,7 @@
 import Item from "~/components/Realestate/contact/list/phoneList/item";
 export default {
   name: "phoneList",
-  emits: ['deleteitem'],
+  emits: ['deleteitem', 'saveitem'],
   components: {Item},
   props:{
     value: []
@@ -25,6 +25,9 @@ export default {
   created() {
     this.$on('deleteitem', index => {
       this.value.splice(index, 1)
+    });
+    this.$on('saveitem', index => {
+      console.log('saveitem')
     });
   }
 }

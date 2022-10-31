@@ -20,6 +20,10 @@ const sequelize = new Sequelize(
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
+
+db.setings = require("../models/rent21.setings.model.js")(sequelize, Sequelize);
+db.setingtip = require("../models/rent21.setingtip.model.js")(sequelize, Sequelize);
+
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.address = require("../models/address.model.js")(sequelize, Sequelize);
@@ -64,5 +68,10 @@ db.user.belongsToMany(db.role, {
   foreignKey: "userId",
   otherKey: "roleId"
 });
+
+
+
+
+db.setingtip = ["export","phones"];
 db.ROLES = ["user", "admin", "moderator"];
 module.exports = db;

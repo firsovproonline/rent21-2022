@@ -310,18 +310,10 @@
                   <Land v-if="item.ob && item.ob.cian && item.ob.cian.Land && typeof(item.ob.cian.Land) !== 'undefined'"
                     title="Участок"
                   />
-                  <div style="margin-bottom: 120px"></div>
-
-                </div>
-              </template>
-              <template #tab2 >
-                <div title="Фото">
-                  <div style="display: flex;flex-wrap: wrap;">
-                    <div v-for="(item,index) in obfoto" :key="index" style="margin: 4px">
-                      <img :src="'/api/foto/get?id='+item.ID" />
-                    </div>
-
+                  <div title="Фото">
+                    <PhotosList v-if="item.ob && item.ob.uid" :uid="item.ob.uid" />
                   </div>
+                  <div style="margin-bottom: 120px"></div>
                 </div>
               </template>
               <template #tab3 >
@@ -355,10 +347,12 @@ import DivCombo from "~/components/divCombo";
 import Info from "~/components/Realestate/export/info/info";
 import Land from "~/components/cian/Land";
 import OwnerList from "~/components/Realestate/owner/list";
+import PhotosList from "~/components/Realestate/photos/list";
 
 export default {
   name: "index",
   components: {
+    PhotosList,
     OwnerList,
     Land,
     Info, DivCombo, Parking, ComboNoSpr, TotalArea, Building, AreaParts, Tabs, ComboRent21, Labelfromfield},
@@ -423,6 +417,10 @@ export default {
   },
   methods:{
     listRoomClick(val){
+      this.$api.get('/api/foto/list?id='+val).then(item=>{
+        this.$store.dispatch('realestate/setobfoto',item.data.row)
+      })
+
       this.$api.get('/api/realestate/room?id='+val).then(item=>{
         this.$store.dispatch('realestate/setItem',item.data.row)
       })
@@ -464,7 +462,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this['_uid'])
+    console.log('================',this.item.ob)
     this.$store.dispatch('realestate/loadSpr')
     this.$api.get('/api/realestate/room?id='+this.$route.params.id).then(item=>{
       this.$store.dispatch('realestate/setItem',item.data.row)
